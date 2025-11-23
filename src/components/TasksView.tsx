@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
-import { MOCK_TASKS, MOCK_TIME_LOGS, SUBJECT_COLORS } from '../constants';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { db } from '../db';
+import { SUBJECT_COLORS } from '../constants';
 import { Task, TaskStatus, Subject, TimeLog, Evidence, EvidenceType } from '../types';
 import { Plus, X, Calendar, Clock, AlertCircle, CheckSquare, Square, Save, Paperclip, Link as LinkIcon, FileText, Trash2, ChevronDown, Filter } from 'lucide-react';
 
 const TasksView: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>(MOCK_TASKS);
-  const [timeLogs, setTimeLogs] = useState<TimeLog[]>(MOCK_TIME_LOGS);
-
-  // Evidences State (Local mock for this view)
-  const [evidences, setEvidences] = useState<Evidence[]>([]);
+  // Fetch live data from IndexedDB
+  const tasks = useLiveQuery(() => db.tasks.toArray()) || [];
 
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
+
+  // Create Task Form State
+  const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [newTaskSubject, setNewTaskSubject] = useState<Subject>(Subject.POLITY);
+  const [newTaskPriority, setNewTaskPriority] = useState<'High' | 'Medium' | 'Low'>('Medium');
+  const [newTaskDate, setNewTaskDate] = useState(new Date().toISOString().split('T')[0]);
+  const [newTaskDescription, setNewTaskDescription] = useState('');
 
   // Time Logging Form State
   const [logDuration, setLogDuration] = useState<string>('30');
@@ -21,68 +28,115 @@ const TasksView: React.FC = () => {
   const [evidenceType, setEvidenceType] = useState<EvidenceType>(EvidenceType.LINK);
   const [evidenceContent, setEvidenceContent] = useState('');
 
-  const handleStatusChange = (taskId: string, newStatus: TaskStatus) => {
-    setTasks(tasks.map(t =>
-      t.id === taskId ? { ...t, status: newStatus } : t
-    ));
+  const handleCreateTask = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const newTask: Task = {
+      id: Math.random().toString(36).substr(2, 9),
+      userId: 'Schamala',
+      title: newTaskTitle,
+      subject: newTaskSubject,
+      priority: newTaskPriority,
+      date: newTaskDate,
+      status: TaskStatus.TODO,
+      description: newTaskDescription,
+      acceptanceCriteria: [],
+      logs: [],
+      evidences: []
+    };
+
+    await db.tasks.add(newTask);
+    setIsCreating(false);
+    // Reset form
+    setNewTaskTitle('');
+    setNewTaskDescription('');
+    setNewTaskSubject(Subject.POLITY);
+  };
+
+  const handleStatusChange = async (taskId: string, newStatus: TaskStatus) => {
+    await db.tasks.update(taskId, { status: newStatus });
+
     if (selectedTask?.id === taskId) {
       setSelectedTask(prev => prev ? { ...prev, status: newStatus } : null);
     }
   };
 
-  const toggleCriterion = (taskId: string, criterionId: string) => {
-    const updatedTasks = tasks.map(t => {
-      if (t.id === taskId && t.acceptanceCriteria) {
-        const updatedCriteria = t.acceptanceCriteria.map(ac =>
-          ac.id === criterionId ? { ...ac, isCompleted: !ac.isCompleted } : ac
-        );
-        return { ...t, acceptanceCriteria: updatedCriteria };
-      }
-      return t;
-    });
-    setTasks(updatedTasks);
+  const toggleCriterion = async (taskId: string, criterionId: string) => {
+    const task = tasks.find(t => t.id === taskId);
+    if (task && task.acceptanceCriteria) {
+      const updatedCriteria = task.acceptanceCriteria.map(ac =>
+        ac.id === criterionId ? { ...ac, isCompleted: !ac.isCompleted } : ac
+      );
+      await db.tasks.update(taskId, { acceptanceCriteria: updatedCriteria });
 
-    if (selectedTask?.id === taskId) {
-      const updatedTask = updatedTasks.find(t => t.id === taskId);
-      if (updatedTask) setSelectedTask(updatedTask);
+      if (selectedTask?.id === taskId) {
+        setSelectedTask(prev => prev ? { ...prev, acceptanceCriteria: updatedCriteria } : null);
+      }
     }
   };
 
-  const handleLogTime = () => {
+  const handleLogTime = async () => {
     if (!selectedTask || !logDuration) return;
 
     const newLog: TimeLog = {
-      id: Date.now().toString(),
-      taskId: selectedTask.id,
+      id: Math.random().toString(36).substr(2, 9),
       date: logDate,
       durationMinutes: parseInt(logDuration),
       subject: selectedTask.subject,
       description: logDescription || 'Task work log'
     };
 
-    setTimeLogs([newLog, ...timeLogs]);
-    MOCK_TIME_LOGS.push(newLog);
+    // Use current task from live query to ensure we have latest logs
+    const currentTask = tasks.find(t => t.id === selectedTask.id);
+    if (!currentTask) return;
+
+    const updatedLogs = [...(currentTask.logs || []), newLog];
+
+    await db.tasks.update(selectedTask.id, { logs: updatedLogs });
+
+    // Update local state
+    setSelectedTask({ ...selectedTask, logs: updatedLogs });
+
     setLogDescription('');
     setLogDuration('30');
   };
 
-  const handleAddEvidence = () => {
+  const handleAddEvidence = async () => {
     if (!selectedTask || !evidenceContent) return;
 
     const newEvidence: Evidence = {
-      id: Date.now().toString(),
-      taskId: selectedTask.id,
+      id: Math.random().toString(36).substr(2, 9),
       type: evidenceType,
       content: evidenceContent,
       timestamp: new Date().toLocaleTimeString()
     };
 
-    setEvidences([newEvidence, ...evidences]);
+    // Use current task from live query
+    const currentTask = tasks.find(t => t.id === selectedTask.id);
+    if (!currentTask) return;
+
+    const updatedEvidences = [...(currentTask.evidences || []), newEvidence];
+
+    await db.tasks.update(selectedTask.id, { evidences: updatedEvidences });
+
+    // Update local state
+    setSelectedTask({ ...selectedTask, evidences: updatedEvidences });
+
     setEvidenceContent('');
   };
 
-  const handleDeleteEvidence = (id: string) => {
-    setEvidences(evidences.filter(e => e.id !== id));
+  const handleDeleteEvidence = async (id: string) => {
+    if (!selectedTask) return;
+
+    // Use current task from live query
+    const currentTask = tasks.find(t => t.id === selectedTask.id);
+    if (!currentTask) return;
+
+    const updatedEvidences = (currentTask.evidences || []).filter(e => e.id !== id);
+
+    await db.tasks.update(selectedTask.id, { evidences: updatedEvidences });
+
+    // Update local state
+    setSelectedTask({ ...selectedTask, evidences: updatedEvidences });
   };
 
   const calculateProgress = (task: Task) => {
@@ -91,8 +145,8 @@ const TasksView: React.FC = () => {
     return Math.round((completed / task.acceptanceCriteria.length) * 100);
   };
 
-  const calculateTotalTime = (taskId: string) => {
-    const logs = timeLogs.filter(l => l.taskId === taskId);
+  const calculateTotalTime = (task: Task) => {
+    const logs = task.logs || [];
     const totalMinutes = logs.reduce((acc, l) => acc + l.durationMinutes, 0);
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
@@ -121,7 +175,10 @@ const TasksView: React.FC = () => {
             <button className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
               <Filter size={16} /> Filter
             </button>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center gap-2">
+            <button
+              onClick={() => setIsCreating(true)}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center gap-2"
+            >
               <Plus size={16} /> Create Task
             </button>
           </div>
@@ -138,60 +195,152 @@ const TasksView: React.FC = () => {
 
         {/* Task List Body */}
         <div className="flex-1 overflow-y-auto custom-scrollbar">
-          {tasks.map(task => (
-            <div
-              key={task.id}
-              onClick={() => setSelectedTask(task)}
-              className={`grid grid-cols-12 gap-4 px-6 py-4 border-b border-gray-100 items-center hover:bg-blue-50/50 cursor-pointer transition-colors group ${selectedTask?.id === task.id ? 'bg-blue-50' : ''}`}
-            >
-              {/* Task Title & Progress */}
-              <div className="col-span-4">
-                <h4 className="text-sm font-medium text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">{task.title}</h4>
-                <div className="flex items-center gap-2">
-                  <div className="w-24 bg-gray-100 rounded-full h-1.5">
-                    <div
-                      className="bg-blue-500 h-1.5 rounded-full"
-                      style={{ width: `${calculateProgress(task)}%` }}
-                    ></div>
+          {tasks.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-gray-400">
+              <p>No tasks found. Create one to get started!</p>
+            </div>
+          ) : (
+            tasks.map(task => (
+              <div
+                key={task.id}
+                onClick={() => setSelectedTask(task)}
+                className={`grid grid-cols-12 gap-4 px-6 py-4 border-b border-gray-100 items-center hover:bg-blue-50/50 cursor-pointer transition-colors group ${selectedTask?.id === task.id ? 'bg-blue-50' : ''}`}
+              >
+                {/* Task Title & Progress */}
+                <div className="col-span-4">
+                  <h4 className="text-sm font-medium text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">{task.title}</h4>
+                  <div className="flex items-center gap-2">
+                    <div className="w-24 bg-gray-100 rounded-full h-1.5">
+                      <div
+                        className="bg-blue-500 h-1.5 rounded-full"
+                        style={{ width: `${calculateProgress(task)}%` }}
+                      ></div>
+                    </div>
+                    <span className="text-[10px] text-gray-400">{calculateProgress(task)}%</span>
                   </div>
-                  <span className="text-[10px] text-gray-400">{calculateProgress(task)}%</span>
+                </div>
+
+                {/* Status */}
+                <div className="col-span-2">
+                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(task.status)}`}>
+                    {task.status.replace('_', ' ')}
+                  </span>
+                </div>
+
+                {/* Subject */}
+                <div className="col-span-2">
+                  <span
+                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-white"
+                    style={{ backgroundColor: SUBJECT_COLORS[task.subject] }}
+                  >
+                    {task.subject}
+                  </span>
+                </div>
+
+                {/* Priority */}
+                <div className="col-span-2 flex items-center gap-2">
+                  {task.priority === 'High' && <AlertCircle size={16} className="text-red-500" />}
+                  <span className={`text-sm ${task.priority === 'High' ? 'text-red-600 font-medium' : 'text-gray-600'}`}>
+                    {task.priority || 'Normal'}
+                  </span>
+                </div>
+
+                {/* Due Date */}
+                <div className="col-span-2 flex items-center gap-2 text-sm text-gray-500">
+                  <Calendar size={14} />
+                  <span>{task.date}</span>
                 </div>
               </div>
-
-              {/* Status */}
-              <div className="col-span-2">
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(task.status)}`}>
-                  {task.status.replace('_', ' ')}
-                </span>
-              </div>
-
-              {/* Subject */}
-              <div className="col-span-2">
-                <span
-                  className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-white"
-                  style={{ backgroundColor: SUBJECT_COLORS[task.subject] }}
-                >
-                  {task.subject}
-                </span>
-              </div>
-
-              {/* Priority */}
-              <div className="col-span-2 flex items-center gap-2">
-                {task.priority === 'High' && <AlertCircle size={16} className="text-red-500" />}
-                <span className={`text-sm ${task.priority === 'High' ? 'text-red-600 font-medium' : 'text-gray-600'}`}>
-                  {task.priority || 'Normal'}
-                </span>
-              </div>
-
-              {/* Due Date */}
-              <div className="col-span-2 flex items-center gap-2 text-sm text-gray-500">
-                <Calendar size={14} />
-                <span>{task.date}</span>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
+
+      {/* Create Task Modal */}
+      {isCreating && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 animate-scale-in">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold text-gray-800">Create New Task</h3>
+              <button onClick={() => setIsCreating(false)} className="text-gray-500 hover:text-gray-700">
+                <X size={20} />
+              </button>
+            </div>
+            <form onSubmit={handleCreateTask} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <input
+                  required
+                  type="text"
+                  value={newTaskTitle}
+                  onChange={(e) => setNewTaskTitle(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                  placeholder="e.g. Complete Chapter 1"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                  <select
+                    value={newTaskSubject}
+                    onChange={(e) => setNewTaskSubject(e.target.value as Subject)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                  >
+                    {Object.values(Subject).map(s => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+                  <select
+                    value={newTaskPriority}
+                    onChange={(e) => setNewTaskPriority(e.target.value as any)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                  >
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
+                <input
+                  type="date"
+                  value={newTaskDate}
+                  onChange={(e) => setNewTaskDate(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea
+                  value={newTaskDescription}
+                  onChange={(e) => setNewTaskDescription(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none h-24 resize-none"
+                  placeholder="Task details..."
+                />
+              </div>
+              <div className="flex justify-end gap-3 mt-6">
+                <button
+                  type="button"
+                  onClick={() => setIsCreating(false)}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium"
+                >
+                  Create Task
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Task Detail Sidebar */}
       {selectedTask && (
@@ -258,7 +407,7 @@ const TasksView: React.FC = () => {
                   <Paperclip size={16} /> Evidences
                 </h3>
                 <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-                  {evidences.filter(e => e.taskId === selectedTask.id).length} Attached
+                  {(selectedTask.evidences || []).length} Attached
                 </span>
               </div>
 
@@ -290,10 +439,10 @@ const TasksView: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                {evidences.filter(e => e.taskId === selectedTask.id).length === 0 ? (
+                {(!selectedTask.evidences || selectedTask.evidences.length === 0) ? (
                   <p className="text-xs text-gray-400 italic text-center">No evidences attached yet.</p>
                 ) : (
-                  evidences.filter(e => e.taskId === selectedTask.id).map(ev => (
+                  selectedTask.evidences.map(ev => (
                     <div key={ev.id} className="flex items-center justify-between bg-white border border-gray-200 p-2 rounded-md group">
                       <div className="flex items-center gap-2 overflow-hidden">
                         {ev.type === EvidenceType.LINK ? <LinkIcon size={14} className="text-blue-500 shrink-0" /> : <FileText size={14} className="text-gray-500 shrink-0" />}
@@ -315,7 +464,7 @@ const TasksView: React.FC = () => {
                   <Clock size={16} /> Time Tracking
                 </h3>
                 <span className="text-xs font-bold bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                  Total: {calculateTotalTime(selectedTask.id)}
+                  Total: {calculateTotalTime(selectedTask)}
                 </span>
               </div>
 
@@ -359,10 +508,10 @@ const TasksView: React.FC = () => {
               </div>
 
               <div className="mt-4 space-y-2 max-h-40 overflow-y-auto custom-scrollbar">
-                {timeLogs.filter(l => l.taskId === selectedTask.id).length === 0 ? (
+                {(!selectedTask.logs || selectedTask.logs.length === 0) ? (
                   <p className="text-xs text-gray-400 italic text-center py-2">No time logged yet.</p>
                 ) : (
-                  timeLogs.filter(l => l.taskId === selectedTask.id).map(log => (
+                  selectedTask.logs.map(log => (
                     <div key={log.id} className="flex justify-between items-center bg-white border border-gray-100 p-2 rounded text-xs">
                       <div className="flex items-center gap-2">
                         <span className="text-gray-400 font-mono">{log.date}</span>
@@ -384,8 +533,8 @@ const TasksView: React.FC = () => {
                     key={status}
                     onClick={() => handleStatusChange(selectedTask.id, status)}
                     className={`flex-1 py-2 text-xs font-medium rounded-md border ${selectedTask.status === status
-                        ? 'bg-blue-600 text-white border-blue-600'
-                        : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+                      ? 'bg-blue-600 text-white border-blue-600'
+                      : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
                       }`}
                   >
                     {status.replace('_', ' ')}

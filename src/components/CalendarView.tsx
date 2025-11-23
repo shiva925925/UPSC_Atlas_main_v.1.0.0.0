@@ -1,177 +1,180 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Filter, Link as LinkIcon, FileText } from 'lucide-react';
-import { CalendarFilter, Task, TimeLog, Achievement, Subject, ResourceType } from '../types';
-import { MOCK_TASKS, MOCK_TIME_LOGS, MOCK_ACHIEVEMENTS, MOCK_RESOURCES, SUBJECT_COLORS } from '../constants';
-
-// Helper to get days in month
-const getDaysInMonth = (year: number, month: number) => {
-  return new Date(year, month + 1, 0).getDate();
-};
-
-const getFirstDayOfMonth = (year: number, month: number) => {
-  return new Date(year, month, 1).getDay();
-};
+import { useLiveQuery } from 'dexie-react-hooks';
+import { db } from '../db';
+import { SUBJECT_COLORS, MOCK_ACHIEVEMENTS } from '../constants';
+import { CalendarFilter } from '../types';
+import { ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 
 const CalendarView: React.FC = () => {
-  const [filter, setFilter] = useState<CalendarFilter>(CalendarFilter.ALL);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<string | null>(new Date().toISOString().split('T')[0]);
+  const [filter, setFilter] = useState<CalendarFilter>(CalendarFilter.ALL);
 
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
+  const tasks = useLiveQuery(() => db.tasks.toArray()) || [];
+  const resources = useLiveQuery(() => db.resources.toArray()) || [];
 
-  const daysInMonth = getDaysInMonth(year, month);
-  const firstDay = getFirstDayOfMonth(year, month);
-  
-  const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
+  const allLogs = tasks.flatMap(t => t.logs || []);
+
+  const getDaysInMonth = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    return new Date(year, month + 1, 0).getDate();
+  };
+
+  const getFirstDayOfMonth = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    return new Date(year, month, 1).getDay();
+  };
+
+  const daysInMonth = getDaysInMonth(currentDate);
+  const firstDay = getFirstDayOfMonth(currentDate);
 
   const handlePrevMonth = () => {
-    setCurrentDate(new Date(year, month - 1, 1));
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
   };
 
   const handleNextMonth = () => {
-    setCurrentDate(new Date(year, month + 1, 1));
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   };
 
-  // Generate calendar grid
-  const days = [];
-  // Empty slots for previous month
-  for (let i = 0; i < firstDay; i++) {
-    days.push(null);
-  }
-  // Days of current month
-  for (let i = 1; i <= daysInMonth; i++) {
-    days.push(i);
-  }
+  const renderCalendarGrid = () => {
+    const days = [];
+    const emptyDays = Array(firstDay).fill(null);
 
-  // Helper to format date key YYYY-MM-DD
-  const getDateKey = (day: number) => {
-    const m = (month + 1).toString().padStart(2, '0');
-    const d = day.toString().padStart(2, '0');
-    return `${year}-${m}-${d}`;
-  };
+    for (let i = 1; i <= daysInMonth; i++) {
+      const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
+      const dateString = date.toISOString().split('T')[0];
 
-  // Render content for a specific day
-  const renderDayContent = (day: number) => {
-    const dateKey = getDateKey(day);
-    const dayTasks = MOCK_TASKS.filter(t => t.date === dateKey);
-    const dayLogs = MOCK_TIME_LOGS.filter(l => l.date === dateKey);
-    const dayAchievements = MOCK_ACHIEVEMENTS.filter(a => a.date === dateKey);
-    const dayResources = MOCK_RESOURCES.filter(r => r.date === dateKey);
+      const dayTasks = tasks.filter(t => t.date === dateString);
+      const dayLogs = allLogs.filter(l => l.date === dateString);
+
+      days.push(
+        <div
+          key={i}
+          onClick={() => setSelectedDate(dateString)}
+          className={`min-h-[80px] border-b border-r border-gray-100 p-2 cursor-pointer transition-colors hover:bg-gray-50 relative ${selectedDate === dateString ? 'bg-blue-50/50' : ''}`}
+        >
+          <span className={`text-sm font-medium w-6 h-6 flex items-center justify-center rounded-full ${dateString === new Date().toISOString().split('T')[0] ? 'bg-blue-600 text-white' : 'text-gray-700'}`}>
+            {i}
+          </span>
+
+          <div className="mt-2 flex flex-wrap gap-1">
+            {dayTasks.slice(0, 3).map(task => (
+              <div key={task.id} className="w-2 h-2 rounded-full" style={{ backgroundColor: SUBJECT_COLORS[task.subject] }} title={task.title}></div>
+            ))}
+            {dayTasks.length > 3 && <span className="text-[10px] text-gray-400">+{dayTasks.length - 3}</span>}
+            {dayLogs.length > 0 && <div className="w-2 h-2 rounded-full bg-gray-400" title={`${dayLogs.length} logs`}></div>}
+          </div>
+        </div>
+      );
+    }
 
     return (
-      <div className="mt-1 space-y-1 overflow-y-auto max-h-[80px] custom-scrollbar">
-        {/* Achievements */}
-        {(filter === CalendarFilter.ALL || filter === CalendarFilter.ACHIEVEMENTS) && dayAchievements.map(ach => (
-          <div key={ach.id} className="text-[10px] px-1 py-0.5 rounded bg-yellow-100 text-yellow-800 border border-yellow-200 truncate flex items-center gap-1" title={ach.title}>
-            <span>{ach.badge}</span> {ach.title}
-          </div>
-        ))}
+      <div className="grid grid-cols-7 auto-rows-fr border-l border-t border-gray-200">
+        {emptyDays.map((_, i) => <div key={`empty-${i}`} className="min-h-[80px] bg-gray-50/30 border-b border-r border-gray-100"></div>)}
+        {days}
+      </div>
+    );
+  };
 
-        {/* Resources */}
-        {(filter === CalendarFilter.ALL || filter === CalendarFilter.RESOURCES) && dayResources.map(res => (
-          <div key={res.id} className="text-[10px] px-1 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 truncate flex items-center gap-1" title={`Resource: ${res.title}`}>
-            {res.type === ResourceType.LINK ? <LinkIcon size={8} /> : <FileText size={8} />}
-            {res.title}
-          </div>
-        ))}
+  const renderSelectedDateDetails = () => {
+    if (!selectedDate) return <p className="text-gray-500 text-center mt-10">Select a date to view details.</p>;
+
+    const dateTasks = tasks.filter(t => t.date === selectedDate);
+    const dateLogs = allLogs.filter(l => l.date === selectedDate);
+    const dateResources = resources.filter(r => r.date === selectedDate);
+    const dateAchievements = MOCK_ACHIEVEMENTS.filter(a => a.date === selectedDate);
+
+    return (
+      <div className="space-y-6">
+        <h3 className="text-lg font-bold text-gray-800 border-b border-gray-200 pb-2">
+          {new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+        </h3>
 
         {/* Tasks */}
-        {(filter === CalendarFilter.ALL || filter === CalendarFilter.TASKS) && dayTasks.map(task => (
-          <div 
-            key={task.id} 
-            className={`text-[10px] px-1 py-0.5 rounded border truncate ${task.status === 'DONE' ? 'bg-green-50 text-green-700 border-green-200 line-through' : 'bg-blue-50 text-blue-700 border-blue-200'}`}
-            title={task.title}
-          >
-            {task.title}
+        {(filter === CalendarFilter.ALL || filter === CalendarFilter.TASKS) && (
+          <div>
+            <h4 className="text-sm font-bold text-gray-600 mb-2 uppercase tracking-wider">Tasks</h4>
+            {dateTasks.length === 0 ? <p className="text-xs text-gray-400 italic">No tasks for this day.</p> : (
+              <div className="space-y-2">
+                {dateTasks.map(task => (
+                  <div key={task.id} className="bg-white border border-gray-200 p-3 rounded-md shadow-sm">
+                    <div className="flex justify-between items-start">
+                      <h5 className="text-sm font-medium text-gray-800">{task.title}</h5>
+                      <span className="text-[10px] px-2 py-0.5 rounded text-white" style={{ backgroundColor: SUBJECT_COLORS[task.subject] }}>{task.subject}</span>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">{task.status.replace('_', ' ')}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-        ))}
+        )}
 
         {/* Time Logs */}
-        {(filter === CalendarFilter.ALL || filter === CalendarFilter.TIME_LOGS) && dayLogs.map(log => (
-          <div 
-            key={log.id} 
-            className="text-[10px] px-1 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200 truncate flex items-center"
-            title={`${log.durationMinutes}m - ${log.description}`}
-            style={{borderLeftColor: SUBJECT_COLORS[log.subject], borderLeftWidth: '3px'}}
-          >
-            {log.durationMinutes}m {log.subject}
+        {(filter === CalendarFilter.ALL || filter === CalendarFilter.TIME_LOGS) && (
+          <div>
+            <h4 className="text-sm font-bold text-gray-600 mb-2 uppercase tracking-wider">Time Logs</h4>
+            {dateLogs.length === 0 ? <p className="text-xs text-gray-400 italic">No time logged.</p> : (
+              <div className="space-y-2">
+                {dateLogs.map(log => (
+                  <div key={log.id} className="flex items-center justify-between text-sm bg-gray-50 p-2 rounded">
+                    <span className="text-gray-700">{log.description}</span>
+                    <span className="font-bold text-blue-600">{log.durationMinutes}m</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-        ))}
+        )}
       </div>
     );
   };
 
   return (
-    <div className="p-4 md:p-8 h-full flex flex-col">
-      <header className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-800">Preparation Calendar</h2>
-          <p className="text-gray-500">Track your daily study habits and milestones.</p>
-        </div>
-
-        <div className="flex items-center space-x-4 bg-white p-2 rounded-lg shadow-sm border border-gray-200 self-start md:self-auto">
-          <div className="flex items-center space-x-2">
-            <button onClick={handlePrevMonth} className="p-1 hover:bg-gray-100 rounded text-gray-600">
-              <ChevronLeft size={20} />
-            </button>
-            <span className="font-semibold text-gray-800 w-32 text-center select-none">
-              {monthNames[month]} {year}
-            </span>
-            <button onClick={handleNextMonth} className="p-1 hover:bg-gray-100 rounded text-gray-600">
-              <ChevronRight size={20} />
-            </button>
-          </div>
-          
-          <div className="h-6 w-px bg-gray-300 mx-2"></div>
-
-          <div className="flex items-center space-x-2 relative">
-            <Filter size={16} className="text-gray-500" />
-            <select 
-              value={filter}
-              onChange={(e) => setFilter(e.target.value as CalendarFilter)}
-              className="text-sm font-medium text-gray-700 bg-transparent focus:outline-none cursor-pointer max-w-[100px]"
-            >
-              {Object.values(CalendarFilter).map(f => (
-                <option key={f} value={f}>{f}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-      </header>
-
+    <div className="flex h-full animate-fade-in bg-white">
       {/* Calendar Grid */}
-      <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col overflow-hidden">
-        {/* Days Header */}
-        <div className="grid grid-cols-7 border-b border-gray-200 bg-gray-50 rounded-t-lg">
+      <div className="flex-1 p-6 overflow-y-auto flex flex-col">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">
+            {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+          </h2>
+          <div className="flex gap-2">
+            <button onClick={handlePrevMonth} className="p-2 hover:bg-gray-100 rounded-full"><ChevronLeft size={20} /></button>
+            <button onClick={handleNextMonth} className="p-2 hover:bg-gray-100 rounded-full"><ChevronRight size={20} /></button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-7 bg-gray-50 border-b border-gray-200">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <div key={day} className="py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <div key={day} className="p-3 text-center text-xs font-bold text-gray-500 uppercase">
               {day}
             </div>
           ))}
         </div>
-        
-        {/* Days Grid */}
-        <div className="grid grid-cols-7 flex-1 auto-rows-fr overflow-y-auto">
-          {days.map((day, index) => {
-            if (day === null) {
-              return <div key={`empty-${index}`} className="bg-gray-50/50 border-b border-r border-gray-100 min-h-[80px] md:min-h-[120px]"></div>;
-            }
-            const isToday = day === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear();
-            
-            return (
-              <div key={day} className={`border-b border-r border-gray-100 p-1 md:p-2 min-h-[80px] md:min-h-[120px] transition-colors hover:bg-gray-50 ${isToday ? 'bg-blue-50/30' : ''}`}>
-                <div className="flex items-center justify-between">
-                  <span className={`text-sm font-medium w-6 h-6 flex items-center justify-center rounded-full ${isToday ? 'bg-blue-600 text-white' : 'text-gray-700'}`}>
-                    {day}
-                  </span>
-                </div>
-                {renderDayContent(day)}
-              </div>
-            );
-          })}
+        <div className="flex-1 overflow-y-auto">
+          {renderCalendarGrid()}
         </div>
+      </div>
+
+      {/* Sidebar Details */}
+      <div className="w-80 border-l border-gray-200 bg-white p-6 overflow-y-auto">
+        <div className="mb-6">
+          <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Filter View</label>
+          <div className="flex flex-wrap gap-2">
+            {Object.values(CalendarFilter).map(f => (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${filter === f ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}`}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+        </div>
+        {renderSelectedDateDetails()}
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import { db } from '../db';
 
 const Profile: React.FC = () => {
   // Fetch user profile from DB
-  const userProfile = useLiveQuery(() => db.userProfile.get('current'));
+  const userProfile = useLiveQuery(() => db.userProfile.get('Schamala'));
 
   // Fetch diary entries from DB
   const entries = useLiveQuery(() => db.diary.orderBy('date').reverse().toArray()) || [];
@@ -18,6 +18,7 @@ const Profile: React.FC = () => {
     if (!newEntry.trim()) return;
     const entry: DiaryEntry = {
       id: Date.now(),
+      userId: 'Schamala',
       date: new Date().toISOString().split('T')[0],
       content: newEntry
     };

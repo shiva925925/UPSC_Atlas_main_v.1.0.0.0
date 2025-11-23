@@ -18,7 +18,7 @@ const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Fetch user profile
-  const userProfile = useLiveQuery(() => db.userProfile.get('current'));
+  const userProfile = useLiveQuery(() => db.userProfile.get('Schamala'));
 
   // Session Tracking
   useEffect(() => {
@@ -26,7 +26,7 @@ const App: React.FC = () => {
 
     const interval = setInterval(async () => {
       // Increment total usage by 1 minute every 60 seconds
-      await db.userProfile.where('id').equals('current').modify(user => {
+      await db.userProfile.where('id').equals('Schamala').modify(user => {
         user.totalAppUsageMinutes = (user.totalAppUsageMinutes || 0) + 1;
       });
     }, 60000);

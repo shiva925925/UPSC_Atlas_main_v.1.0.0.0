@@ -1,123 +1,110 @@
 import React from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
-import { MOCK_TASKS, MOCK_TIME_LOGS, SUBJECT_COLORS } from '../constants';
-import { TaskStatus, Subject } from '../types';
-import { CheckCircle2, Clock, Target, TrendingUp } from 'lucide-react';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { db } from '../db';
+import { SUBJECT_COLORS } from '../constants';
+import { Clock, BookOpen, Target, CheckSquare } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
-  // Calculate Stats
-  const completedTasks = MOCK_TASKS.filter(t => t.status === TaskStatus.DONE).length;
-  const totalTasks = MOCK_TASKS.length;
-  const completionRate = Math.round((completedTasks / totalTasks) * 100);
-  
-  const totalHours = Math.round(MOCK_TIME_LOGS.reduce((acc, log) => acc + log.durationMinutes, 0) / 60);
-  
-  // Data for Subject Distribution (Pie Chart)
-  const subjectData = Object.values(Subject).map(subject => {
-    const minutes = MOCK_TIME_LOGS
-      .filter(log => log.subject === subject)
-      .reduce((acc, log) => acc + log.durationMinutes, 0);
-    return { name: subject, value: minutes };
-  }).filter(d => d.value > 0);
+  const tasks = useLiveQuery(() => db.tasks.toArray()) || [];
+  const userProfile = useLiveQuery(() => db.userProfile.get('Schamala'));
 
-  // Data for Activity (Bar Chart - Mocked for visual)
-  const activityData = [
-    { name: 'Mon', hours: 4 },
-    { name: 'Tue', hours: 6 },
-    { name: 'Wed', hours: 5.5 },
-    { name: 'Thu', hours: 8 },
-    { name: 'Fri', hours: 7 },
-    { name: 'Sat', hours: 9 },
-    { name: 'Sun', hours: 3 },
-  ];
+  // Calculate aggregate stats from nested logs
+  const allLogs = tasks.flatMap(t => t.logs || []);
+  const totalMinutes = allLogs.reduce((acc, log) => acc + log.durationMinutes, 0);
+  const totalHours = Math.round(totalMinutes / 60);
+
+  const completedTasks = tasks.filter(t => t.status === 'DONE').length;
+  const inProgressTasks = tasks.filter(t => t.status === 'IN_PROGRESS').length;
 
   return (
-    <div className="p-4 md:p-8 space-y-8 animate-fade-in">
-      <header className="mb-6 md:mb-8">
-        <h2 className="text-2xl font-bold text-gray-800">Dashboard</h2>
-        <p className="text-gray-500">Overview of your preparation progress.</p>
+    <div className="p-6 animate-fade-in">
+      <header className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-800">Welcome back, {userProfile?.name || 'Aspirant'}!</h1>
+        <p className="text-gray-600 mt-2">You've studied for <span className="font-bold text-blue-600">{totalHours} hours</span> total. Keep pushing!</p>
       </header>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-medium text-gray-500">Tasks Completed</h3>
-            <CheckCircle2 className="text-green-500" size={20} />
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+          <div className="p-3 bg-blue-100 text-blue-600 rounded-lg">
+            <Clock size={24} />
           </div>
-          <div className="text-3xl font-bold text-gray-800">{completedTasks}/{totalTasks}</div>
-          <p className="text-xs text-green-600 mt-2 font-medium">{completionRate}% Completion Rate</p>
+          <div>
+            <p className="text-sm text-gray-500">Total Study Time</p>
+            <h3 className="text-2xl font-bold text-gray-800">{totalHours}h</h3>
+          </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-medium text-gray-500">Hours Studied</h3>
-            <Clock className="text-blue-500" size={20} />
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+          <div className="p-3 bg-green-100 text-green-600 rounded-lg">
+            <CheckSquare size={24} />
           </div>
-          <div className="text-3xl font-bold text-gray-800">{totalHours}h</div>
-          <p className="text-xs text-gray-500 mt-2">Last 7 Days</p>
+          <div>
+            <p className="text-sm text-gray-500">Tasks Completed</p>
+            <h3 className="text-2xl font-bold text-gray-800">{completedTasks}</h3>
+          </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-medium text-gray-500">Current Streak</h3>
-            <TrendingUp className="text-orange-500" size={20} />
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+          <div className="p-3 bg-yellow-100 text-yellow-600 rounded-lg">
+            <BookOpen size={24} />
           </div>
-          <div className="text-3xl font-bold text-gray-800">14 Days</div>
-          <p className="text-xs text-orange-600 mt-2 font-medium">Keep it up!</p>
+          <div>
+            <p className="text-sm text-gray-500">In Progress</p>
+            <h3 className="text-2xl font-bold text-gray-800">{inProgressTasks}</h3>
+          </div>
         </div>
 
-         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-medium text-gray-500">Focus Subject</h3>
-            <Target className="text-purple-500" size={20} />
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+          <div className="p-3 bg-purple-100 text-purple-600 rounded-lg">
+            <Target size={24} />
           </div>
-          <div className="text-xl font-bold text-gray-800 truncate">Polity</div>
-          <p className="text-xs text-gray-500 mt-2">Most time logged</p>
+          <div>
+            <p className="text-sm text-gray-500">Target Year</p>
+            <h3 className="text-2xl font-bold text-gray-800">{userProfile?.targetYear || 2025}</h3>
+          </div>
         </div>
       </div>
 
-      {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        {/* Subject Breakdown */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-800 mb-6">Subject Distribution (Time)</h3>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={subjectData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={80}
-                  paddingAngle={5}
-                  dataKey="value"
-                >
-                  {subjectData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={SUBJECT_COLORS[entry.name as Subject] || '#ccc'} />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend layout="vertical" verticalAlign="middle" align="right" />
-              </PieChart>
-            </ResponsiveContainer>
+      {/* Recent Activity & Charts Placeholder */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h3 className="text-lg font-bold text-gray-800 mb-4">Subject Distribution</h3>
+          <div className="h-64 flex items-end justify-around gap-2">
+            {/* Simple visual placeholder for chart */}
+            {Object.entries(SUBJECT_COLORS).map(([subject, color]) => {
+              const subjectLogs = allLogs.filter(l => l.subject === subject);
+              const subjectMinutes = subjectLogs.reduce((acc, l) => acc + l.durationMinutes, 0);
+              const height = totalMinutes > 0 ? (subjectMinutes / totalMinutes) * 100 : 0;
+
+              if (height === 0) return null;
+
+              return (
+                <div key={subject} className="flex flex-col items-center gap-2 w-full">
+                  <div
+                    className="w-full max-w-[40px] rounded-t-md transition-all duration-500"
+                    style={{ height: `${height}%`, backgroundColor: color, minHeight: '4px' }}
+                  ></div>
+                  <span className="text-[10px] text-gray-500 truncate w-full text-center">{subject.split(' ')[0]}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Weekly Activity */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-800 mb-6">Daily Study Hours</h3>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={activityData}>
-                <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                <YAxis axisLine={false} tickLine={false} />
-                <Tooltip cursor={{fill: '#f4f5f7'}} />
-                <Bar dataKey="hours" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={30} />
-              </BarChart>
-            </ResponsiveContainer>
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h3 className="text-lg font-bold text-gray-800 mb-4">Recent Logs</h3>
+          <div className="space-y-4">
+            {allLogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5).map(log => (
+              <div key={log.id} className="flex items-center gap-3 pb-3 border-b border-gray-50 last:border-0">
+                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: SUBJECT_COLORS[log.subject] }}></div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-800">{log.description}</p>
+                  <p className="text-xs text-gray-500">{log.date} • {log.durationMinutes}m</p>
+                </div>
+              </div>
+            ))}
+            {allLogs.length === 0 && <p className="text-sm text-gray-400">No study time logged yet.</p>}
           </div>
         </div>
       </div>

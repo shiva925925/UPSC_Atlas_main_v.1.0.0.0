@@ -32,6 +32,7 @@ export interface AcceptanceCriterion {
 
 export interface Task {
   id: string;
+  userId: string; // Added userId
   title: string;
   date: string; // ISO YYYY-MM-DD
   status: TaskStatus;
@@ -39,11 +40,13 @@ export interface Task {
   description?: string; // The "Story"
   acceptanceCriteria?: AcceptanceCriterion[]; // The checklist
   priority?: 'High' | 'Medium' | 'Low';
+  logs?: TimeLog[]; // Nested logs
+  evidences?: Evidence[]; // Nested evidences
 }
 
 export interface TimeLog {
   id: string;
-  taskId?: string; // Link log to a specific task
+  // taskId removed as it is nested
   date: string; // ISO YYYY-MM-DD
   durationMinutes: number;
   subject: Subject;
@@ -58,7 +61,7 @@ export enum EvidenceType {
 
 export interface Evidence {
   id: string;
-  taskId: string;
+  // taskId removed as it is nested
   type: EvidenceType;
   content: string; // URL or text note
   timestamp: string;
@@ -66,6 +69,7 @@ export interface Evidence {
 
 export interface Achievement {
   id: string;
+  userId: string;
   date: string; // ISO YYYY-MM-DD
   title: string;
   badge: string;
@@ -79,6 +83,7 @@ export enum ResourceType {
 
 export interface Resource {
   id: string;
+  userId: string; // Added userId
   title: string;
   type: ResourceType;
   url: string;
@@ -88,6 +93,7 @@ export interface Resource {
 }
 
 export interface UserProfile {
+  id: string; // Explicitly added for DB key
   name: string;
   targetYear: number;
   streak: number;
@@ -98,6 +104,7 @@ export interface UserProfile {
 
 export interface DiaryEntry {
   id: number;
+  userId: string; // Added userId
   date: string;
   content: string;
 }

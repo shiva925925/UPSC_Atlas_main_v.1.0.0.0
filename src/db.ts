@@ -1,24 +1,21 @@
 import Dexie, { Table } from 'dexie';
 import { Task, TimeLog, Resource, UserProfile, Subject, TaskStatus, ResourceType, DiaryEntry } from './types';
-import { MOCK_TASKS, MOCK_TIME_LOGS, MOCK_RESOURCES, MOCK_USER } from './constants';
+import { MOCK_TASKS, MOCK_RESOURCES, MOCK_USER } from './constants';
 
 export class UpscDatabase extends Dexie {
     tasks!: Table<Task>;
-    logs!: Table<TimeLog>;
+    // logs and evidences are now nested in tasks
     resources!: Table<Resource>;
     userProfile!: Table<UserProfile>;
     diary!: Table<DiaryEntry>;
-    evidences!: Table<Evidence>;
 
     constructor() {
         super('UpscAtlasDB');
-        this.version(3).stores({ // Increment version
-            tasks: 'id, status, subject, date',
-            logs: 'id, taskId, subject, date',
-            resources: 'id, subject, type',
+        this.version(4).stores({ // Increment version
+            tasks: 'id, userId, status, subject, date',
+            resources: 'id, userId, subject, type',
             userProfile: 'id',
-            diary: 'id, date',
-            evidences: 'id, taskId, type' // New table
+            diary: 'id, userId, date'
         });
     }
 }
@@ -27,9 +24,12 @@ export const db = new UpscDatabase();
 
 // Initialize with mock data if empty
 db.on('populate', async () => {
+    // MOCK_TASKS already has nested logs/evidences and userId
     await db.tasks.bulkAdd(MOCK_TASKS);
-    await db.logs.bulkAdd(MOCK_TIME_LOGS);
+
+    // MOCK_RESOURCES already has userId
     await db.resources.bulkAdd(MOCK_RESOURCES);
-    // Add user profile with a fixed key 'current'
-    await db.userProfile.add({ ...MOCK_USER, id: 'current', totalAppUsageMinutes: 0 } as any);
+
+    // Add user profile with unique ID 'Schamala'
+    await db.userProfile.add({ ...MOCK_USER, id: 'Schamala', totalAppUsageMinutes: 0 } as any);
 });

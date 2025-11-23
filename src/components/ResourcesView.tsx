@@ -33,6 +33,7 @@ const ResourcesView: React.FC = () => {
         // Map the simple JSON to full Resource objects
         const mapped: Resource[] = data.map((item: any) => ({
           id: item.id,
+          userId: 'Schamala',
           title: item.title,
           type: ResourceType.PDF,
           subject: item.subject as Subject || Subject.SYLLABUS,
@@ -81,6 +82,7 @@ const ResourcesView: React.FC = () => {
       // Add new
       const newResource: Resource = {
         id: Math.random().toString(36).substr(2, 9),
+        userId: 'Schamala',
         title: newTitle,
         type: newType,
         subject: newSubject,
