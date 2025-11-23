@@ -25,12 +25,12 @@ const ResourcesView: React.FC = () => {
   const [newDate, setNewDate] = useState('');
   const [newDescription, setNewDescription] = useState('');
 
-  // Load static library on mount
+  // Load static library on mount - AUTO-SCANS public/library folder
   useEffect(() => {
-    fetch('/library/index.json')
+    fetch('/api/library')
       .then(res => res.json())
       .then(data => {
-        // Map the simple JSON to full Resource objects
+        // Map the API response to full Resource objects
         const mapped: Resource[] = data.map((item: any) => ({
           id: item.id,
           userId: 'Schamala',
@@ -42,7 +42,7 @@ const ResourcesView: React.FC = () => {
         }));
         setLibraryResources(mapped);
       })
-      .catch(err => console.error("Failed to load library index:", err));
+      .catch(err => console.error("Failed to load library:", err));
   }, []);
 
   const allResources = [...libraryResources, ...dbResources];
@@ -276,7 +276,7 @@ const ResourcesView: React.FC = () => {
           </div>
         ) : (
           filteredResources.map(resource => {
-            // Check if it's a user-created resource (not from library json which usually has 'lib_' prefix or is not in db)
+            // Check if it's a user-created resource (not from library - 'lib_' or 'lib_auto_' prefix)
             const isUserResource = !resource.id.startsWith('lib_');
 
             return (

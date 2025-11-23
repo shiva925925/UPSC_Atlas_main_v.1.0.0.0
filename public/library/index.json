@@ -1,9 +1,23 @@
 [
     {
-        "id": "lib_2",
-        "title": "Upsc Mains Syllabus",
+        "id": "lib_1",
+        "title": "UPSC CSE Mains Syllabus",
         "filename": "UPSC_CSE_Mains_Syllabus.pdf",
-        "subject": "SYLLABUS",
-        "description": "Detailed syllabus for UPSC CSE Mains."
+        "subject": "UPSC Syllabus",
+        "description": "Official detailed syllabus for UPSC CSE Mains examination."
+    },
+    {
+        "id": "lib_2",
+        "title": "UPSC CSE Mains Syllabus (Alternative)",
+        "filename": "UPSC_CSE_Mains_Syllabus-1.pdf",
+        "subject": "UPSC Syllabus",
+        "description": "Alternate copy of UPSC CSE Mains syllabus."
+    },
+    {
+        "id": "lib_3",
+        "title": "Mains PYQs GS IV (2013-2025)",
+        "filename": "Mains PYQs GS IV (2013-2025).pdf",
+        "subject": "Ethics",
+        "description": "Previous Year Questions for General Studies Paper IV covering years 2013 to 2025."
     }
 ]
