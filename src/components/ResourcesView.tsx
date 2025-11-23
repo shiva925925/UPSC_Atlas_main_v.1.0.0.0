@@ -1,0 +1,291 @@
+import React, { useState, useEffect } from 'react';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { db } from '../db';
+import { SUBJECT_COLORS } from '../constants';
+import { Resource, ResourceType, Subject } from '../types';
+import { FileText, Link as LinkIcon, Video, Plus, ExternalLink, Search, Filter, Calendar as CalendarIcon, X } from 'lucide-react';
+
+const ResourcesView: React.FC = () => {
+  // Fetch dynamic resources from DB
+  const dbResources = useLiveQuery(() => db.resources.toArray()) || [];
+
+  // State for static library resources
+  const [libraryResources, setLibraryResources] = useState<Resource[]>([]);
+
+  const [filterSubject, setFilterSubject] = useState<Subject | 'ALL'>('ALL');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isAdding, setIsAdding] = useState(false);
+
+  // New Resource Form State
+  const [newTitle, setNewTitle] = useState('');
+  const [newType, setNewType] = useState<ResourceType>(ResourceType.LINK);
+  const [newSubject, setNewSubject] = useState<Subject>(Subject.POLITY);
+  const [newUrl, setNewUrl] = useState('');
+  const [newDate, setNewDate] = useState('');
+  const [newDescription, setNewDescription] = useState('');
+
+  // Load static library on mount
+  useEffect(() => {
+    fetch('/library/index.json')
+      .then(res => res.json())
+      .then(data => {
+        // Map the simple JSON to full Resource objects
+        const mapped: Resource[] = data.map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          type: ResourceType.PDF,
+          subject: item.subject as Subject || Subject.SYLLABUS,
+          url: `/library/${item.filename}`,
+          description: item.description
+        }));
+        setLibraryResources(mapped);
+      })
+      .catch(err => console.error("Failed to load library index:", err));
+  }, []);
+
+  const allResources = [...libraryResources, ...dbResources];
+
+  const filteredResources = allResources.filter(r => {
+    const matchesSubject = filterSubject === 'ALL' || r.subject === filterSubject;
+    const matchesSearch = r.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      r.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesSubject && matchesSearch;
+  });
+
+  const handleAddResource = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const newResource: Resource = {
+      id: Math.random().toString(36).substr(2, 9),
+      title: newTitle,
+      type: newType,
+      subject: newSubject,
+      url: newUrl,
+      date: newDate || undefined,
+      description: newDescription
+    };
+
+    await db.resources.add(newResource);
+    setIsAdding(false);
+    // Reset form
+    setNewTitle('');
+    setNewType(ResourceType.LINK);
+    setNewUrl('');
+    setNewDate('');
+    setNewDescription('');
+  };
+
+  const getIcon = (type: ResourceType) => {
+    switch (type) {
+      case ResourceType.PDF: return <FileText size={20} className="text-red-500" />;
+      case ResourceType.LINK: return <LinkIcon size={20} className="text-blue-500" />;
+      case ResourceType.VIDEO: return <Video size={20} className="text-purple-500" />;
+    }
+  };
+
+  return (
+    <div className="p-4 md:p-8 h-full flex flex-col animate-fade-in">
+      <header className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">Study Library</h2>
+          <p className="text-gray-500">Centralize your PDFs, links, and study materials.</p>
+        </div>
+
+        <button
+          onClick={() => setIsAdding(true)}
+          className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors w-full md:w-auto justify-center"
+        >
+          <Plus size={18} />
+          <span>Add Resource</span>
+        </button>
+      </header>
+
+      {/* Filters */}
+      <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
+          <input
+            type="text"
+            placeholder="Search resources..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+          />
+        </div>
+
+        <div className="flex items-center space-x-2 bg-white border border-gray-300 px-3 py-2 rounded-md">
+          <Filter size={18} className="text-gray-500" />
+          <select
+            value={filterSubject}
+            onChange={(e) => setFilterSubject(e.target.value as Subject | 'ALL')}
+            className="bg-transparent outline-none text-sm text-gray-700 font-medium cursor-pointer w-full md:w-auto"
+          >
+            <option value="ALL">All Subjects</option>
+            {Object.values(Subject).map(s => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Modal for Adding Resource */}
+      {isAdding && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 animate-scale-in max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold text-gray-800">Add New Resource</h3>
+              <button onClick={() => setIsAdding(false)} className="text-gray-500 hover:text-gray-700">
+                <X size={20} />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddResource} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <input
+                  required
+                  type="text"
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                  placeholder="e.g. Fundamental Rights Notes"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                  <select
+                    value={newType}
+                    onChange={(e) => setNewType(e.target.value as ResourceType)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                  >
+                    {Object.values(ResourceType).map(t => (
+                      <option key={t} value={t}>{t}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                  <select
+                    value={newSubject}
+                    onChange={(e) => setNewSubject(e.target.value as Subject)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                  >
+                    {Object.values(Subject).map(s => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">URL / File Link</label>
+                <input
+                  required
+                  type="text"
+                  value={newUrl}
+                  onChange={(e) => setNewUrl(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                  placeholder="https://..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Associate Date (Optional)</label>
+                <input
+                  type="date"
+                  value={newDate}
+                  onChange={(e) => setNewDate(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea
+                  value={newDescription}
+                  onChange={(e) => setNewDescription(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none h-20 resize-none"
+                  placeholder="Brief description..."
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 mt-6">
+                <button
+                  type="button"
+                  onClick={() => setIsAdding(false)}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium"
+                >
+                  Save Resource
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Resources Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto pb-4 custom-scrollbar">
+        {filteredResources.length === 0 ? (
+          <div className="col-span-full text-center py-12 text-gray-500">
+            <p>No resources found matching your criteria.</p>
+          </div>
+        ) : (
+          filteredResources.map(resource => (
+            <div key={resource.id} className="bg-white rounded-lg border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors">
+                    {getIcon(resource.type)}
+                  </div>
+                  <div>
+                    <span
+                      className="text-xs font-bold px-2 py-0.5 rounded-full text-white"
+                      style={{ backgroundColor: SUBJECT_COLORS[resource.subject] }}
+                    >
+                      {resource.subject}
+                    </span>
+                  </div>
+                </div>
+                <a
+                  href={resource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-blue-600 transition-colors"
+                >
+                  <ExternalLink size={18} />
+                </a>
+              </div>
+
+              <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2">{resource.title}</h3>
+
+              <p className="text-sm text-gray-500 mb-4 flex-1 line-clamp-3">
+                {resource.description || 'No description provided.'}
+              </p>
+
+              <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                <div className="flex items-center gap-1">
+                  {resource.date && (
+                    <>
+                      <CalendarIcon size={14} />
+                      <span>{resource.date}</span>
+                    </>
+                  )}
+                </div>
+                <span className="bg-gray-100 px-2 py-1 rounded text-gray-600 font-medium">{resource.type}</span>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default ResourcesView;
