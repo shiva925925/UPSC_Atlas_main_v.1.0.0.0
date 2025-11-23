@@ -1,12 +1,5 @@
 [
     {
-        "id": "lib_1",
-        "title": "UPSC Syllabus Official",
-        "filename": "syllabus.pdf",
-        "subject": "SYLLABUS",
-        "description": "Official notification and syllabus breakdown."
-    },
-    {
         "id": "lib_2",
         "title": "Upsc Mains Syllabus",
         "filename": "UPSC_CSE_Mains_Syllabus.pdf",

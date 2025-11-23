@@ -3,7 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 import { SUBJECT_COLORS } from '../constants';
 import { Resource, ResourceType, Subject } from '../types';
-import { FileText, Link as LinkIcon, Video, Plus, ExternalLink, Search, Filter, Calendar as CalendarIcon, X } from 'lucide-react';
+import { FileText, Link as LinkIcon, Video, Plus, ExternalLink, Search, Filter, Calendar as CalendarIcon, X, Trash2, Edit2 } from 'lucide-react';
 
 const ResourcesView: React.FC = () => {
   // Fetch dynamic resources from DB
@@ -15,6 +15,7 @@ const ResourcesView: React.FC = () => {
   const [filterSubject, setFilterSubject] = useState<Subject | 'ALL'>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [isAdding, setIsAdding] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   // New Resource Form State
   const [newTitle, setNewTitle] = useState('');
@@ -52,26 +53,61 @@ const ResourcesView: React.FC = () => {
     return matchesSubject && matchesSearch;
   });
 
-  const handleAddResource = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const newResource: Resource = {
-      id: Math.random().toString(36).substr(2, 9),
-      title: newTitle,
-      type: newType,
-      subject: newSubject,
-      url: newUrl,
-      date: newDate || undefined,
-      description: newDescription
-    };
-
-    await db.resources.add(newResource);
-    setIsAdding(false);
-    // Reset form
+  const resetForm = () => {
     setNewTitle('');
     setNewType(ResourceType.LINK);
+    setNewSubject(Subject.POLITY);
     setNewUrl('');
     setNewDate('');
     setNewDescription('');
+    setEditingId(null);
+    setIsAdding(false);
+  };
+
+  const handleAddResource = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (editingId) {
+      // Update existing
+      await db.resources.update(editingId, {
+        title: newTitle,
+        type: newType,
+        subject: newSubject,
+        url: newUrl,
+        date: newDate || undefined,
+        description: newDescription
+      });
+    } else {
+      // Add new
+      const newResource: Resource = {
+        id: Math.random().toString(36).substr(2, 9),
+        title: newTitle,
+        type: newType,
+        subject: newSubject,
+        url: newUrl,
+        date: newDate || undefined,
+        description: newDescription
+      };
+      await db.resources.add(newResource);
+    }
+    resetForm();
+  };
+
+  const handleEdit = (resource: Resource) => {
+    setNewTitle(resource.title);
+    setNewType(resource.type);
+    setNewSubject(resource.subject);
+    setNewUrl(resource.url);
+    setNewDate(resource.date || '');
+    setNewDescription(resource.description || '');
+    setEditingId(resource.id);
+    setIsAdding(true);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this resource?')) {
+      await db.resources.delete(id);
+    }
   };
 
   const getIcon = (type: ResourceType) => {
@@ -91,7 +127,7 @@ const ResourcesView: React.FC = () => {
         </div>
 
         <button
-          onClick={() => setIsAdding(true)}
+          onClick={() => { resetForm(); setIsAdding(true); }}
           className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors w-full md:w-auto justify-center"
         >
           <Plus size={18} />
@@ -127,13 +163,13 @@ const ResourcesView: React.FC = () => {
         </div>
       </div>
 
-      {/* Modal for Adding Resource */}
+      {/* Modal for Adding/Editing Resource */}
       {isAdding && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 animate-scale-in max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold text-gray-800">Add New Resource</h3>
-              <button onClick={() => setIsAdding(false)} className="text-gray-500 hover:text-gray-700">
+              <h3 className="text-lg font-bold text-gray-800">{editingId ? 'Edit Resource' : 'Add New Resource'}</h3>
+              <button onClick={resetForm} className="text-gray-500 hover:text-gray-700">
                 <X size={20} />
               </button>
             </div>
@@ -213,7 +249,7 @@ const ResourcesView: React.FC = () => {
               <div className="flex justify-end gap-3 mt-6">
                 <button
                   type="button"
-                  onClick={() => setIsAdding(false)}
+                  onClick={resetForm}
                   className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium"
                 >
                   Cancel
@@ -222,7 +258,7 @@ const ResourcesView: React.FC = () => {
                   type="submit"
                   className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium"
                 >
-                  Save Resource
+                  {editingId ? 'Update Resource' : 'Save Resource'}
                 </button>
               </div>
             </form>
@@ -237,51 +273,77 @@ const ResourcesView: React.FC = () => {
             <p>No resources found matching your criteria.</p>
           </div>
         ) : (
-          filteredResources.map(resource => (
-            <div key={resource.id} className="bg-white rounded-lg border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors">
-                    {getIcon(resource.type)}
+          filteredResources.map(resource => {
+            // Check if it's a user-created resource (not from library json which usually has 'lib_' prefix or is not in db)
+            const isUserResource = !resource.id.startsWith('lib_');
+
+            return (
+              <div key={resource.id} className="bg-white rounded-lg border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors">
+                      {getIcon(resource.type)}
+                    </div>
+                    <div>
+                      <span
+                        className="text-xs font-bold px-2 py-0.5 rounded-full text-white"
+                        style={{ backgroundColor: SUBJECT_COLORS[resource.subject] }}
+                      >
+                        {resource.subject}
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <span
-                      className="text-xs font-bold px-2 py-0.5 rounded-full text-white"
-                      style={{ backgroundColor: SUBJECT_COLORS[resource.subject] }}
+                  <div className="flex items-center gap-2">
+                    {isUserResource && (
+                      <>
+                        <button
+                          onClick={() => handleEdit(resource)}
+                          className="text-gray-400 hover:text-blue-600 transition-colors"
+                          title="Edit"
+                        >
+                          <Edit2 size={16} />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(resource.id)}
+                          className="text-gray-400 hover:text-red-500 transition-colors"
+                          title="Delete"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </>
+                    )}
+                    <a
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-blue-600 transition-colors"
+                      title="Open Link"
                     >
-                      {resource.subject}
-                    </span>
+                      <ExternalLink size={18} />
+                    </a>
                   </div>
                 </div>
-                <a
-                  href={resource.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-blue-600 transition-colors"
-                >
-                  <ExternalLink size={18} />
-                </a>
-              </div>
 
-              <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2">{resource.title}</h3>
+                <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2">{resource.title}</h3>
 
-              <p className="text-sm text-gray-500 mb-4 flex-1 line-clamp-3">
-                {resource.description || 'No description provided.'}
-              </p>
+                <p className="text-sm text-gray-500 mb-4 flex-1 line-clamp-3">
+                  {resource.description || 'No description provided.'}
+                </p>
 
-              <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-                <div className="flex items-center gap-1">
-                  {resource.date && (
-                    <>
-                      <CalendarIcon size={14} />
-                      <span>{resource.date}</span>
-                    </>
-                  )}
+                <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                  <div className="flex items-center gap-1">
+                    {resource.date && (
+                      <>
+                        <CalendarIcon size={14} />
+                        <span>{resource.date}</span>
+                      </>
+                    )}
+                  </div>
+                  <span className="bg-gray-100 px-2 py-1 rounded text-gray-600 font-medium">{resource.type}</span>
                 </div>
-                <span className="bg-gray-100 px-2 py-1 rounded text-gray-600 font-medium">{resource.type}</span>
               </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
     </div>

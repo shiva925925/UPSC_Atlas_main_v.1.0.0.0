@@ -93,6 +93,13 @@ export interface UserProfile {
   streak: number;
   hoursLoggedTotal: number;
   avatarUrl: string;
+  totalAppUsageMinutes?: number; // New field for session tracking
+}
+
+export interface DiaryEntry {
+  id: number;
+  date: string;
+  content: string;
 }
 
 export enum CalendarFilter {
