@@ -3,7 +3,9 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 import { SUBJECT_COLORS } from '../constants';
 import { Task, TaskStatus, Subject, TimeLog, Evidence, EvidenceType } from '../types';
-import { Plus, X, Calendar, Clock, AlertCircle, CheckSquare, Square, Save, Paperclip, Link as LinkIcon, FileText, Trash2, ChevronDown, Filter } from 'lucide-react';
+import { Plus, X, Calendar, Clock, AlertCircle, CheckSquare, Square, Save, Paperclip, Link as LinkIcon, FileText, Trash2, ChevronDown, Filter, Archive, RotateCcw, Ban } from 'lucide-react';
+
+type TabType = 'ACTIVE' | 'ARCHIVED' | 'TRASH';
 
 const TasksView: React.FC = () => {
   // Fetch live data from IndexedDB
@@ -11,6 +13,7 @@ const TasksView: React.FC = () => {
 
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isCreating, setIsCreating] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabType>('ACTIVE');
 
   // Create Task Form State
   const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -41,7 +44,9 @@ const TasksView: React.FC = () => {
       description: newTaskDescription,
       acceptanceCriteria: [],
       logs: [],
-      evidences: []
+      evidences: [],
+      isArchived: false,
+      isDeleted: false
     };
 
     await db.tasks.add(newTask);
@@ -120,8 +125,6 @@ const TasksView: React.FC = () => {
 
     // Update local state
     setSelectedTask({ ...selectedTask, evidences: updatedEvidences });
-
-    setEvidenceContent('');
   };
 
   const handleDeleteEvidence = async (id: string) => {
@@ -138,6 +141,36 @@ const TasksView: React.FC = () => {
     // Update local state
     setSelectedTask({ ...selectedTask, evidences: updatedEvidences });
   };
+
+  const handleDelete = async (id: string) => {
+    if (window.confirm('Are you sure you want to move this task to trash?')) {
+      await db.tasks.update(id, { isDeleted: true, deletedAt: new Date().toISOString() });
+      if (selectedTask?.id === id) setSelectedTask(null);
+    }
+  };
+
+  const handleArchive = async (id: string) => {
+    await db.tasks.update(id, { isArchived: true });
+    if (selectedTask?.id === id) setSelectedTask(null);
+  };
+
+  const handleRestore = async (id: string) => {
+    await db.tasks.update(id, { isArchived: false, isDeleted: false, deletedAt: undefined });
+    if (selectedTask?.id === id) setSelectedTask(null);
+  };
+
+  const handlePermanentDelete = async (id: string) => {
+    if (window.confirm('This action cannot be undone. Delete forever?')) {
+      await db.tasks.delete(id);
+      if (selectedTask?.id === id) setSelectedTask(null);
+    }
+  };
+
+  const filteredTasks = tasks.filter(t => {
+    if (activeTab === 'TRASH') return t.isDeleted;
+    if (activeTab === 'ARCHIVED') return t.isArchived && !t.isDeleted;
+    return !t.isArchived && !t.isDeleted; // ACTIVE
+  });
 
   const calculateProgress = (task: Task) => {
     if (!task.acceptanceCriteria || task.acceptanceCriteria.length === 0) return 0;
@@ -184,6 +217,28 @@ const TasksView: React.FC = () => {
           </div>
         </header>
 
+        {/* Tabs */}
+        <div className="flex border-b border-gray-200 px-6">
+          <button
+            onClick={() => setActiveTab('ACTIVE')}
+            className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${activeTab === 'ACTIVE' ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+          >
+            Active
+          </button>
+          <button
+            onClick={() => setActiveTab('ARCHIVED')}
+            className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${activeTab === 'ARCHIVED' ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+          >
+            Archived
+          </button>
+          <button
+            onClick={() => setActiveTab('TRASH')}
+            className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${activeTab === 'TRASH' ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+          >
+            Trash
+          </button>
+        </div>
+
         {/* Task List Header */}
         <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-500 uppercase tracking-wider">
           <div className="col-span-4">Task</div>
@@ -195,12 +250,12 @@ const TasksView: React.FC = () => {
 
         {/* Task List Body */}
         <div className="flex-1 overflow-y-auto custom-scrollbar">
-          {tasks.length === 0 ? (
+          {filteredTasks.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-gray-400">
-              <p>No tasks found. Create one to get started!</p>
+              <p>No tasks found in {activeTab.toLowerCase()}.</p>
             </div>
           ) : (
-            tasks.map(task => (
+            filteredTasks.map(task => (
               <div
                 key={task.id}
                 onClick={() => setSelectedTask(task)}
@@ -245,10 +300,72 @@ const TasksView: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Due Date */}
-                <div className="col-span-2 flex items-center gap-2 text-sm text-gray-500">
-                  <Calendar size={14} />
-                  <span>{task.date}</span>
+                {/* Due Date & Actions */}
+                <div className="col-span-2 flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <Calendar size={14} />
+                    <span>{task.date}</span>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    {activeTab === 'ACTIVE' && (
+                      <>
+                        {task.status === TaskStatus.DONE && (
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleArchive(task.id); }}
+                            className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded"
+                            title="Archive"
+                          >
+                            <Archive size={16} />
+                          </button>
+                        )}
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleDelete(task.id); }}
+                          className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded"
+                          title="Move to Trash"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </>
+                    )}
+                    {activeTab === 'ARCHIVED' && (
+                      <>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleRestore(task.id); }}
+                          className="p-1.5 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded"
+                          title="Restore"
+                        >
+                          <RotateCcw size={16} />
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleDelete(task.id); }}
+                          className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded"
+                          title="Move to Trash"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </>
+                    )}
+                    {activeTab === 'TRASH' && (
+                      <>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleRestore(task.id); }}
+                          className="p-1.5 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded"
+                          title="Restore"
+                        >
+                          <RotateCcw size={16} />
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handlePermanentDelete(task.id); }}
+                          className="p-1.5 text-gray-400 hover:text-red-700 hover:bg-red-50 rounded"
+                          title="Delete Forever"
+                        >
+                          <Ban size={16} />
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             ))

@@ -42,6 +42,9 @@ export interface Task {
   priority?: 'High' | 'Medium' | 'Low';
   logs?: TimeLog[]; // Nested logs
   evidences?: Evidence[]; // Nested evidences
+  isArchived?: boolean;
+  isDeleted?: boolean;
+  deletedAt?: string; // ISO Date
 }
 
 export interface TimeLog {
@@ -78,7 +81,8 @@ export interface Achievement {
 export enum ResourceType {
   PDF = 'PDF',
   LINK = 'LINK',
-  VIDEO = 'VIDEO'
+  VIDEO = 'VIDEO',
+  IMAGE = 'IMAGE'
 }
 
 export interface Resource {
@@ -90,6 +94,8 @@ export interface Resource {
   subject: Subject;
   date?: string; // ISO YYYY-MM-DD, Optional association with a date
   description?: string;
+  content?: Blob; // Local file content
+  path?: string; // File path for tree structure
 }
 
 export interface UserProfile {

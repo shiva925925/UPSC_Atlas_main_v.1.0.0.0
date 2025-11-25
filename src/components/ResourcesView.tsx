@@ -3,7 +3,8 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 import { SUBJECT_COLORS } from '../constants';
 import { Resource, ResourceType, Subject } from '../types';
-import { FileText, Link as LinkIcon, Video, Plus, ExternalLink, Search, Filter, Calendar as CalendarIcon, X, Trash2, Edit2 } from 'lucide-react';
+import { FileText, Link as LinkIcon, Video, Plus, ExternalLink, Search, Filter, Calendar as CalendarIcon, X, Trash2, Edit2, Image as ImageIcon, Grid3x3, Network } from 'lucide-react';
+import LibraryTree from './LibraryTree';
 
 const ResourcesView: React.FC = () => {
   // Fetch dynamic resources from DB
@@ -16,6 +17,7 @@ const ResourcesView: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<'grid' | 'tree'>('grid');
 
   // New Resource Form State
   const [newTitle, setNewTitle] = useState('');
@@ -24,6 +26,7 @@ const ResourcesView: React.FC = () => {
   const [newUrl, setNewUrl] = useState('');
   const [newDate, setNewDate] = useState('');
   const [newDescription, setNewDescription] = useState('');
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   // Load static library on mount - AUTO-SCANS public/library folder
   useEffect(() => {
@@ -37,8 +40,9 @@ const ResourcesView: React.FC = () => {
           title: item.title,
           type: ResourceType.PDF,
           subject: item.subject as Subject || Subject.SYLLABUS,
-          url: `/library/${item.filename}`,
-          description: item.description
+          url: `/library/${item.path || item.filename}`,
+          description: item.description,
+          path: item.path // Add path for tree structure
         }));
         setLibraryResources(mapped);
       })
@@ -61,23 +65,35 @@ const ResourcesView: React.FC = () => {
     setNewUrl('');
     setNewDate('');
     setNewDescription('');
+    setSelectedFile(null);
     setEditingId(null);
     setIsAdding(false);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setSelectedFile(file);
+      setNewTitle(file.name.split('.')[0]); // Auto-fill title
+    }
   };
 
   const handleAddResource = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const resourceData: Partial<Resource> = {
+      title: newTitle,
+      type: newType,
+      subject: newSubject,
+      url: newUrl || (selectedFile ? URL.createObjectURL(selectedFile) : ''), // Fallback URL for display
+      date: newDate || undefined,
+      description: newDescription,
+      content: selectedFile || undefined
+    };
+
     if (editingId) {
       // Update existing
-      await db.resources.update(editingId, {
-        title: newTitle,
-        type: newType,
-        subject: newSubject,
-        url: newUrl,
-        date: newDate || undefined,
-        description: newDescription
-      });
+      await db.resources.update(editingId, resourceData);
     } else {
       // Add new
       const newResource: Resource = {
@@ -86,9 +102,10 @@ const ResourcesView: React.FC = () => {
         title: newTitle,
         type: newType,
         subject: newSubject,
-        url: newUrl,
+        url: newUrl || (selectedFile ? 'local-file' : ''),
         date: newDate || undefined,
-        description: newDescription
+        description: newDescription,
+        content: selectedFile || undefined
       };
       await db.resources.add(newResource);
     }
@@ -103,6 +120,7 @@ const ResourcesView: React.FC = () => {
     setNewDate(resource.date || '');
     setNewDescription(resource.description || '');
     setEditingId(resource.id);
+    // Note: We don't restore the file object for editing as we can't programmatically set file input
     setIsAdding(true);
   };
 
@@ -112,11 +130,21 @@ const ResourcesView: React.FC = () => {
     }
   };
 
+  const handleOpenResource = (resource: Resource) => {
+    if (resource.content) {
+      const url = URL.createObjectURL(resource.content);
+      window.open(url, '_blank');
+    } else {
+      window.open(resource.url, '_blank');
+    }
+  };
+
   const getIcon = (type: ResourceType) => {
     switch (type) {
       case ResourceType.PDF: return <FileText size={20} className="text-red-500" />;
       case ResourceType.LINK: return <LinkIcon size={20} className="text-blue-500" />;
       case ResourceType.VIDEO: return <Video size={20} className="text-purple-500" />;
+      case ResourceType.IMAGE: return <ImageIcon size={20} className="text-green-500" />;
     }
   };
 
@@ -128,13 +156,35 @@ const ResourcesView: React.FC = () => {
           <p className="text-gray-500">Centralize your PDFs, links, and study materials.</p>
         </div>
 
-        <button
-          onClick={() => { resetForm(); setIsAdding(true); }}
-          className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors w-full md:w-auto justify-center"
-        >
-          <Plus size={18} />
-          <span>Add Resource</span>
-        </button>
+        <div className="flex items-center gap-3">
+          {/* View Mode Toggle */}
+          <div className="flex items-center bg-gray-100 rounded-md p-1">
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-600 hover:text-gray-800'
+                }`}
+            >
+              <Grid3x3 size={16} />
+              <span className="text-sm font-medium">Grid</span>
+            </button>
+            <button
+              onClick={() => setViewMode('tree')}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded transition-colors ${viewMode === 'tree' ? 'bg-white shadow-sm text-purple-600' : 'text-gray-600 hover:text-gray-800'
+                }`}
+            >
+              <Network size={16} />
+              <span className="text-sm font-medium">Tree</span>
+            </button>
+          </div>
+
+          <button
+            onClick={() => { resetForm(); setIsAdding(true); }}
+            className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors w-full md:w-auto justify-center"
+          >
+            <Plus size={18} />
+            <span>Add Resource</span>
+          </button>
+        </div>
       </header>
 
       {/* Filters */}
@@ -177,18 +227,6 @@ const ResourcesView: React.FC = () => {
             </div>
 
             <form onSubmit={handleAddResource} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                <input
-                  required
-                  type="text"
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                  placeholder="e.g. Fundamental Rights Notes"
-                />
-              </div>
-
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
@@ -216,15 +254,41 @@ const ResourcesView: React.FC = () => {
                 </div>
               </div>
 
+              {/* File Upload or URL Input */}
+              {(newType === ResourceType.PDF || newType === ResourceType.IMAGE) ? (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Upload File</label>
+                  <input
+                    type="file"
+                    accept={newType === ResourceType.PDF ? ".pdf" : "image/*"}
+                    onChange={handleFileChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">File will be stored locally in your browser.</p>
+                </div>
+              ) : (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">URL</label>
+                  <input
+                    required
+                    type="text"
+                    value={newUrl}
+                    onChange={(e) => setNewUrl(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                    placeholder="https://..."
+                  />
+                </div>
+              )}
+
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">URL / File Link</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
                 <input
                   required
                   type="text"
-                  value={newUrl}
-                  onChange={(e) => setNewUrl(e.target.value)}
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                  placeholder="https://..."
+                  placeholder="e.g. Fundamental Rights Notes"
                 />
               </div>
 
@@ -268,86 +332,88 @@ const ResourcesView: React.FC = () => {
         </div>
       )}
 
-      {/* Resources Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto pb-4 custom-scrollbar">
-        {filteredResources.length === 0 ? (
-          <div className="col-span-full text-center py-12 text-gray-500">
-            <p>No resources found matching your criteria.</p>
-          </div>
-        ) : (
-          filteredResources.map(resource => {
-            // Check if it's a user-created resource (not from library - 'lib_' or 'lib_auto_' prefix)
-            const isUserResource = !resource.id.startsWith('lib_');
+      {/* Resources Grid or Tree View */}
+      {viewMode === 'tree' ? (
+        <LibraryTree resources={libraryResources.filter(r => r.path)} />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto pb-4 custom-scrollbar">
+          {filteredResources.length === 0 ? (
+            <div className="col-span-full text-center py-12 text-gray-500">
+              <p>No resources found matching your criteria.</p>
+            </div>
+          ) : (
+            filteredResources.map(resource => {
+              // Check if it's a user-created resource (not from library - 'lib_' or 'lib_auto_' prefix)
+              const isUserResource = !resource.id.startsWith('lib_');
 
-            return (
-              <div key={resource.id} className="bg-white rounded-lg border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group">
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors">
-                      {getIcon(resource.type)}
+              return (
+                <div key={resource.id} className="bg-white rounded-lg border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors">
+                        {getIcon(resource.type)}
+                      </div>
+                      <div>
+                        <span
+                          className="text-xs font-bold px-2 py-0.5 rounded-full text-white"
+                          style={{ backgroundColor: SUBJECT_COLORS[resource.subject] }}
+                        >
+                          {resource.subject}
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <span
-                        className="text-xs font-bold px-2 py-0.5 rounded-full text-white"
-                        style={{ backgroundColor: SUBJECT_COLORS[resource.subject] }}
+                    <div className="flex items-center gap-2">
+                      {isUserResource && (
+                        <>
+                          <button
+                            onClick={() => handleEdit(resource)}
+                            className="text-gray-400 hover:text-blue-600 transition-colors"
+                            title="Edit"
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(resource.id)}
+                            className="text-gray-400 hover:text-red-500 transition-colors"
+                            title="Delete"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </>
+                      )}
+                      <button
+                        onClick={() => handleOpenResource(resource)}
+                        className="text-gray-400 hover:text-blue-600 transition-colors"
+                        title="Open"
                       >
-                        {resource.subject}
-                      </span>
+                        <ExternalLink size={18} />
+                      </button>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    {isUserResource && (
-                      <>
-                        <button
-                          onClick={() => handleEdit(resource)}
-                          className="text-gray-400 hover:text-blue-600 transition-colors"
-                          title="Edit"
-                        >
-                          <Edit2 size={16} />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(resource.id)}
-                          className="text-gray-400 hover:text-red-500 transition-colors"
-                          title="Delete"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </>
-                    )}
-                    <a
-                      href={resource.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-blue-600 transition-colors"
-                      title="Open Link"
-                    >
-                      <ExternalLink size={18} />
-                    </a>
+
+                  <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2">{resource.title}</h3>
+
+                  <p className="text-sm text-gray-500 mb-4 flex-1 line-clamp-3">
+                    {resource.description || 'No description provided.'}
+                  </p>
+
+                  <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center gap-1">
+                      {resource.date && (
+                        <>
+                          <CalendarIcon size={14} />
+                          <span>{resource.date}</span>
+                        </>
+                      )}
+                    </div>
+                    <span className="bg-gray-100 px-2 py-1 rounded text-gray-600 font-medium">{resource.type}</span>
                   </div>
                 </div>
-
-                <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2">{resource.title}</h3>
-
-                <p className="text-sm text-gray-500 mb-4 flex-1 line-clamp-3">
-                  {resource.description || 'No description provided.'}
-                </p>
-
-                <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-                  <div className="flex items-center gap-1">
-                    {resource.date && (
-                      <>
-                        <CalendarIcon size={14} />
-                        <span>{resource.date}</span>
-                      </>
-                    )}
-                  </div>
-                  <span className="bg-gray-100 px-2 py-1 rounded text-gray-600 font-medium">{resource.type}</span>
-                </div>
-              </div>
-            );
-          })
-        )}
-      </div>
+              );
+            })
+          )}
+        </div>
+      )}
     </div>
   );
 };

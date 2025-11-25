@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
+    "@types/dagre": "^0.7.53",
+    "@xyflow/react": "^12.9.3",
+    "dagre": "^0.8.5",
     "dexie": "^4.2.1",
     "dexie-react-hooks": "^4.2.0",
     "lucide-react": "^0.554.0",
