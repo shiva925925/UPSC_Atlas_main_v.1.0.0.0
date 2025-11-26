@@ -9,192 +9,16 @@ export const MOCK_USER: UserProfile = {
   id: 'Schamala',
   name: "Schamala",
   targetYear: 2025,
-  streak: 14,
-  hoursLoggedTotal: 342,
-  avatarUrl: "https://picsum.photos/200/200"
+  streak: 0,
+  hoursLoggedTotal: 0,
+  avatarUrl: "https://ui-avatars.com/api/?name=Schamala&background=0D8ABC&color=fff"
 };
 
-export const MOCK_TASKS: Task[] = [
-  {
-    id: '1',
-    userId: 'Schamala',
-    title: 'Complete Chapter 4: Fundamental Rights',
-    description: 'As an aspirant, I need to understand the 6 Fundamental Rights thoroughly so that I can answer case-study based questions in GS-2.',
-    acceptanceCriteria: [
-      { id: 'ac1', text: 'Read Laxmikanth Chapter 4 completely', isCompleted: true },
-      { id: 'ac2', text: 'Make short notes on Art 14-32', isCompleted: true },
-      { id: 'ac3', text: 'Solve 20 MCQs related to FRs', isCompleted: false },
-      { id: 'ac4', text: 'Review landmark Supreme Court judgments', isCompleted: false }
-    ],
-    date: today,
-    status: TaskStatus.IN_PROGRESS,
-    subject: Subject.POLITY,
-    priority: 'High',
-    logs: [
-      { id: 'l1', date: today, durationMinutes: 120, subject: Subject.POLITY, description: 'Laxmikanth readings' }
-    ],
-    evidences: []
-  },
-  {
-    id: '2',
-    userId: 'Schamala',
-    title: 'Map Practice: Rivers of India',
-    description: 'I need to memorize the origin, tributaries, and flow direction of major peninsular rivers to handle Geography map questions.',
-    acceptanceCriteria: [
-      { id: 'ac1', text: 'Draw outline map of Peninsular India', isCompleted: false },
-      { id: 'ac2', text: 'Mark Godavari, Krishna, Kaveri basins', isCompleted: false },
-      { id: 'ac3', text: 'List West flowing rivers', isCompleted: false }
-    ],
-    date: today,
-    status: TaskStatus.TODO,
-    subject: Subject.GEOGRAPHY,
-    priority: 'Medium',
-    logs: [],
-    evidences: []
-  },
-  {
-    id: '3',
-    userId: 'Schamala',
-    title: 'Daily Hindu Editorial Analysis',
-    description: 'Analyze today\'s editorials to extract points for Mains answers regarding International Relations.',
-    acceptanceCriteria: [
-      { id: 'ac1', text: 'Read Lead Article', isCompleted: true },
-      { id: 'ac2', text: 'Note down key statistics', isCompleted: true },
-      { id: 'ac3', text: 'Update vocab journal', isCompleted: true }
-    ],
-    date: today,
-    status: TaskStatus.DONE,
-    subject: Subject.CURRENT_AFFAIRS,
-    priority: 'High',
-    logs: [
-      { id: 'l2', date: today, durationMinutes: 45, subject: Subject.CURRENT_AFFAIRS, description: 'Newspaper reading' }
-    ],
-    evidences: []
-  },
-  {
-    id: '4',
-    userId: 'Schamala',
-    title: 'Mughal Empire Revision',
-    date: yesterday,
-    status: TaskStatus.DONE,
-    subject: Subject.HISTORY,
-    description: 'Revise Akbar\'s administrative policies.',
-    acceptanceCriteria: [
-      { id: 'ac1', text: 'Review Mansabdari System', isCompleted: true },
-      { id: 'ac2', text: 'Review Din-i-Ilahi', isCompleted: true }
-    ],
-    priority: 'Medium',
-    logs: [
-      { id: 'l3', date: yesterday, durationMinutes: 180, subject: Subject.HISTORY, description: 'Deep dive into Modern History' }
-    ],
-    evidences: []
-  },
-  {
-    id: '5',
-    userId: 'Schamala',
-    title: 'Mock Test: Economics Sectional',
-    date: twoDaysAgo,
-    status: TaskStatus.DONE,
-    subject: Subject.ECONOMICS,
-    priority: 'High',
-    logs: [
-      { id: 'l4', date: twoDaysAgo, durationMinutes: 60, subject: Subject.ECONOMICS, description: 'Budget analysis' }
-    ],
-    evidences: []
-  },
-  {
-    id: '6',
-    userId: 'Schamala',
-    title: 'Ethics Case Studies - Integrity',
-    date: '2023-10-25',
-    status: TaskStatus.TODO,
-    subject: Subject.ETHICS,
-    description: 'Practice answer writing for GS-4.',
-    acceptanceCriteria: [
-      { id: 'ac1', text: 'Write answer for Case Study 1', isCompleted: false },
-      { id: 'ac2', text: 'Write answer for Case Study 2', isCompleted: false }
-    ],
-    priority: 'Low',
-    logs: [],
-    evidences: []
-  },
-];
+export const MOCK_TASKS: Task[] = [];
 
-export const MOCK_ACHIEVEMENTS: Achievement[] = [
-  { id: 'a1', userId: 'Schamala', date: today, title: 'Early Bird', badge: '🌅' },
-  { id: 'a2', userId: 'Schamala', date: yesterday, title: '50 Hours Milestone', badge: '🔥' },
-  { id: 'a3', userId: 'Schamala', date: twoDaysAgo, title: 'Mock Test Ace', badge: '🎯' },
-];
+export const MOCK_ACHIEVEMENTS: Achievement[] = [];
 
-export const MOCK_RESOURCES: Resource[] = [
-  {
-    id: 's1',
-    userId: 'Schamala',
-    title: 'UPSC CSE Official Syllabus PDF',
-    type: ResourceType.PDF,
-    url: '#',
-    subject: Subject.SYLLABUS,
-    description: 'Complete notification including Prelims and Mains syllabus breakdown.'
-  },
-  {
-    id: 's2',
-    userId: 'Schamala',
-    title: 'Mains GS-1 Detailed Topic List',
-    type: ResourceType.LINK,
-    url: '#',
-    subject: Subject.SYLLABUS,
-    description: 'Micro-listing of topics for Art & Culture, History, and Geography.'
-  },
-  {
-    id: 'r1',
-    userId: 'Schamala',
-    title: 'Polity: Fundamental Rights Summary',
-    type: ResourceType.PDF,
-    url: '#',
-    subject: Subject.POLITY,
-    date: today,
-    description: 'Quick revision notes from class lecture.'
-  },
-  {
-    id: 'r2',
-    userId: 'Schamala',
-    title: 'The Hindu: Editorial Link',
-    type: ResourceType.LINK,
-    url: 'https://www.thehindu.com',
-    subject: Subject.CURRENT_AFFAIRS,
-    date: today,
-    description: 'Article regarding new foreign policy updates.'
-  },
-  {
-    id: 'r3',
-    userId: 'Schamala',
-    title: 'Mughal Genealogy Chart',
-    type: ResourceType.PDF,
-    url: '#',
-    subject: Subject.HISTORY,
-    date: yesterday,
-    description: 'Visual chart for quick memorization.'
-  },
-  {
-    id: 'r4',
-    userId: 'Schamala',
-    title: 'Economic Survey 2024 Highlights',
-    type: ResourceType.PDF,
-    url: '#',
-    subject: Subject.ECONOMICS,
-    // No date, general resource
-    description: 'Key points from the latest survey.'
-  },
-  {
-    id: 'r5',
-    userId: 'Schamala',
-    title: 'Ethics Terminology Video',
-    type: ResourceType.VIDEO,
-    url: '#',
-    subject: Subject.ETHICS,
-    description: 'YouTube explainer on integrity vs aptitude.'
-  }
-];
+export const MOCK_RESOURCES: Resource[] = [];
 
 export const SUBJECT_COLORS: Record<Subject, string> = {
   [Subject.HISTORY]: '#ef4444', // Red
@@ -205,4 +29,5 @@ export const SUBJECT_COLORS: Record<Subject, string> = {
   [Subject.CSAT]: '#f97316', // Orange
   [Subject.CURRENT_AFFAIRS]: '#06b6d4', // Cyan
   [Subject.SYLLABUS]: '#6366f1', // Indigo
+  [Subject.GENERAL]: '#9ca3af', // Gray
 };

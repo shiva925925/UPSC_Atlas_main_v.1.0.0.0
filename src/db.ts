@@ -24,14 +24,8 @@ export class UpscDatabase extends Dexie {
 
 export const db = new UpscDatabase();
 
-// Initialize with mock data if empty
+// Initialize with default user if empty
 db.on('populate', async () => {
-    // MOCK_TASKS already has nested logs/evidences and userId
-    await db.tasks.bulkAdd(MOCK_TASKS);
-
-    // MOCK_RESOURCES already has userId
-    await db.resources.bulkAdd(MOCK_RESOURCES);
-
     // Add user profile with unique ID 'Schamala'
-    await db.userProfile.add({ ...MOCK_USER, id: 'Schamala', totalAppUsageMinutes: 0 } as any);
+    await db.userProfile.add({ ...MOCK_USER, id: 'Schamala' } as any);
 });
