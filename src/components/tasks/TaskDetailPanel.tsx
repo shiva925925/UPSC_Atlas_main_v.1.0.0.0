@@ -273,10 +273,11 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             <button
                                 key={status}
                                 onClick={() => handleStatusChange(status)}
+                                disabled={status === TaskStatus.DONE && (task.acceptanceCriteria || []).some(ac => !ac.isCompleted)}
                                 className={`flex-1 py-2 text-xs font-medium rounded-md border ${task.status === status
                                     ? 'bg-blue-600 text-white border-blue-600'
                                     : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
-                                    }`}
+                                    } ${status === TaskStatus.DONE && (task.acceptanceCriteria || []).some(ac => !ac.isCompleted) ? 'opacity-50 cursor-not-allowed' : ''}`}
                             >
                                 {status.replace('_', ' ')}
                             </button>
