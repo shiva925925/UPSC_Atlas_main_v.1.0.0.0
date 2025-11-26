@@ -87,30 +87,42 @@ export enum ResourceType {
 
 export interface Resource {
   id: string;
-  userId: string; // Added userId
+  userId: string;
   title: string;
   type: ResourceType;
   url: string;
   subject: Subject;
-  date?: string; // ISO YYYY-MM-DD, Optional association with a date
+  date?: string;
   description?: string;
-  content?: Blob; // Local file content
-  path?: string; // File path for tree structure
+  content?: Blob;
+  path?: string;
+}
+
+export interface CustomLink {
+  id: string;
+  userId: string;
+  sourceNodeId: string;
+  targetNodeId: string;
+  type: 'prerequisite' | 'related' | 'example' | 'reference' | 'custom';
+  label?: string;
+  color?: string;
+  bidirectional: boolean;
+  createdAt: string;
 }
 
 export interface UserProfile {
-  id: string; // Explicitly added for DB key
+  id: string;
   name: string;
   targetYear: number;
   streak: number;
   hoursLoggedTotal: number;
   avatarUrl: string;
-  totalAppUsageMinutes?: number; // New field for session tracking
+  totalAppUsageMinutes?: number;
 }
 
 export interface DiaryEntry {
   id: number;
-  userId: string; // Added userId
+  userId: string;
   date: string;
   content: string;
 }

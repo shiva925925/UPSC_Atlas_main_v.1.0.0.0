@@ -1,5 +1,5 @@
 import Dexie, { Table } from 'dexie';
-import { Task, TimeLog, Resource, UserProfile, Subject, TaskStatus, ResourceType, DiaryEntry } from './types';
+import { Task, TimeLog, Resource, UserProfile, Subject, TaskStatus, ResourceType, DiaryEntry, CustomLink } from './types';
 import { MOCK_TASKS, MOCK_RESOURCES, MOCK_USER } from './constants';
 
 export class UpscDatabase extends Dexie {
@@ -8,14 +8,16 @@ export class UpscDatabase extends Dexie {
     resources!: Table<Resource>;
     userProfile!: Table<UserProfile>;
     diary!: Table<DiaryEntry>;
+    customLinks!: Table<CustomLink>;
 
     constructor() {
         super('UpscAtlasDB');
-        this.version(5).stores({ // Increment version
+        this.version(6).stores({ // Increment version
             tasks: 'id, userId, status, subject, date, isArchived, isDeleted',
             resources: 'id, userId, subject, type',
             userProfile: 'id',
-            diary: 'id, userId, date'
+            diary: 'id, userId, date',
+            customLinks: 'id, userId, sourceNodeId, targetNodeId'
         });
     }
 }
