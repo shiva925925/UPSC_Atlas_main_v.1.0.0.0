@@ -56,14 +56,22 @@ function buildTree(resources: Resource[]): TreeNodeData {
                 };
                 nodeMap.set(currentPath, newNode);
                 parent.children.push(newNode);
-                parent.children.sort((a, b) => {
-                    if (a.isFile !== b.isFile) return a.isFile ? 1 : -1;
-                    return a.name.localeCompare(b.name);
-                });
             }
             parent = nodeMap.get(currentPath)!;
         });
     });
+
+    // Sort the tree recursively
+    const sortNode = (node: TreeNodeData) => {
+        if (node.children.length > 0) {
+            node.children.sort((a, b) => {
+                if (a.isFile !== b.isFile) return a.isFile ? 1 : -1;
+                return a.name.localeCompare(b.name);
+            });
+            node.children.forEach(sortNode);
+        }
+    };
+    sortNode(treeRoot);
 
     return treeRoot;
 }
@@ -84,8 +92,8 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, level, expandedFolders, toggl
     const style = isSelected
         ? 'bg-blue-100 text-blue-800'
         : searchHighlight
-        ? 'bg-yellow-200'
-        : 'hover:bg-gray-100';
+            ? 'bg-yellow-200'
+            : 'hover:bg-gray-100';
 
     return (
         <div>
@@ -131,7 +139,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, level, expandedFolders, toggl
 const LibraryTree: React.FC<LibraryTreeProps> = ({ resources, searchQuery, onSelectResource, selectedResource }) => {
     const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set(['root']));
     const [searchMatches, setSearchMatches] = useState<Set<string>>(new Set());
-    
+
     const tree = useMemo(() => buildTree(resources), [resources]);
 
     useEffect(() => {
@@ -145,20 +153,26 @@ const LibraryTree: React.FC<LibraryTreeProps> = ({ resources, searchQuery, onSel
 
         function searchTree(node: TreeNodeData) {
             let foundInChildren = node.children.some(child => searchTree(child));
-            
+
             const isMatch = node.name.toLowerCase().includes(searchQuery.toLowerCase());
 
-            if (isMatch && node.isFile) {
-                newMatches.add(node.path);
+            if (isMatch) {
+                if (node.isFile) {
+                    newMatches.add(node.path);
+                } else {
+                    // If folder matches, expand it and maybe highlight it (optional, currently only files are highlighted)
+                    // For now, let's just ensure it's expanded if it matches
+                    newExpanded.add(node.path);
+                }
             }
 
-            if ((isMatch && node.isFile) || foundInChildren) {
-                 if(!node.isFile) newExpanded.add(node.path);
-                 return true;
+            if (isMatch || foundInChildren) {
+                if (!node.isFile) newExpanded.add(node.path);
+                return true;
             }
             return false;
         }
-        
+
         tree.children.forEach(child => searchTree(child));
 
         setExpandedFolders(newExpanded);
@@ -182,7 +196,7 @@ const LibraryTree: React.FC<LibraryTreeProps> = ({ resources, searchQuery, onSel
     const renderTree = (node: TreeNodeData, level: number) => {
         const searchHighlight = searchMatches.has(node.path);
         const isSelected = selectedResource?.path === node.path;
-        
+
         return (
             <div key={node.id}>
                 <TreeNode
@@ -198,10 +212,10 @@ const LibraryTree: React.FC<LibraryTreeProps> = ({ resources, searchQuery, onSel
             </div>
         );
     }
-    
+
     return (
         <div className="w-full h-full p-1">
-             {tree.children.map(child => renderTree(child, 0))}
+            {tree.children.map(child => renderTree(child, 0))}
         </div>
     );
 };

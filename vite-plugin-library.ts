@@ -6,6 +6,24 @@ export function libraryPlugin(): Plugin {
     return {
         name: 'vite-plugin-library',
         configureServer(server) {
+            server.middlewares.use('/api/list-tasks', async (req, res) => {
+                try {
+                    const tasksPath = join(process.cwd(), 'public', 'library', 'tasks');
+                    const dirents = await readdir(tasksPath, { withFileTypes: true });
+                    const mdFiles = dirents
+                        .filter(dirent => dirent.isFile() && (dirent.name.toLowerCase().endsWith('.md') || dirent.name.toLowerCase().endsWith('.yaml') || dirent.name.toLowerCase().endsWith('.yml')))
+                        .map(dirent => dirent.name);
+
+                    res.setHeader('Content-Type', 'application/json');
+                    res.setHeader('Cache-Control', 'no-store, max-age=0');
+                    res.end(JSON.stringify(mdFiles));
+                } catch (error) {
+                    console.error('Error reading tasks folder:', error);
+                    res.statusCode = 500;
+                    res.end(JSON.stringify({ error: 'Failed to read tasks folder' }));
+                }
+            });
+
             server.middlewares.use('/api/library', async (req, res) => {
                 try {
                     const libraryPath = join(process.cwd(), 'public', 'library');
@@ -89,6 +107,7 @@ export function libraryPlugin(): Plugin {
                     });
 
                     res.setHeader('Content-Type', 'application/json');
+                    res.setHeader('Cache-Control', 'no-store, max-age=0');
                     res.end(JSON.stringify(resources));
                 } catch (error) {
                     console.error('Error reading library folder:', error);

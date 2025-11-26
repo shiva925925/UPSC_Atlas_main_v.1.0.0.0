@@ -1,0 +1,13 @@
+id: "task_yaml_001"
+title: "Complete Geography Mapping"
+date: "2025-11-30"
+subject: "Geography"
+priority: "High"
+description: "Map all major rivers and mountain ranges of India."
+acceptanceCriteria:
+  - id: "ac_1"
+    text: "Map Himalayan Rivers"
+    isCompleted: false
+  - id: "ac_2"
+    text: "Map Peninsular Rivers"
+    isCompleted: false

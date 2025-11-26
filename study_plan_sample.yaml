@@ -1,0 +1,30 @@
+# Sample Study Plan
+# You can import this file directly into UPSC Atlas
+
+- id: "task_sample_001"
+  title: "Ancient History: Indus Valley Civilization"
+  date: "2025-12-01"
+  subject: "History"
+  priority: "High"
+  description: "Cover major sites like Harappa, Mohenjo-Daro, Dholavira. Focus on town planning and trade."
+  acceptanceCriteria:
+    - id: "ac_1"
+      text: "Read NCERT Class 12 Theme 1"
+      isCompleted: false
+    - id: "ac_2"
+      text: "Map major sites"
+      isCompleted: false
+
+- id: "task_sample_002"
+  title: "Polity: Preamble & Union and its Territory"
+  date: "2025-12-02"
+  subject: "Polity"
+  priority: "Medium"
+  description: "Understand the keywords in Preamble and the procedure for state reorganization."
+
+- id: "task_sample_003"
+  title: "Geography: Solar System & Earth"
+  date: "2025-12-03"
+  subject: "Geography"
+  priority: "Low"
+  description: "Basics of rotation, revolution, and seasons."

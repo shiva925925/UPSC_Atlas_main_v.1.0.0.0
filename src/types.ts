@@ -21,8 +21,11 @@ export enum Subject {
   ETHICS = 'Ethics',
   CSAT = 'CSAT',
   CURRENT_AFFAIRS = 'Current Affairs',
-  SYLLABUS = 'UPSC Syllabus'
+  SYLLABUS = 'UPSC Syllabus',
+  GENERAL = 'General'
 }
+
+export type Priority = 'High' | 'Medium' | 'Low';
 
 export interface AcceptanceCriterion {
   id: string;
@@ -39,7 +42,7 @@ export interface Task {
   subject: Subject;
   description?: string; // The "Story"
   acceptanceCriteria?: AcceptanceCriterion[]; // The checklist
-  priority?: 'High' | 'Medium' | 'Low';
+  priority?: Priority;
   logs?: TimeLog[]; // Nested logs
   evidences?: Evidence[]; // Nested evidences
   isArchived?: boolean;

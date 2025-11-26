@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 import { SUBJECT_COLORS } from '../constants';
-import { Task, TaskStatus, Subject, TimeLog, Evidence, EvidenceType } from '../types';
-import { Plus, X, Calendar, Clock, AlertCircle, CheckSquare, Square, Save, Paperclip, Link as LinkIcon, FileText, Trash2, ChevronDown, Filter, Archive, RotateCcw, Ban } from 'lucide-react';
+import { Task, TaskStatus, Subject, TimeLog, Evidence, EvidenceType, Priority } from '../types';
+import { Plus, X, Calendar, Clock, AlertCircle, CheckSquare, Square, Save, Paperclip, Link as LinkIcon, FileText, Trash2, ChevronDown, Filter, Archive, RotateCcw, Ban, RefreshCw, Upload } from 'lucide-react';
+import { syncMarkdownTasks } from '../services/markdownTaskService';
+import { load } from 'js-yaml';
+import matter from 'gray-matter';
 
 type TabType = 'ACTIVE' | 'ARCHIVED' | 'TRASH';
 
@@ -14,6 +17,93 @@ const TasksView: React.FC = () => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>('ACTIVE');
+  const [isSyncing, setIsSyncing] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSync = async () => {
+    setIsSyncing(true);
+    console.log("Starting sync with markdown files...");
+    await syncMarkdownTasks();
+    console.log("Sync finished.");
+    setIsSyncing(false);
+  };
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const content = e.target?.result as string;
+      if (!content) return;
+
+      try {
+        let importedTasks: any[] = [];
+
+        if (file.name.toLowerCase().endsWith('.yaml') || file.name.toLowerCase().endsWith('.yml')) {
+          const parsed = load(content);
+          if (Array.isArray(parsed)) {
+            importedTasks = parsed;
+          } else if (typeof parsed === 'object' && parsed !== null) {
+            importedTasks = [parsed];
+          }
+        } else if (file.name.toLowerCase().endsWith('.md')) {
+          // Basic MD parsing for single task per file usually, but let's support it
+          const { data, content: mdContent } = matter(content);
+          importedTasks = [{ ...data, description: mdContent }];
+        }
+
+        let count = 0;
+        for (const item of importedTasks) {
+          if (!item.id || !item.title) continue;
+
+          const newTask: Task = {
+            id: item.id,
+            userId: 'Schamala',
+            title: item.title,
+            date: item.date ? new Date(item.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+            subject: item.subject as Subject || Subject.GENERAL,
+            priority: item.priority as Priority || 'Medium',
+            status: TaskStatus.TODO,
+            description: item.description || '',
+            acceptanceCriteria: item.acceptanceCriteria || [],
+            logs: [],
+            evidences: [],
+            isArchived: false,
+            isDeleted: false
+          };
+
+          // Check if exists
+          const existing = await db.tasks.get(newTask.id);
+          if (existing) {
+            await db.tasks.update(newTask.id, newTask);
+          } else {
+            await db.tasks.add(newTask);
+          }
+          count++;
+        }
+        alert(`Successfully imported ${count} tasks!`);
+
+      } catch (error) {
+        console.error("Import failed:", error);
+        alert("Failed to import tasks. Please check the file format.");
+      }
+
+      // Reset input
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    };
+    reader.readAsText(file);
+  };
+
+  // Sync tasks from Markdown files on initial load
+  useEffect(() => {
+    handleSync();
+  }, []); // Empty dependency array ensures this runs only once on mount
+
 
   // Create Task Form State
   const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -200,11 +290,35 @@ const TasksView: React.FC = () => {
       {/* List Area */}
       <div className="flex-1 flex flex-col h-full overflow-hidden">
         <header className="p-6 border-b border-gray-200 flex justify-between items-center bg-white z-10">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800">Tasks</h2>
-            <p className="text-gray-500">Manage your study goals and progress.</p>
+          <div className="flex items-center gap-4">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-800">Tasks</h2>
+              <p className="text-gray-500">Manage your study goals and progress.</p>
+            </div>
           </div>
           <div className="flex gap-3">
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileUpload}
+              accept=".yaml,.yml,.md"
+              className="hidden"
+            />
+            <button
+              onClick={handleImportClick}
+              className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+              title="Import Tasks from YAML/MD"
+            >
+              <Upload size={16} /> Import
+            </button>
+            <button
+              onClick={handleSync}
+              disabled={isSyncing}
+              className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+              title="Sync from Server"
+            >
+              <RefreshCw size={16} className={isSyncing ? 'animate-spin' : ''} />
+            </button>
             <button className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
               <Filter size={16} /> Filter
             </button>
