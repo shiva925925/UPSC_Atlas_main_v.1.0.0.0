@@ -1,7 +1,7 @@
-import matter from 'gray-matter';
 import { load } from 'js-yaml';
 import { db } from '../db';
 import { Task, TaskStatus, Subject, Priority } from '../types';
+import { parseFrontMatter } from '../utils';
 
 export async function syncMarkdownTasks() {
     console.log('%c[Sync Service] Starting task sync...', 'color: blue; font-weight: bold;');
@@ -51,7 +51,7 @@ export async function syncMarkdownTasks() {
                 }
             } else if (filename.toLowerCase().endsWith('.md')) {
                 // Markdown parsing
-                const { data, content } = matter(fileContent);
+                const { data, content } = parseFrontMatter(fileContent);
                 taskId = data.id;
                 fileTaskData = {
                     title: data.title || 'Untitled Task',

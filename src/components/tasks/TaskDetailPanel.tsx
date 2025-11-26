@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Task, TaskStatus, EvidenceType, TimeLog, Evidence } from '../../types';
 import { SUBJECT_COLORS } from '../../constants';
-import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle } from 'lucide-react';
+import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit } from 'lucide-react';
 
 interface TaskDetailPanelProps {
     task: Task;
@@ -18,6 +18,15 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
     // Evidence Form State
     const [evidenceType, setEvidenceType] = useState<EvidenceType>(EvidenceType.LINK);
     const [evidenceContent, setEvidenceContent] = useState('');
+
+    // Description Edit State
+    const [isEditingDescription, setIsEditingDescription] = useState(false);
+    const [editedDescription, setEditedDescription] = useState('');
+
+    // Acceptance Criteria Edit State
+    const [newCriterion, setNewCriterion] = useState('');
+    const [editingCriterionId, setEditingCriterionId] = useState<string | null>(null);
+    const [editedCriterionText, setEditedCriterionText] = useState('');
 
     const calculateProgress = (task: Task) => {
         if (!task.acceptanceCriteria || task.acceptanceCriteria.length === 0) return 0;
@@ -84,6 +93,42 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
         await onUpdate(task.id, { status: newStatus });
     };
 
+    const handleSaveDescription = async () => {
+        await onUpdate(task.id, { description: editedDescription });
+        setIsEditingDescription(false);
+    };
+
+    const handleAddCriterion = async () => {
+        if (!newCriterion.trim()) return;
+        const newAC = {
+            id: Math.random().toString(36).substr(2, 9),
+            text: newCriterion,
+            isCompleted: false
+        };
+        const updated = [...(task.acceptanceCriteria || []), newAC];
+        await onUpdate(task.id, { acceptanceCriteria: updated });
+        setNewCriterion('');
+    };
+
+    const handleDeleteCriterion = async (id: string) => {
+        const updated = (task.acceptanceCriteria || []).filter(ac => ac.id !== id);
+        await onUpdate(task.id, { acceptanceCriteria: updated });
+    };
+
+    const startEditingCriterion = (id: string, text: string) => {
+        setEditingCriterionId(id);
+        setEditedCriterionText(text);
+    };
+
+    const saveCriterion = async () => {
+        if (!editingCriterionId) return;
+        const updated = (task.acceptanceCriteria || []).map(ac => 
+            ac.id === editingCriterionId ? { ...ac, text: editedCriterionText } : ac
+        );
+        await onUpdate(task.id, { acceptanceCriteria: updated });
+        setEditingCriterionId(null);
+    };
+
     return (
         <div className="w-[400px] border-l border-gray-200 bg-white h-full overflow-y-auto shadow-xl z-20 absolute right-0 top-0 bottom-0 animate-slide-in-right">
             <div className="p-6">
@@ -105,10 +150,46 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                 <h2 className="text-xl font-bold text-gray-900 mb-6">{task.title}</h2>
 
                 <div className="mb-8">
-                    <h3 className="text-sm font-bold text-gray-900 mb-2">Description</h3>
-                    <div className="text-sm text-gray-700 leading-relaxed bg-gray-50 p-4 rounded-md border border-gray-100">
-                        {task.description || "No description provided."}
+                    <div className="flex justify-between items-center mb-2">
+                        <h3 className="text-sm font-bold text-gray-900">Description</h3>
+                        {!isEditingDescription && (
+                            <button 
+                                onClick={() => { setEditedDescription(task.description || ''); setIsEditingDescription(true); }}
+                                className="text-gray-400 hover:text-blue-600 p-1"
+                                title="Edit Description"
+                            >
+                                <Edit size={14} />
+                            </button>
+                        )}
                     </div>
+                    {isEditingDescription ? (
+                        <div className="space-y-2">
+                            <textarea
+                                value={editedDescription}
+                                onChange={(e) => setEditedDescription(e.target.value)}
+                                className="w-full text-sm border border-gray-300 rounded-md p-3 min-h-[120px] focus:ring-2 focus:ring-blue-500 outline-none resize-y"
+                                placeholder="Enter task description..."
+                            />
+                            <div className="flex justify-end gap-2">
+                                <button 
+                                    onClick={() => setIsEditingDescription(false)}
+                                    className="text-xs text-gray-600 px-3 py-1.5 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+                                >
+                                    Cancel
+                                </button>
+                                <button 
+                                    onClick={handleSaveDescription}
+                                    className="text-xs text-white bg-blue-600 px-3 py-1.5 rounded hover:bg-blue-700 transition-colors flex items-center gap-1"
+                                >
+                                    <Save size={12} /> Save
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="text-sm text-gray-700 leading-relaxed bg-gray-50 p-4 rounded-md border border-gray-100 whitespace-pre-wrap">
+                            {task.description || "No description provided."}
+                        </div>
+                    )}
                 </div>
 
                 <div className="mb-8">
@@ -119,25 +200,82 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                         </span>
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-2 mb-3">
                         {(!task.acceptanceCriteria || task.acceptanceCriteria.length === 0) ? (
                             <p className="text-sm text-gray-400 italic">No acceptance criteria defined.</p>
                         ) : (
                             task.acceptanceCriteria.map(ac => (
                                 <div
                                     key={ac.id}
-                                    className={`flex items-start gap-3 p-3 rounded-md border transition-all cursor-pointer ${ac.isCompleted ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200 hover:border-blue-300'}`}
-                                    onClick={() => toggleCriterion(ac.id)}
+                                    className={`group flex items-start gap-3 p-3 rounded-md border transition-all ${ac.isCompleted ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200 hover:border-blue-300'}`}
                                 >
-                                    <button className={`mt-0.5 flex-shrink-0 ${ac.isCompleted ? 'text-green-600' : 'text-gray-400'}`}>
-                                        {ac.isCompleted ? <CheckSquare size={18} /> : <Square size={18} />}
-                                    </button>
-                                    <span className={`text-sm ${ac.isCompleted ? 'text-green-800 line-through decoration-green-800/50' : 'text-gray-700'}`}>
-                                        {ac.text}
-                                    </span>
+                                    <div 
+                                        className="flex items-start gap-3 flex-1 cursor-pointer"
+                                        onClick={() => editingCriterionId !== ac.id && toggleCriterion(ac.id)}
+                                    >
+                                        <button className={`mt-0.5 flex-shrink-0 ${ac.isCompleted ? 'text-green-600' : 'text-gray-400'}`}>
+                                            {ac.isCompleted ? <CheckSquare size={18} /> : <Square size={18} />}
+                                        </button>
+                                        
+                                        {editingCriterionId === ac.id ? (
+                                            <div className="flex-1 flex gap-2" onClick={(e) => e.stopPropagation()}>
+                                                <input
+                                                    type="text"
+                                                    value={editedCriterionText}
+                                                    onChange={(e) => setEditedCriterionText(e.target.value)}
+                                                    className="flex-1 text-sm border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500 outline-none"
+                                                    autoFocus
+                                                />
+                                                <button onClick={saveCriterion} className="text-green-600 hover:bg-green-50 p-1 rounded"><Save size={14} /></button>
+                                                <button onClick={() => setEditingCriterionId(null)} className="text-gray-400 hover:bg-gray-100 p-1 rounded"><X size={14} /></button>
+                                            </div>
+                                        ) : (
+                                            <span className={`text-sm flex-1 ${ac.isCompleted ? 'text-green-800 line-through decoration-green-800/50' : 'text-gray-700'}`}>
+                                                {ac.text}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    {editingCriterionId !== ac.id && (
+                                        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button 
+                                                onClick={() => startEditingCriterion(ac.id, ac.text)}
+                                                className="text-gray-400 hover:text-blue-600 p-1 rounded hover:bg-gray-100"
+                                                title="Edit"
+                                            >
+                                                <Edit size={14} />
+                                            </button>
+                                            <button 
+                                                onClick={() => handleDeleteCriterion(ac.id)}
+                                                className="text-gray-400 hover:text-red-600 p-1 rounded hover:bg-gray-100"
+                                                title="Delete"
+                                            >
+                                                <Trash2 size={14} />
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             ))
                         )}
+                    </div>
+
+                    {/* Add New Criterion Input */}
+                    <div className="flex gap-2">
+                        <input
+                            type="text"
+                            value={newCriterion}
+                            onChange={(e) => setNewCriterion(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleAddCriterion()}
+                            placeholder="Add new acceptance criteria..."
+                            className="flex-1 text-sm border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                        />
+                        <button
+                            onClick={handleAddCriterion}
+                            disabled={!newCriterion.trim()}
+                            className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded border border-gray-300 transition-colors disabled:opacity-50"
+                        >
+                            <Plus size={16} />
+                        </button>
                     </div>
                 </div>
 
