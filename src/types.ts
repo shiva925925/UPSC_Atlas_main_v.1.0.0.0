@@ -48,6 +48,7 @@ export interface Task {
   isArchived?: boolean;
   isDeleted?: boolean;
   deletedAt?: string; // ISO Date
+  sourceFile?: string; // The name of the file from which this task was imported
 }
 
 export interface TimeLog {

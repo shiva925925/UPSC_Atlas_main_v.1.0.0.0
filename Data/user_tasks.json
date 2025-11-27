@@ -1,0 +1,38 @@
+[
+  {
+    "id": "es8u2k56t",
+    "userId": "Schamala",
+    "title": "ertdyfg",
+    "subject": "Polity",
+    "priority": "Medium",
+    "date": "2025-11-27",
+    "status": "TODO",
+    "description": "gfhj",
+    "acceptanceCriteria": [
+      {
+        "id": "b2wu52ws0",
+        "text": "dtrgyuh",
+        "isCompleted": false
+      }
+    ],
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  {
+    "id": "9fthd3c3r",
+    "userId": "Schamala",
+    "title": "789978",
+    "subject": "Polity",
+    "priority": "Medium",
+    "date": "2025-11-27",
+    "status": "TODO",
+    "description": "",
+    "acceptanceCriteria": [],
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  }
+]

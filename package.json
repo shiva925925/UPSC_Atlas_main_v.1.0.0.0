@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start-server": "node server/server.js",
+    "dev": "concurrently \"vite\" \"npm run start-server\"",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -14,19 +15,24 @@
     "@types/js-yaml": "^4.0.9",
     "@types/marked": "^5.0.2",
     "@xyflow/react": "^12.9.3",
+    "concurrently": "^9.2.1",
+    "cors": "^2.8.5",
     "dagre": "^0.8.5",
     "dexie": "^4.2.1",
     "dexie-react-hooks": "^4.2.0",
+    "exceljs": "^4.4.0",
+    "express": "^5.1.0",
     "js-yaml": "^4.1.1",
     "lucide-react": "^0.554.0",
     "marked": "^17.0.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.6",
-    "recharts": "^3.5.0",
-    "xlsx": "^0.18.5"
+    "recharts": "^3.5.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
     "typescript": "~5.8.2",

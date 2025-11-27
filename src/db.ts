@@ -12,8 +12,8 @@ export class UpscDatabase extends Dexie {
 
     constructor() {
         super('UpscAtlasDB');
-        this.version(6).stores({ // Increment version
-            tasks: 'id, userId, status, subject, date, isArchived, isDeleted',
+        this.version(7).stores({ // Increment version
+            tasks: 'id, userId, status, subject, date, isArchived, isDeleted, sourceFile',
             resources: 'id, userId, subject, type',
             userProfile: 'id',
             diary: 'id, userId, date',

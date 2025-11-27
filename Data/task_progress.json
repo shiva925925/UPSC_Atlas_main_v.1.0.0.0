@@ -1,0 +1,87 @@
+{
+  "63e9260kw": {
+    "status": "DONE",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "9fthd3c3r": {
+    "status": "IN_PROGRESS",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "es8u2k56t": {
+    "status": "IN_PROGRESS",
+    "logs": [
+      {
+        "id": "efs79434l",
+        "date": "2025-11-27",
+        "durationMinutes": 30,
+        "subject": "Polity",
+        "description": "Task work log"
+      }
+    ],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "task-001": {
+    "status": "TODO",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": true,
+    "deletedAt": "2025-11-27T00:09:06.325Z"
+  },
+  "task-003": {
+    "status": "TODO",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": true,
+    "deletedAt": "2025-11-27T00:09:03.802Z"
+  },
+  "task-004": {
+    "status": "TODO",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": true,
+    "deletedAt": "2025-11-27T00:09:01.764Z"
+  },
+  "task_001": {
+    "status": "TODO",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": true,
+    "deletedAt": "2025-11-27T00:08:59.567Z"
+  },
+  "task_002": {
+    "status": "TODO",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": true,
+    "deletedAt": "2025-11-27T00:08:56.811Z"
+  },
+  "task_003": {
+    "status": "TODO",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": true,
+    "deletedAt": "2025-11-27T00:08:55.062Z"
+  },
+  "task_yaml_001": {
+    "status": "DONE",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": true,
+    "deletedAt": "2025-11-27T00:08:46.292Z"
+  }
+}
