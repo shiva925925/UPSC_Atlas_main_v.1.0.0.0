@@ -6,6 +6,7 @@
   "scripts": {
     "start-server": "node server/server.js",
     "dev": "concurrently \"vite\" \"npm run start-server\"",
+    "full-sync-dev": "node convert-excel.js && npx kill-port 3000 3001 && npm run dev",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -28,7 +29,8 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.6",
-    "recharts": "^3.5.0"
+    "recharts": "^3.5.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",

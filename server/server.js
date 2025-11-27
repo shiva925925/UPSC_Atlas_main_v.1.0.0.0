@@ -2,9 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
-import ExcelJS from 'exceljs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { load } from 'js-yaml'; // Import js-yaml for YAML parsing
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -27,182 +27,25 @@ if (!fs.existsSync(TASKS_FOLDER)) {
     console.log(`Created tasks folder: ${TASKS_FOLDER}`);
 }
 
-// --- Utility Functions (Excel Parsing) ---
-// This logic is adapted from your frontend helper but now uses ExcelJS
-const COLUMN_ALIASES = {
-    id: ['unqid', 'id', 'uniqueid', 'taskid'],
-    title: ['topic', 'title', 'task', 'name', 'taskname', 'task title'],
-    subject: ['subject', 'category'],
-    priority: ['priority', 'importance', 'level'],
-    date: ['date', 'duedate', 'targetdate'],
-    description: ['description', 'notes', 'details'],
-    paper: ['paper', 'gspaper'],
-    acceptanceCriteria: ['acceptance criteria', 'checklist', 'criteria', 'acs'],
-};
-
-function normalizeHeader(header) {
-    return header ? header.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
-}
-
-function findColumnValue(row, headerMap, key) {
-    const aliases = COLUMN_ALIASES[key];
-    if (!aliases) return undefined;
-    for (const alias of aliases) {
-        if (headerMap[alias] !== undefined) {
-            return row[headerMap[alias]];
-        }
-    }
-    return undefined;
-}
-
-async function parseExcelFile(filePath, sourceFile) {
-    const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile(filePath);
-    const worksheet = workbook.getWorksheet(1); // Get first worksheet
-
-    if (!worksheet) return [];
-
-    const tasks = [];
-    const headerRow = worksheet.getRow(1);
-    const headerMap = {};
-
-    if (!headerRow.values) return [];
-
-    // Build header map for case-insensitive and alias matching
-    headerRow.eachCell((cell, colNumber) => {
-        const headerText = normalizeHeader(cell.text);
-        for (const key in COLUMN_ALIASES) {
-            if (COLUMN_ALIASES[key].includes(headerText)) {
-                headerMap[headerText] = colNumber -1 ; // 0-indexed for array access
-                break;
-            }
-        }
-    });
-    
-    // Fallback if specific aliases not found, use original header text
-    headerRow.eachCell((cell, colNumber) => {
-        const headerText = cell.text ? String(cell.text).toLowerCase() : '';
-        if (headerText && headerMap[headerText] === undefined) {
-            headerMap[headerText] = colNumber -1 ;
-        }
-    });
-
-    worksheet.eachRow((row, rowNumber) => {
-        if (rowNumber === 1) return; // Skip header row
-
-        const rowValues = row.values.slice(1); // ExcelJS uses 1-based indexing for values
-        
-        // Basic check for empty row (if all cells are empty or null-like)
-        if (rowValues.every(v => v === undefined || v === null || String(v).trim() === '')) {
-            return; 
-        }
-
-        const idFromExcel = findColumnValue(rowValues, headerMap, 'id');
-        const id = idFromExcel ? String(idFromExcel) : `excel_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
-
-        const title = findColumnValue(rowValues, headerMap, 'title') || 'Untitled Task';
-
-        let subject = 'General';
-        const rawSubject = findColumnValue(rowValues, headerMap, 'subject');
-        if (rawSubject) {
-            const normalizedRawSubject = String(rawSubject).toLowerCase();
-            // This needs to match your frontend Subject enum values
-            const validSubjects = ['history', 'polity', 'geography', 'economics', 'ethics', 'csat', 'current affairs', 'upsc syllabus', 'general'];
-            if (validSubjects.includes(normalizedRawSubject)) {
-                subject = normalizedRawSubject.charAt(0).toUpperCase() + normalizedRawSubject.slice(1); // Capitalize first letter
-            } else if (normalizedRawSubject === 'currentaffairs') {
-                subject = 'Current Affairs'; // Specific mapping for multi-word
-            } else if (normalizedRawSubject === 'upscsyllabus') {
-                subject = 'UPSC Syllabus';
-            }
-        }
-        
-        let priority = 'Medium';
-        const rawPriority = findColumnValue(rowValues, headerMap, 'priority');
-        if (rawPriority) {
-            const normalizedRawPriority = String(rawPriority).toLowerCase();
-            if (['high', 'medium', 'low'].includes(normalizedRawPriority)) {
-                priority = normalizedRawPriority.charAt(0).toUpperCase() + normalizedRawPriority.slice(1);
-            }
-        }
-
-        let dateStr = new Date().toISOString().split('T')[0];
-        const rawDate = findColumnValue(rowValues, headerMap, 'date');
-        if (rawDate) {
-            try {
-                let parsedDate;
-                if (typeof rawDate === 'number') {
-                    // Excel date numbers are days since 1900-01-01 (or 1904)
-                    // ExcelJS might auto-convert to Date objects, but if not:
-                    const excelEpoch = new Date(Date.UTC(1899, 11, 30)); // 1900-01-01 is day 1
-                    parsedDate = new Date(excelEpoch.getTime() + (rawDate * 24 * 60 * 60 * 1000));
-                } else {
-                    parsedDate = new Date(rawDate);
-                }
-                if (!isNaN(parsedDate.getTime())) {
-                    dateStr = parsedDate.toISOString().split('T')[0];
-                } else {
-                    console.warn(`Invalid date format for task '${title}': ${rawDate}. Using today's date.`);
-                }
-            } catch (e) {
-                console.warn(`Error parsing date for task '${title}': ${rawDate}. Using today's date.`, e);
-            }
-        }
-
-        let description = findColumnValue(rowValues, headerMap, 'description') || '';
-        const paper = findColumnValue(rowValues, headerMap, 'paper');
-        if (paper) {
-            description = `Paper: ${paper}\n\n${description}`;
-        }
-
-        const acceptanceCriteria = [];
-        const criteriaText = findColumnValue(rowValues, headerMap, 'acceptanceCriteria');
-        if (criteriaText) {
-            const lines = String(criteriaText).split(/\r?\n/).filter(line => line.trim() !== '');
-            lines.forEach((line, idx) => {
-                acceptanceCriteria.push({
-                    id: `ac-${id}-${idx}`,
-                    text: line.trim(),
-                    isCompleted: false
-                });
-            });
-        }
-
-        tasks.push({
-            id: id,
-            userId: 'Schamala', // Default user, will be dynamic later
-            title: title,
-            date: dateStr,
-            subject: subject,
-            priority: priority,
-            status: 'TODO', // Default status
-            description: description,
-            acceptanceCriteria: acceptanceCriteria,
-            logs: [],
-            evidences: [],
-            isArchived: false,
-            isDeleted: false,
-            sourceFile: sourceFile, // The file this task came from
-        });
-    });
-
-    return tasks;
-}
-
 // --- API Endpoints ---
 app.get('/api/tasks', async (req, res) => {
     console.log('GET /api/tasks received.');
     try {
         const allTasks = [];
         const files = fs.readdirSync(TASKS_FOLDER);
-        const excelFiles = files.filter(file => file.endsWith('.xlsx') || file.endsWith('.xls'));
+        const yamlFiles = files.filter(file => file.endsWith('.yaml') || file.endsWith('.yml'));
 
-        for (const file of excelFiles) {
+        for (const file of yamlFiles) {
             const filePath = path.join(TASKS_FOLDER, file);
-            console.log(`Parsing Excel file: ${file}`);
+            console.log(`Parsing YAML file: ${file}`);
             try {
-                const tasksFromFile = await parseExcelFile(filePath, file);
-                allTasks.push(...tasksFromFile);
+                const fileContent = await fs.promises.readFile(filePath, 'utf8');
+                const tasksFromFile = load(fileContent);
+                if (Array.isArray(tasksFromFile)) {
+                    allTasks.push(...tasksFromFile.map(task => ({ ...task, sourceFile: file })));
+                } else if (typeof tasksFromFile === 'object' && tasksFromFile !== null) {
+                    allTasks.push({ ...tasksFromFile, sourceFile: file });
+                }
             } catch (parseError) {
                 console.error(`Error parsing file ${file}:`, parseError);
                 // Continue to next file even if one fails

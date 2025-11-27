@@ -25,15 +25,17 @@ export async function syncAllTasks() {
         // Continue even if progress fetch fails, to sync basic task data
     }
 
+    const activeFileTaskIds = new Set<string>();
+
     try {
-        await syncMarkdownTasks(serverProgress);
+        await syncMarkdownTasks(serverProgress, activeFileTaskIds);
     } catch (e: any) {
         console.error('[Sync Service] Markdown sync failed:', e);
         errors.push(`Markdown Sync: ${e.message}`);
     }
 
     try {
-        await syncExcelTasks(serverProgress);
+        await syncExcelTasks(serverProgress, activeFileTaskIds);
     } catch (e: any) {
         console.error('[Sync Service] Excel sync failed:', e);
         errors.push(`Excel Sync: ${e.message}`);
@@ -47,10 +49,17 @@ export async function syncAllTasks() {
     }
 
     // 4. Update tasks that exist locally (e.g. created in UI) but not in files
-    // The above sync functions only touch tasks found in files.
-    // We need to apply server progress to tasks that are purely local/UI-based too.
+    // AND Perform Cleanup of Orphans
     const allTasks = await db.tasks.toArray();
     for (const task of allTasks) {
+        // Cleanup Logic:
+        // If it has a sourceFile (meaning it came from a file) AND it's NOT in our active list...
+        if (task.sourceFile && !activeFileTaskIds.has(task.id)) {
+            console.log(`%c[Sync Service] Deleting orphan task '${task.title}' (ID: ${task.id}) because it was removed from ${task.sourceFile}`, 'color: red;');
+            await db.tasks.delete(task.id);
+            continue; // Skip the rest of the loop for this deleted task
+        }
+
         const progress = serverProgress[task.id];
         if (progress) {
              const updates: Partial<Task> = {};
@@ -122,7 +131,7 @@ export async function saveUserTask(task: Task) {
     }
 }
 
-async function syncMarkdownTasks(serverProgress: { [taskId: string]: Partial<Task> }) {
+async function syncMarkdownTasks(serverProgress: { [taskId: string]: Partial<Task> }, activeFileTaskIds: Set<string>) {
     console.log('%c[Sync Service] Starting Markdown/YAML sync...', 'color: blue;');
     
     // 1. Fetch the list of task files
@@ -193,10 +202,11 @@ async function syncMarkdownTasks(serverProgress: { [taskId: string]: Partial<Tas
         }
 
         await smartUpdate(taskId, fileTaskData, existingTasksMap, serverProgress);
+        activeFileTaskIds.add(taskId);
     }
 }
 
-async function syncExcelTasks(serverProgress: { [taskId: string]: Partial<Task> }) {
+async function syncExcelTasks(serverProgress: { [taskId: string]: Partial<Task> }, activeFileTaskIds: Set<string>) {
     console.log('%c[Sync Service] Starting Excel server sync...', 'color: blue;');
     
     // 1. Fetch tasks from the server
@@ -237,6 +247,7 @@ async function syncExcelTasks(serverProgress: { [taskId: string]: Partial<Task> 
         };
 
         await smartUpdate(task.id, fileTaskData, existingTasksMap, serverProgress);
+        activeFileTaskIds.add(task.id);
     }
 }
 
@@ -258,7 +269,12 @@ async function smartUpdate(
         if (existingTask.date !== fileTaskData.date) updates.date = fileTaskData.date;
         if (existingTask.subject !== fileTaskData.subject) updates.subject = fileTaskData.subject;
         if (existingTask.description !== fileTaskData.description) updates.description = fileTaskData.description;
-        if (existingTask.priority !== fileTaskData.priority) updates.priority = fileTaskData.priority;
+        // Priority: Only update from file if NOT overridden by server progress
+        if (progressFromServer.priority) {
+             if (existingTask.priority !== progressFromServer.priority) updates.priority = progressFromServer.priority;
+        } else if (existingTask.priority !== fileTaskData.priority) {
+             updates.priority = fileTaskData.priority;
+        }
         if (existingTask.sourceFile !== fileTaskData.sourceFile) updates.sourceFile = fileTaskData.sourceFile;
 
         // Acceptance Criteria: Overwrite from file if changed, as file is source of truth for structure
@@ -320,11 +336,12 @@ export async function saveTaskProgress(allTasks: Task[]) {
     allTasks.forEach(task => {
         progressToSave[task.id] = {
             status: task.status,
+            priority: task.priority, // Save priority state
             logs: task.logs,
             evidences: task.evidences,
             isArchived: task.isArchived,
             isDeleted: task.isDeleted,
-            deletedAt: task.deletedAt // Include deletedAt if it exists
+            deletedAt: task.deletedAt
         };
     });
 

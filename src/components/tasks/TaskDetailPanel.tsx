@@ -403,6 +403,20 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                     </div>
                 </div>
 
+                {/* Priority Selection */}
+                <div className="mb-8">
+                    <h3 className="text-sm font-bold text-gray-900 mb-2">Priority</h3>
+                    <select
+                        value={task.priority}
+                        onChange={(e) => onUpdate(task.id, { priority: e.target.value as Priority })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+
                 {/* Status Status */}
                 <div className="mb-8">
                     <h3 className="text-sm font-bold text-gray-900 mb-2">Status</h3>

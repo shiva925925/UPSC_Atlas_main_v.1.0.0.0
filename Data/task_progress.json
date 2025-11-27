@@ -1,20 +1,16 @@
 {
-  "63e9260kw": {
-    "status": "DONE",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
-  },
   "9fthd3c3r": {
     "status": "IN_PROGRESS",
+    "priority": "Medium",
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": true,
+    "deletedAt": "2025-11-27T22:37:24.712Z"
   },
   "es8u2k56t": {
     "status": "IN_PROGRESS",
+    "priority": "Medium",
     "logs": [
       {
         "id": "efs79434l",
@@ -26,10 +22,29 @@
     ],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": true,
+    "deletedAt": "2025-11-27T22:37:27.969Z"
+  },
+  "p9krxw94a": {
+    "status": "IN_PROGRESS",
+    "priority": "Medium",
+    "logs": [
+      {
+        "id": "ntyosow7y",
+        "date": "2025-11-27",
+        "durationMinutes": 30,
+        "subject": "Current Affairs",
+        "description": "Task work log"
+      }
+    ],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": true,
+    "deletedAt": "2025-11-27T22:37:30.910Z"
   },
   "task-001": {
     "status": "TODO",
+    "priority": "High",
     "logs": [],
     "evidences": [],
     "isArchived": false,
@@ -38,6 +53,7 @@
   },
   "task-003": {
     "status": "TODO",
+    "priority": "Medium",
     "logs": [],
     "evidences": [],
     "isArchived": false,
@@ -46,6 +62,7 @@
   },
   "task-004": {
     "status": "TODO",
+    "priority": "Low",
     "logs": [],
     "evidences": [],
     "isArchived": false,
@@ -54,6 +71,7 @@
   },
   "task_001": {
     "status": "TODO",
+    "priority": "High",
     "logs": [],
     "evidences": [],
     "isArchived": false,
@@ -62,6 +80,7 @@
   },
   "task_002": {
     "status": "TODO",
+    "priority": "Medium",
     "logs": [],
     "evidences": [],
     "isArchived": false,
@@ -70,6 +89,7 @@
   },
   "task_003": {
     "status": "TODO",
+    "priority": "Low",
     "logs": [],
     "evidences": [],
     "isArchived": false,
@@ -78,10 +98,28 @@
   },
   "task_yaml_001": {
     "status": "DONE",
+    "priority": "High",
     "logs": [],
     "evidences": [],
     "isArchived": false,
     "isDeleted": true,
     "deletedAt": "2025-11-27T00:08:46.292Z"
+  },
+  "xik626jye": {
+    "status": "IN_PROGRESS",
+    "priority": "High",
+    "logs": [
+      {
+        "id": "9ulics9qf",
+        "date": "2025-11-27",
+        "durationMinutes": 30,
+        "subject": "CSAT",
+        "description": "Task work log"
+      }
+    ],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": true,
+    "deletedAt": "2025-11-27T22:37:34.083Z"
   }
 }
