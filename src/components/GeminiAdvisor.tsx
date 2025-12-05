@@ -3,14 +3,14 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 import { Sparkles, MessageSquare, BookOpen, BrainCircuit, Loader2 } from 'lucide-react';
 import { generateStudyInsights } from '../services/geminiService';
-import { Subject } from '../types';
+import { Subject, SubjectCategory } from '../types';
 
 const GeminiAdvisor: React.FC = () => {
   const tasks = useLiveQuery(() => db.tasks.toArray()) || [];
   const allLogs = tasks.flatMap(t => t.logs || []);
 
   const [activeTab, setActiveTab] = useState<'insights' | 'schedule'>('insights');
-  const [selectedSubject, setSelectedSubject] = useState<Subject>(Subject.POLITY);
+  const [selectedCategory, setSelectedCategory] = useState<SubjectCategory>(SubjectCategory.POLITY_GOVERNANCE);
   const [insight, setInsight] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +33,7 @@ const GeminiAdvisor: React.FC = () => {
       // Placeholder for schedule generation logic
       // In a real app, this would call a different service function
       await new Promise(resolve => setTimeout(resolve, 2000));
-      setInsight(`Here is a suggested schedule for ${selectedSubject}:\n\n- Monday: Read Chapter 1-2 (2 hours)\n- Tuesday: Revise notes (1 hour)\n- Wednesday: Practice questions (1.5 hours)`);
+      setInsight(`Here is a suggested schedule for ${selectedCategory}:\n\n- Monday: Read Chapter 1-2 (2 hours)\n- Tuesday: Revise notes (1 hour)\n- Wednesday: Practice questions (1.5 hours)`);
     } catch (error) {
       setInsight("Failed to generate schedule.");
     } finally {
@@ -42,7 +42,7 @@ const GeminiAdvisor: React.FC = () => {
   };
 
   return (
-    <div className="p-6 animate-fade-in h-full flex flex-col">
+    <div className="p-6 animate-fade-in h-full flex flex-col overflow-y-auto">
       <header className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
           <Sparkles className="text-purple-600" /> AI Study Advisor
@@ -96,12 +96,12 @@ const GeminiAdvisor: React.FC = () => {
               <div className="space-y-4 animate-fade-in">
                 <label className="block text-sm font-medium text-gray-700">Subject Focus</label>
                 <select
-                  value={selectedSubject}
-                  onChange={(e) => setSelectedSubject(e.target.value as Subject)}
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value as SubjectCategory)}
                   className="w-full border-gray-300 border rounded-md p-2 text-sm focus:ring-purple-500 focus:border-purple-500"
                 >
-                  {Object.values(Subject).map(s => (
-                    <option key={s} value={s}>{s}</option>
+                  {Object.values(SubjectCategory).map(cat => (
+                    <option key={cat} value={cat}>{cat}</option>
                   ))}
                 </select>
                 <button

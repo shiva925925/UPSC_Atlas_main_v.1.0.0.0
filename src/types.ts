@@ -14,15 +14,71 @@ export enum TaskStatus {
 }
 
 export enum Subject {
+  // Generic Subjects (these match SubjectCategory names for easier mapping)
   HISTORY = 'History',
-  POLITY = 'Polity',
   GEOGRAPHY = 'Geography',
-  ECONOMICS = 'Economics',
+  INDIAN_SOCIETY = 'Indian Society',
+  POLITY_GOVERNANCE = 'Polity & Governance',
+  ECONOMY = 'Economy',
+  ENVIRONMENT_SCIENCE = 'Environment & Science',
+  SECURITY = 'Security',
   ETHICS = 'Ethics',
+
+  // Specific History & Culture (GS 1)
+  ART_AND_CULTURE = 'Art & Culture',
+  ANCIENT_HISTORY = 'Ancient History',
+  MEDIEVAL_HISTORY = 'Medieval History',
+  MODERN_HISTORY = 'Modern History',
+  POST_INDEPENDENCE = 'Post-Independence India',
+  WORLD_HISTORY = 'World History',
+
+  // Specific Geography (GS 1)
+  PHYSICAL_GEOGRAPHY = 'Physical Geography',
+  HUMAN_ECONOMIC_GEOGRAPHY = 'Human & Economic Geography',
+  INDIAN_GEOGRAPHY = 'Indian Geography',
+  WORLD_GEOGRAPHY = 'World Geography',
+
+  // Specific Polity & Governance (GS 2)
+  INDIAN_POLITY = 'Indian Polity',
+  GOVERNANCE = 'Governance',
+  SOCIAL_JUSTICE = 'Social Justice',
+  INTERNATIONAL_RELATIONS = 'International Relations',
+
+  // Specific Economy & Agriculture (GS 3)
+  INDIAN_ECONOMY = 'Indian Economy',
+  ECONOMIC_DEVELOPMENT = 'Economic Development',
+  AGRICULTURE = 'Agriculture',
+
+  // Specific Science, Tech & Environment (GS 3)
+  SCIENCE_TECHNOLOGY = 'Science & Technology',
+  BIODIVERSITY_ENVIRONMENT = 'Biodiversity & Environment',
+  DISASTER_MANAGEMENT = 'Disaster Management',
+
+  // Specific Internal Security (GS 3)
+  INTERNAL_SECURITY = 'Internal Security',
+
+  // Specific Ethics (GS 4)
+  ETHICS_INTEGRITY = 'Ethics & Integrity',
+  CASE_STUDIES = 'Case Studies',
+
+  // General / Others
   CSAT = 'CSAT',
   CURRENT_AFFAIRS = 'Current Affairs',
-  SYLLABUS = 'UPSC Syllabus',
-  GENERAL = 'General'
+  UPSC_SYLLABUS = 'UPSC Syllabus',
+  ESSAY = 'Essay',
+  GENERAL = 'General',
+}
+
+export enum SubjectCategory {
+  HISTORY = 'History',
+  GEOGRAPHY = 'Geography',
+  INDIAN_SOCIETY = 'Indian Society',
+  POLITY_GOVERNANCE = 'Polity & Governance',
+  ECONOMY = 'Economy',
+  ENVIRONMENT_SCIENCE = 'Environment & Science',
+  SECURITY = 'Security',
+  ETHICS = 'Ethics',
+  GENERAL = 'General',
 }
 
 export type Priority = 'High' | 'Medium' | 'Low';

@@ -1,6 +1,5 @@
-import React from 'react';
-import { Task, TaskStatus, Subject } from '../../types';
-import { SUBJECT_COLORS } from '../../constants';
+import { Task, TaskStatus, Subject, SubjectCategory } from '../../types';
+import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../../constants';
 import { AlertCircle, Calendar, Archive, Trash2, RotateCcw, Ban } from 'lucide-react';
 
 interface TaskItemProps {
@@ -39,6 +38,9 @@ const TaskItem: React.FC<TaskItemProps> = ({
         }
     };
 
+    const subjectCategory = SUBJECT_HIERARCHY[task.subject] || SubjectCategory.GENERAL;
+    const colors = CATEGORY_COLORS[subjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];
+
     return (
         <div
             onClick={() => onClick(task)}
@@ -68,8 +70,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
             {/* Subject */}
             <div className="col-span-2">
                 <span
-                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-white"
-                    style={{ backgroundColor: SUBJECT_COLORS[task.subject] }}
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${colors.background} ${colors.text}`}
                 >
                     {task.subject}
                 </span>

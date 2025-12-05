@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { SUBJECT_COLORS } from '../constants';
-import { Subject, DiaryEntry } from '../types';
+import { Subject, SubjectCategory, DiaryEntry } from '../types';
+import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../constants';
 import { Edit2, BookHeart, Send, Trash2 } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
@@ -33,7 +33,7 @@ const Profile: React.FC = () => {
   if (!userProfile) return <div>Loading profile...</div>;
 
   return (
-    <div className="p-4 md:p-8 max-w-4xl mx-auto animate-fade-in">
+    <div className="p-4 md:p-8 max-w-4xl mx-auto animate-fade-in overflow-y-auto h-full">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-8">
         {/* Cover Photo */}
         <div className="h-32 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
@@ -110,15 +110,18 @@ const Profile: React.FC = () => {
             <div>
               <h3 className="text-lg font-bold text-gray-900 mb-4">Focus Areas</h3>
               <div className="flex flex-wrap gap-2">
-                {Object.values(Subject).map((sub) => {
-                  if (sub === Subject.SYLLABUS) return null;
+                {Object.values(SubjectCategory).map((category) => {
+                  // Exclude general/meta categories from "Focus Areas"
+                  if (category === SubjectCategory.GENERAL || category === SubjectCategory.UPSC_SYLLABUS || category === SubjectCategory.ESSAY) {
+                    return null;
+                  }
+                  const colors = CATEGORY_COLORS[category];
                   return (
                     <span
-                      key={sub}
-                      className="px-3 py-1 rounded-full text-sm font-medium text-white shadow-sm"
-                      style={{ backgroundColor: SUBJECT_COLORS[sub] }}
+                      key={category}
+                      className={`px-3 py-1 rounded-full text-sm font-medium shadow-sm ${colors.background} ${colors.text}`}
                     >
-                      {sub}
+                      {category}
                     </span>
                   );
                 })}

@@ -34,5 +34,26 @@
     "evidences": [],
     "isArchived": false,
     "isDeleted": false
+  },
+  {
+    "id": "xl3r155b8",
+    "userId": "Schamala",
+    "title": "DM Examples in India",
+    "subject": "Disaster Management",
+    "priority": "Low",
+    "date": "2025-12-12",
+    "status": "TODO",
+    "description": "",
+    "acceptanceCriteria": [
+      {
+        "id": "csieijjeg",
+        "text": "Maintain the data in a map",
+        "isCompleted": false
+      }
+    ],
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
   }
 ]

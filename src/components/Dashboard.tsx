@@ -1,7 +1,8 @@
 import React from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
-import { SUBJECT_COLORS } from '../constants';
+import { Subject, SubjectCategory } from '../types';
+import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../constants';
 import { Clock, BookOpen, Target, CheckSquare } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
@@ -17,7 +18,7 @@ const Dashboard: React.FC = () => {
   const inProgressTasks = tasks.filter(t => t.status === 'IN_PROGRESS').length;
 
   return (
-    <div className="p-6 animate-fade-in">
+    <div className="p-6 animate-fade-in overflow-y-auto h-full">
       <header className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800">Welcome back, {userProfile?.name || 'Aspirant'}!</h1>
         <p className="text-gray-600 mt-2">You've studied for <span className="font-bold text-blue-600">{totalHours} hours</span> total. Keep pushing!</p>
@@ -72,23 +73,35 @@ const Dashboard: React.FC = () => {
           <h3 className="text-lg font-bold text-gray-800 mb-4">Subject Distribution</h3>
           <div className="h-64 flex items-end justify-around gap-2">
             {/* Simple visual placeholder for chart */}
-            {Object.entries(SUBJECT_COLORS).map(([subject, color]) => {
-              const subjectLogs = allLogs.filter(l => l.subject === subject);
-              const subjectMinutes = subjectLogs.reduce((acc, l) => acc + l.durationMinutes, 0);
-              const height = totalMinutes > 0 ? (subjectMinutes / totalMinutes) * 100 : 0;
+            {(() => {
+              const categoryMinutes: Record<SubjectCategory, number> = Object.values(SubjectCategory).reduce((acc, category) => {
+                acc[category] = 0;
+                return acc;
+              }, {} as Record<SubjectCategory, number>);
 
-              if (height === 0) return null;
+              allLogs.forEach(log => {
+                const category = SUBJECT_HIERARCHY[log.subject] || SubjectCategory.GENERAL;
+                categoryMinutes[category] += log.durationMinutes;
+              });
 
-              return (
-                <div key={subject} className="flex flex-col items-center gap-2 w-full">
-                  <div
-                    className="w-full max-w-[40px] rounded-t-md transition-all duration-500"
-                    style={{ height: `${height}%`, backgroundColor: color, minHeight: '4px' }}
-                  ></div>
-                  <span className="text-[10px] text-gray-500 truncate w-full text-center">{subject.split(' ')[0]}</span>
-                </div>
-              );
-            })}
+              return Object.entries(categoryMinutes).map(([categoryKey, minutes]) => {
+                const categoryEnum = categoryKey as SubjectCategory;
+                const colors = CATEGORY_COLORS[categoryEnum];
+                const height = totalMinutes > 0 ? (minutes / totalMinutes) * 100 : 0;
+
+                if (height === 0) return null;
+
+                return (
+                  <div key={categoryEnum} className="flex flex-col items-center gap-2 w-full">
+                    <div
+                      className="w-full max-w-[40px] rounded-t-md transition-all duration-500"
+                      style={{ height: `${height}%`, backgroundColor: colors.hex, minHeight: '4px' }}
+                    ></div>
+                    <span className="text-[10px] text-gray-500 truncate w-full text-center">{categoryEnum}</span>
+                  </div>
+                );
+              });
+            })()}
           </div>
         </div>
 
@@ -97,7 +110,7 @@ const Dashboard: React.FC = () => {
           <div className="space-y-4">
             {allLogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5).map(log => (
               <div key={log.id} className="flex items-center gap-3 pb-3 border-b border-gray-50 last:border-0">
-                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: SUBJECT_COLORS[log.subject] }}></div>
+                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: CATEGORY_COLORS[SUBJECT_HIERARCHY[log.subject] || SubjectCategory.GENERAL].hex }}></div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-800">{log.description}</p>
                   <p className="text-xs text-gray-500">{log.date} • {log.durationMinutes}m</p>

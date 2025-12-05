@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
-import { SUBJECT_COLORS, MOCK_ACHIEVEMENTS } from '../constants';
-import { CalendarFilter } from '../types';
+import { Subject, SubjectCategory, CalendarFilter } from '../types';
+import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../constants';
 import { ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 
 const CalendarView: React.FC = () => {
@@ -61,7 +61,7 @@ const CalendarView: React.FC = () => {
 
           <div className="mt-2 flex flex-wrap gap-1">
             {dayTasks.slice(0, 3).map(task => (
-              <div key={task.id} className="w-2 h-2 rounded-full" style={{ backgroundColor: SUBJECT_COLORS[task.subject] }} title={task.title}></div>
+              <div key={task.id} className="w-2 h-2 rounded-full" style={{ backgroundColor: CATEGORY_COLORS[SUBJECT_HIERARCHY[task.subject] || SubjectCategory.GENERAL].hex }} title={task.title}></div>
             ))}
             {dayTasks.length > 3 && <span className="text-[10px] text-gray-400">+{dayTasks.length - 3}</span>}
             {dayLogs.length > 0 && <div className="w-2 h-2 rounded-full bg-gray-400" title={`${dayLogs.length} logs`}></div>}
@@ -84,7 +84,6 @@ const CalendarView: React.FC = () => {
     const dateTasks = tasks.filter(t => t.date === selectedDate);
     const dateLogs = allLogs.filter(l => l.date === selectedDate);
     const dateResources = resources.filter(r => r.date === selectedDate);
-    const dateAchievements = MOCK_ACHIEVEMENTS.filter(a => a.date === selectedDate);
 
     return (
       <div className="space-y-6">
@@ -98,15 +97,19 @@ const CalendarView: React.FC = () => {
             <h4 className="text-sm font-bold text-gray-600 mb-2 uppercase tracking-wider">Tasks</h4>
             {dateTasks.length === 0 ? <p className="text-xs text-gray-400 italic">No tasks for this day.</p> : (
               <div className="space-y-2">
-                {dateTasks.map(task => (
-                  <div key={task.id} className="bg-white border border-gray-200 p-3 rounded-md shadow-sm">
-                    <div className="flex justify-between items-start">
-                      <h5 className="text-sm font-medium text-gray-800">{task.title}</h5>
-                      <span className="text-[10px] px-2 py-0.5 rounded text-white" style={{ backgroundColor: SUBJECT_COLORS[task.subject] }}>{task.subject}</span>
+                {dateTasks.map(task => {
+                  const subjectCategory = SUBJECT_HIERARCHY[task.subject] || SubjectCategory.GENERAL;
+                  const colors = CATEGORY_COLORS[subjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];
+                  return (
+                    <div key={task.id} className="bg-white border border-gray-200 p-3 rounded-md shadow-sm">
+                      <div className="flex justify-between items-start">
+                        <h5 className="text-sm font-medium text-gray-800">{task.title}</h5>
+                        <span className={`text-[10px] px-2 py-0.5 rounded ${colors.background} ${colors.text}`}>{task.subject}</span>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-1">{task.status.replace('_', ' ')}</p>
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">{task.status.replace('_', ' ')}</p>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

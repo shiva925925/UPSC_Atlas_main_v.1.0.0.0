@@ -64,7 +64,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#f4f5f7]">
+    <div className="flex h-screen overflow-hidden bg-[#f4f5f7]">
       {/* Mobile Overlay */}
       {isMobileMenuOpen && (
         <div
@@ -119,7 +119,7 @@ const App: React.FC = () => {
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-x-hidden overflow-y-auto">
+        <main className="flex-1 overflow-hidden flex flex-col">
           {renderContent()}
         </main>
       </div>

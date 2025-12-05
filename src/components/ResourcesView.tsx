@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
-import { SUBJECT_COLORS } from '../constants';
-import { Resource, ResourceType, Subject } from '../types';
+import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../constants';
+import { Resource, ResourceType, Subject, SubjectCategory } from '../types';
 import { FileText, Link as LinkIcon, Video, Plus, ExternalLink, Search, Filter, Calendar as CalendarIcon, X, Trash2, Edit2, Image as ImageIcon } from 'lucide-react';
 import LibraryTree from './LibraryTree';
 import DetailPanel from './DetailPanel';
@@ -10,7 +10,7 @@ import DetailPanel from './DetailPanel';
 const ResourcesView: React.FC = () => {
   const dbResources = useLiveQuery(() => db.resources.toArray()) || [];
   const [libraryResources, setLibraryResources] = useState<Resource[]>([]);
-  const [filterSubject, setFilterSubject] = useState<Subject | 'ALL'>('ALL');
+  const [filterSubject, setFilterSubject] = useState<SubjectCategory | 'ALL'>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -19,7 +19,7 @@ const ResourcesView: React.FC = () => {
   // Form state
   const [newTitle, setNewTitle] = useState('');
   const [newType, setNewType] = useState<ResourceType>(ResourceType.LINK);
-  const [newSubject, setNewSubject] = useState<Subject>(Subject.POLITY);
+  const [newSubject, setNewSubject] = useState<Subject>(Subject.GENERAL);
   const [newUrl, setNewUrl] = useState('');
   const [newDate, setNewDate] = useState('');
   const [newDescription, setNewDescription] = useState('');
@@ -157,11 +157,11 @@ const ResourcesView: React.FC = () => {
           <Filter size={18} className="text-gray-500" />
           <select
             value={filterSubject}
-            onChange={(e) => setFilterSubject(e.target.value as Subject | 'ALL')}
+            onChange={(e) => setFilterSubject(e.target.value as SubjectCategory | 'ALL')}
             className="bg-transparent outline-none text-sm text-gray-700 font-medium cursor-pointer w-full md:w-auto"
           >
             <option value="ALL">All Subjects</option>
-            {Object.values(Subject).map(s => <option key={s} value={s}>{s}</option>)}
+            {Object.values(SubjectCategory).map(cat => <option key={cat} value={cat}>{cat}</option>)}
           </select>
         </div>
       </div>
@@ -207,51 +207,54 @@ const ResourcesView: React.FC = () => {
                     <p>No custom resources found. Add one to get started!</p>
                   </div>
                 ) : (
-                  filteredUserResources.map(resource => (
-                    <div
-                      key={resource.id}
-                      className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-gray-100 items-center hover:bg-blue-50/50 transition-colors group"
-                    >
-                      {/* Resource Title */}
-                      <div className="col-span-5">
-                        <h4 className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors">{resource.title}</h4>
-                        <p className="text-xs text-gray-500 line-clamp-1">{resource.description || 'No description'}</p>
-                      </div>
+                  filteredUserResources.map(resource => {
+                    const resourceSubjectCategory = SUBJECT_HIERARCHY[resource.subject] || SubjectCategory.GENERAL;
+                    const resourceColors = CATEGORY_COLORS[resourceSubjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];
+                    return (
+                      <div
+                        key={resource.id}
+                        className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-gray-100 items-center hover:bg-blue-50/50 transition-colors group"
+                      >
+                        {/* Resource Title */}
+                        <div className="col-span-5">
+                          <h4 className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors">{resource.title}</h4>
+                          <p className="text-xs text-gray-500 line-clamp-1">{resource.description || 'No description'}</p>
+                        </div>
 
-                      {/* Type */}
-                      <div className="col-span-2 flex items-center gap-1">
-                        {getIcon(resource.type)}
-                        <span className="text-xs font-medium text-gray-700">{resource.type}</span>
-                      </div>
+                        {/* Type */}
+                        <div className="col-span-2 flex items-center gap-1">
+                          {getIcon(resource.type)}
+                          <span className="text-xs font-medium text-gray-700">{resource.type}</span>
+                        </div>
 
-                      {/* Subject */}
-                      <div className="col-span-2">
-                        <span
-                          className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium text-white"
-                          style={{ backgroundColor: SUBJECT_COLORS[resource.subject] }}
-                        >
-                          {resource.subject}
-                        </span>
-                      </div>
+                        {/* Subject */}
+                        <div className="col-span-2">
+                          <span
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${resourceColors.background} ${resourceColors.text}`}
+                          >
+                            {resource.subject}
+                          </span>
+                        </div>
 
-                      {/* Date */}
-                      <div className="col-span-2 text-sm text-gray-500">
-                        {resource.date && (
-                          <div className="flex items-center gap-1">
-                            <CalendarIcon size={14} />
-                            <span>{resource.date}</span>
-                          </div>
-                        )}
-                      </div>
+                        {/* Date */}
+                        <div className="col-span-2 text-sm text-gray-500">
+                          {resource.date && (
+                            <div className="flex items-center gap-1">
+                              <CalendarIcon size={14} />
+                              <span>{resource.date}</span>
+                            </div>
+                          )}
+                        </div>
 
-                      {/* Actions */}
-                      <div className="col-span-1 flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button onClick={() => handleEdit(resource)} className="p-1 text-gray-400 hover:text-blue-600 rounded" title="Edit"><Edit2 size={16} /></button>
-                        <button onClick={() => handleDelete(resource.id)} className="p-1 text-gray-400 hover:text-red-500 rounded" title="Delete"><Trash2 size={16} /></button>
-                        <button onClick={() => handleOpenResource(resource)} className="p-1 text-gray-400 hover:text-blue-600 rounded" title="Open"><ExternalLink size={16} /></button>
+                        {/* Actions */}
+                        <div className="col-span-1 flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <button onClick={() => handleEdit(resource)} className="p-1 text-gray-400 hover:text-blue-600 rounded" title="Edit"><Edit2 size={16} /></button>
+                          <button onClick={() => handleDelete(resource.id)} className="p-1 text-gray-400 hover:text-red-500 rounded" title="Delete"><Trash2 size={16} /></button>
+                          <button onClick={() => handleOpenResource(resource)} className="p-1 text-gray-400 hover:text-blue-600 rounded" title="Open"><ExternalLink size={16} /></button>
+                        </div>
                       </div>
-                    </div>
-                  ))
+                    );
+                  })
                 )}
               </div>
             </div>

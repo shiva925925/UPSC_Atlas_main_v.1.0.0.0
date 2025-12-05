@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Task, TaskStatus, EvidenceType, TimeLog, Evidence } from '../../types';
-import { SUBJECT_COLORS } from '../../constants';
+import { Task, TaskStatus, EvidenceType, TimeLog, Evidence, SubjectCategory } from '../../types';
+import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../../constants';
 import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit } from 'lucide-react';
 
 interface TaskDetailPanelProps {
@@ -129,14 +129,17 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
         setEditingCriterionId(null);
     };
 
+    const subjectCategory = SUBJECT_HIERARCHY[task.subject] || SubjectCategory.GENERAL;
+    // Safe access in case category is missing from colors map
+    const colors = CATEGORY_COLORS[subjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];
+
     return (
-        <div className="w-[400px] border-l border-gray-200 bg-white h-full overflow-y-auto shadow-xl z-20 absolute right-0 top-0 bottom-0 animate-slide-in-right">
+        <div className="w-[400px] border-l border-gray-200 bg-white h-full overflow-y-auto shadow-xl">
             <div className="p-6">
                 <div className="flex justify-between items-start mb-6">
                     <div className="flex items-center gap-2">
                         <span
-                            className="text-xs font-bold px-2 py-1 rounded text-white"
-                            style={{ backgroundColor: SUBJECT_COLORS[task.subject] }}
+                            className={`text-xs font-bold px-2 py-1 rounded ${colors.background} ${colors.text}`}
                         >
                             {task.subject}
                         </span>

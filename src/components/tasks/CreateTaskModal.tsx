@@ -10,7 +10,7 @@ interface CreateTaskModalProps {
 
 const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose, onCreate }) => {
     const [newTaskTitle, setNewTaskTitle] = useState('');
-    const [newTaskSubject, setNewTaskSubject] = useState<Subject>(Subject.POLITY);
+    const [newTaskSubject, setNewTaskSubject] = useState<Subject>(Subject.GENERAL);
     const [newTaskPriority, setNewTaskPriority] = useState<'High' | 'Medium' | 'Low'>('Medium');
     const [newTaskDate, setNewTaskDate] = useState(new Date().toISOString().split('T')[0]);
     const [newTaskDescription, setNewTaskDescription] = useState('');
@@ -54,7 +54,7 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose, onCr
         // Reset form
         setNewTaskTitle('');
         setNewTaskDescription('');
-        setNewTaskSubject(Subject.POLITY);
+        setNewTaskSubject(Subject.GENERAL);
         setNewTaskPriority('Medium');
         setNewTaskDate(new Date().toISOString().split('T')[0]);
         setCriteria([]);

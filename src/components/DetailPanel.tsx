@@ -1,9 +1,9 @@
 import React from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
-import { Resource, CustomLink } from '../types';
+import { Resource, CustomLink, Subject, SubjectCategory } from '../types';
 import { X, ExternalLink, Link as LinkIcon } from 'lucide-react';
-import { SUBJECT_COLORS } from '../constants';
+import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../constants';
 
 interface DetailPanelProps {
     selectedResource: Resource;
@@ -36,14 +36,16 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ selectedResource, allResource
         [allResources]
     );
 
+    const selectedSubjectCategory = SUBJECT_HIERARCHY[selectedResource.subject] || SubjectCategory.GENERAL;
+    const selectedColors = CATEGORY_COLORS[selectedSubjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];
+
     return (
         <div className="bg-white h-full flex flex-col border-l border-gray-200 animate-slide-in-left">
             {/* Header */}
             <div className="p-4 border-b border-gray-200 flex-shrink-0">
                 <div className="flex justify-between items-center mb-2">
                     <span 
-                        className="text-xs font-bold px-2 py-0.5 rounded-full text-white"
-                        style={{ backgroundColor: SUBJECT_COLORS[selectedResource.subject] }}
+                        className={`text-xs font-bold px-2 py-0.5 rounded-full ${selectedColors.background} ${selectedColors.text}`}
                     >
                         {selectedResource.subject}
                     </span>
@@ -74,6 +76,9 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ selectedResource, allResource
 
                             if (!otherResource) return null;
 
+                            const otherSubjectCategory = SUBJECT_HIERARCHY[otherResource.subject] || SubjectCategory.GENERAL;
+                            const otherColors = CATEGORY_COLORS[otherSubjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];
+
                             return (
                                 <li key={link.id} className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                                     <div className="text-xs font-semibold text-gray-500 mb-1 flex items-center" style={{ color: link.color || '#6b7280' }}>
@@ -86,8 +91,8 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ selectedResource, allResource
                                     >
                                         <p className="font-semibold text-blue-600 hover:underline">{otherResource.title}</p>
                                         <p 
-                                            className="text-xs font-medium text-white px-1.5 py-0.5 rounded-full mt-1" 
-                                            style={{ backgroundColor: SUBJECT_COLORS[otherResource.subject], display: 'inline-block' }}
+                                            className={`text-xs font-medium px-1.5 py-0.5 rounded-full mt-1 ${otherColors.background} ${otherColors.text}`} 
+                                            style={{ display: 'inline-block' }}
                                         >
                                             {otherResource.subject}
                                         </p>

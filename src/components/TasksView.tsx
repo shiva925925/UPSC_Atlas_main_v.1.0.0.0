@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
-import { Task, TaskStatus, Subject } from '../types';
+import { Task, TaskStatus, Subject, SubjectCategory } from '../types';
 import { Plus, Filter } from 'lucide-react';
 import { syncAllTasks, saveTaskProgress, saveUserTask } from '../services/taskSyncService';
+import { SUBJECT_HIERARCHY } from '../constants';
 
 // Sub-components
 import TaskItem from './tasks/TaskItem';
@@ -24,6 +25,7 @@ const TasksView: React.FC = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterType, setFilterType] = useState<'Subject' | 'Status' | 'Date' | 'Source File' | null>(null);
   const [filterValue, setFilterValue] = useState<string>('');
+  const [subFilterValue, setSubFilterValue] = useState<string>('');
   
   // Get unique source files
   const uniqueSourceFiles = useLiveQuery(async () => {
@@ -34,6 +36,13 @@ const TasksView: React.FC = () => {
     });
     return Array.from(files).sort();
   }) || [];
+
+  // Helper to get topics for a category
+  const getSubjectTopics = (category: string) => {
+    return Object.entries(SUBJECT_HIERARCHY)
+      .filter(([_, cat]) => cat === category)
+      .map(([subject, _]) => subject);
+  };
   
   // Sync tasks from Server & Markdown files on initial load
   useEffect(() => {
@@ -133,7 +142,13 @@ const TasksView: React.FC = () => {
     // 2. Advanced Filter
     if (filterType && filterValue) {
       if (filterType === 'Subject') {
-        return t.subject === filterValue;
+        // Priority 1: Specific Topic Filter
+        if (subFilterValue) {
+          return t.subject === subFilterValue;
+        }
+        // Priority 2: Category Filter
+        const taskCategory = SUBJECT_HIERARCHY[t.subject] || SubjectCategory.GENERAL;
+        return taskCategory === filterValue;
       }
       if (filterType === 'Status') {
         return t.status === filterValue;
@@ -163,9 +178,9 @@ const TasksView: React.FC = () => {
   });
 
   return (
-    <div className="flex h-full animate-fade-in relative bg-white">
+    <div className="flex h-full animate-fade-in bg-white">
       {/* List Area */}
-      <div className="flex-1 flex flex-col h-full overflow-hidden">
+      <div className={`flex-1 flex flex-col h-full overflow-hidden ${selectedTask ? 'max-w-[calc(100%-400px)]' : ''}`}>
         <header className="p-6 border-b border-gray-200 flex justify-between items-center bg-white z-10">
           <div className="flex items-center gap-4">
             <div>
@@ -196,6 +211,7 @@ const TasksView: React.FC = () => {
                         onChange={(e) => {
                           setFilterType(e.target.value as any);
                           setFilterValue(''); // Reset value when type changes
+                          setSubFilterValue(''); // Reset sub-filter
                         }}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
@@ -209,16 +225,21 @@ const TasksView: React.FC = () => {
 
                     {filterType && (
                       <div>
-                        <label className="block text-xs font-semibold text-gray-500 mb-1">Select {filterType}</label>
+                        <label className="block text-xs font-semibold text-gray-500 mb-1">
+                          Select {filterType === 'Subject' ? 'Category' : filterType}
+                        </label>
                         <select
                           value={filterValue}
-                          onChange={(e) => setFilterValue(e.target.value)}
+                          onChange={(e) => {
+                            setFilterValue(e.target.value);
+                            setSubFilterValue(''); // Reset sub-filter when category changes
+                          }}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                           <option value="">All {filterType}s</option>
                           
-                          {filterType === 'Subject' && Object.values(Subject).map(s => (
-                            <option key={s} value={s}>{s}</option>
+                          {filterType === 'Subject' && Object.values(SubjectCategory).map(cat => (
+                            <option key={cat} value={cat}>{cat}</option>
                           ))}
 
                           {filterType === 'Status' && Object.values(TaskStatus).map(s => (
@@ -240,11 +261,29 @@ const TasksView: React.FC = () => {
                       </div>
                     )}
 
+                    {/* Sub-Filter for Specific Topics */}
+                    {filterType === 'Subject' && filterValue && (
+                      <div className="animate-fade-in">
+                        <label className="block text-xs font-semibold text-gray-500 mb-1">Select Topic</label>
+                        <select
+                          value={subFilterValue}
+                          onChange={(e) => setSubFilterValue(e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                          <option value="">All Topics</option>
+                          {getSubjectTopics(filterValue).map(topic => (
+                            <option key={topic} value={topic}>{topic}</option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+
                     <div className="flex justify-end pt-2 border-t border-gray-100">
                        <button
                         onClick={() => {
                           setFilterType(null);
                           setFilterValue('');
+                          setSubFilterValue('');
                           setIsFilterOpen(false);
                         }}
                         className="text-xs text-gray-500 hover:text-red-600 font-medium"

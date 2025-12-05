@@ -22,8 +22,80 @@ const COLUMN_ALIASES = {
     acceptanceCriteria: ['acceptance criteria', 'checklist', 'criteria', 'acs'],
 };
 
+// This map mirrors the Subject enum from src/types.ts for lookup in this Node.js script.
+// It must be kept in sync with src/types.ts.
+const SUBJECT_MAP = {
+    // Generic Subjects (these map directly to their SubjectCategory counterparts)
+    'history': 'History',
+    'geography': 'Geography',
+    'indian society': 'Indian Society',
+    'polity & governance': 'Polity & Governance',
+    'economy': 'Economy',
+    'environment & science': 'Environment & Science',
+    'security': 'Security',
+    'ethics': 'Ethics',
+
+    // Specific History & Culture (GS 1)
+    'art & culture': 'Art & Culture',
+    'ancient history': 'Ancient History',
+    'medieval history': 'Medieval History',
+    'modern history': 'Modern History',
+    'post-independence india': 'Post-Independence India',
+    'world history': 'World History',
+
+    // Specific Geography (GS 1)
+    'physical geography': 'Physical Geography',
+    'human & economic geography': 'Human & Economic Geography',
+    'indian geography': 'Indian Geography',
+    'world geography': 'World Geography',
+
+    // Specific Polity & Governance (GS 2)
+    'indian polity': 'Indian Polity',
+    'governance': 'Governance',
+    'social justice': 'Social Justice',
+    'international relations': 'International Relations',
+
+    // Specific Economy & Agriculture (GS 3)
+    'indian economy': 'Indian Economy',
+    'economic development': 'Economic Development',
+    'agriculture': 'Agriculture',
+
+    // Specific Science, Tech & Environment (GS 3)
+    'science & technology': 'Science & Technology',
+    'biodiversity & environment': 'Biodiversity & Environment',
+    'disaster management': 'Disaster Management',
+
+    // Specific Internal Security (GS 3)
+    'internal security': 'Internal Security',
+
+    // Specific Ethics (GS 4)
+    'ethics & integrity': 'Ethics & Integrity',
+    'case studies': 'Case Studies',
+
+    // General / Others
+    'csat': 'CSAT',
+    'current affairs': 'Current Affairs',
+    'upsc syllabus': 'UPSC Syllabus',
+    'essay': 'Essay',
+    'general': 'General',
+};
+
 function normalizeHeader(header) {
     return header ? header.trim().toLowerCase().replace(/[^a-z0-9]/g, '') : '';
+}
+
+function normalizeSubject(subjectString) {
+    if (!subjectString) {
+        return SUBJECT_MAP['general'];
+    }
+    const normalizedInput = String(subjectString).trim().toLowerCase();
+    
+    if (SUBJECT_MAP[normalizedInput]) {
+        return SUBJECT_MAP[normalizedInput];
+    }
+
+    console.warn(`Warning: Unknown subject '${subjectString}'. Defaulting to 'General'.`);
+    return SUBJECT_MAP['general'];
 }
 
 function findColumnMapping(headers) {
@@ -100,7 +172,7 @@ async function convertExcelToYaml(excelFilePath) {
         task.id = taskId.trim();
 
         task.title = String(row[headers.indexOf(headerMap.title)] || 'Untitled Task').trim();
-        task.subject = String(row[headers.indexOf(headerMap.subject)] || 'General').trim();
+        task.subject = normalizeSubject(row[headers.indexOf(headerMap.subject)]);
         task.priority = String(row[headers.indexOf(headerMap.priority)] || 'Medium').trim();
 
         const date = parseDate(row[headers.indexOf(headerMap.date)]);
