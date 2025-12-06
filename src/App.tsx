@@ -6,14 +6,13 @@ import Profile from './components/Profile';
 import GeminiAdvisor from './components/GeminiAdvisor';
 import ResourcesView from './components/ResourcesView';
 import TasksView from './components/TasksView';
-import LoginView from './components/LoginView';
 import { ViewType } from './types';
 import { Bell, Search, HelpCircle, Menu } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from './db';
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [currentView, setCurrentView] = useState<ViewType>(ViewType.DASHBOARD);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -34,10 +33,10 @@ const App: React.FC = () => {
     return () => clearInterval(interval);
   }, [isAuthenticated]);
 
-  // Auth Guard
-  if (!isAuthenticated) {
-    return <LoginView onLogin={() => setIsAuthenticated(true)} />;
-  }
+  // Auth Guard - Commented out for now (will re-enable when multi-user support is ready)
+  // if (!isAuthenticated) {
+  //   return <LoginView onLogin={() => setIsAuthenticated(true)} />;
+  // }
 
   const renderContent = () => {
     switch (currentView) {
