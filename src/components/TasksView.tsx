@@ -10,6 +10,7 @@ import { SUBJECT_HIERARCHY } from '../constants';
 import TaskItem from './tasks/TaskItem';
 import CreateTaskModal from './tasks/CreateTaskModal';
 import TaskDetailPanel from './tasks/TaskDetailPanel';
+import GlassCard from './ui/GlassCard';
 
 type TabType = 'ACTIVE' | 'ARCHIVED' | 'TRASH';
 
@@ -20,13 +21,13 @@ const TasksView: React.FC = () => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>('ACTIVE');
-  
+
   // Filter State
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterType, setFilterType] = useState<'Subject' | 'Status' | 'Date' | 'Source File' | null>(null);
   const [filterValue, setFilterValue] = useState<string>('');
   const [subFilterValue, setSubFilterValue] = useState<string>('');
-  
+
   // Get unique source files
   const uniqueSourceFiles = useLiveQuery(async () => {
     const allTasks = await db.tasks.toArray();
@@ -43,7 +44,7 @@ const TasksView: React.FC = () => {
       .filter(([_, cat]) => cat === category)
       .map(([subject, _]) => subject);
   };
-  
+
   // Sync tasks from Server & Markdown files on initial load
   useEffect(() => {
     const runSync = async () => {
@@ -122,11 +123,11 @@ const TasksView: React.FC = () => {
     const start = new Date(now);
     start.setDate(now.getDate() - now.getDay() + (offsetWeeks * 7)); // Start on Sunday
     start.setHours(0, 0, 0, 0);
-    
+
     const end = new Date(start);
     end.setDate(start.getDate() + 6);
     end.setHours(23, 59, 59, 999);
-    
+
     return { start, end };
   };
 
@@ -178,10 +179,10 @@ const TasksView: React.FC = () => {
   });
 
   return (
-    <div className="flex h-full animate-fade-in bg-white">
+    <div className="flex h-full animate-fade-in gap-4 p-4">
       {/* List Area */}
-      <div className={`flex-1 flex flex-col h-full overflow-hidden ${selectedTask ? 'max-w-[calc(100%-400px)]' : ''}`}>
-        <header className="p-6 border-b border-gray-200 flex justify-between items-center bg-white z-10">
+      <GlassCard variant="blur" className={`flex-1 flex flex-col h-full overflow-hidden border-white/20 ${selectedTask ? 'max-w-[calc(100%-400px)]' : ''}`}>
+        <header className="p-6 border-b border-white/10 flex justify-between items-center bg-white/5 z-10">
           <div className="flex items-center gap-4">
             <div>
               <h2 className="text-2xl font-bold text-gray-800">Tasks</h2>
@@ -192,11 +193,10 @@ const TasksView: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
-                className={`flex items-center gap-2 px-3 py-2 border rounded-md text-sm font-medium transition-colors ${
-                  isFilterOpen || filterType 
-                    ? 'border-blue-500 bg-blue-50 text-blue-700' 
-                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                }`}
+                className={`flex items-center gap-2 px-3 py-2 border rounded-md text-sm font-medium transition-colors ${isFilterOpen || filterType
+                  ? 'border-blue-500 bg-blue-50 text-blue-700'
+                  : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}
               >
                 <Filter size={16} /> Filter {filterType ? '(Active)' : ''}
               </button>
@@ -237,7 +237,7 @@ const TasksView: React.FC = () => {
                           className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                           <option value="">All {filterType}s</option>
-                          
+
                           {filterType === 'Subject' && Object.values(SubjectCategory).map(cat => (
                             <option key={cat} value={cat}>{cat}</option>
                           ))}
@@ -245,7 +245,7 @@ const TasksView: React.FC = () => {
                           {filterType === 'Status' && Object.values(TaskStatus).map(s => (
                             <option key={s} value={s}>{s.replace('_', ' ')}</option>
                           ))}
-                          
+
                           {filterType === 'Source File' && uniqueSourceFiles.map(file => (
                             <option key={file} value={file}>{file}</option>
                           ))}
@@ -279,7 +279,7 @@ const TasksView: React.FC = () => {
                     )}
 
                     <div className="flex justify-end pt-2 border-t border-gray-100">
-                       <button
+                      <button
                         onClick={() => {
                           setFilterType(null);
                           setFilterValue('');
@@ -358,7 +358,7 @@ const TasksView: React.FC = () => {
             ))
           )}
         </div>
-      </div>
+      </GlassCard>
 
       {/* Create Task Modal */}
       <CreateTaskModal
@@ -368,13 +368,15 @@ const TasksView: React.FC = () => {
       />
 
       {/* Task Detail Sidebar */}
-      {selectedTask && (
-        <TaskDetailPanel
-          task={selectedTask}
-          onClose={() => setSelectedTask(null)}
-          onUpdate={handleUpdateTask}
-        />
-      )}
+      {
+        selectedTask && (
+          <TaskDetailPanel
+            task={selectedTask}
+            onClose={() => setSelectedTask(null)}
+            onUpdate={handleUpdateTask}
+          />
+        )
+      }
     </div>
   );
 };

@@ -14,6 +14,9 @@ export const MOCK_USER: UserProfile = {
   avatarUrl: "https://ui-avatars.com/api/?name=Schamala&background=0D8ABC&color=fff"
 };
 
+export const MOCK_TASKS: Task[] = [];
+export const MOCK_RESOURCES: Resource[] = [];
+
 export const SUBJECT_HIERARCHY: Record<Subject, SubjectCategory> = {
   // Generic Subjects (these match SubjectCategory names for easier mapping)
   [Subject.HISTORY]: SubjectCategory.HISTORY,

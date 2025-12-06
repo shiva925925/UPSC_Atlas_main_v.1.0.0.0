@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { Task, TaskStatus, EvidenceType, TimeLog, Evidence, SubjectCategory } from '../../types';
+import { Task, TaskStatus, EvidenceType, TimeLog, Evidence, SubjectCategory, Priority } from '../../types';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../../constants';
 import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit, Upload } from 'lucide-react';
+import GlassCard from '../ui/GlassCard';
 import { uploadFile } from '../../services/uploadService';
 import { ensureProtocol } from '../../utils/urlHelper';
 
@@ -91,7 +92,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                 const result = await uploadFile(selectedFile);
                 finalContent = result.url;
                 // Files uploaded become links to that file
-                finalType = EvidenceType.LINK; 
+                finalType = EvidenceType.LINK;
             } catch (error) {
                 alert('Failed to upload file.');
                 console.error(error);
@@ -108,7 +109,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
 
         const updatedEvidences = [...(task.evidences || []), newEvidence];
         await onUpdate(task.id, { evidences: updatedEvidences });
-        
+
         // Reset form
         setEvidenceContent('');
         setSelectedFile(null);
@@ -153,7 +154,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
 
     const saveCriterion = async () => {
         if (!editingCriterionId) return;
-        const updated = (task.acceptanceCriteria || []).map(ac => 
+        const updated = (task.acceptanceCriteria || []).map(ac =>
             ac.id === editingCriterionId ? { ...ac, text: editedCriterionText } : ac
         );
         await onUpdate(task.id, { acceptanceCriteria: updated });
@@ -165,7 +166,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
     const colors = CATEGORY_COLORS[subjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];
 
     return (
-        <div className="w-[400px] border-l border-gray-200 bg-white h-full overflow-y-auto shadow-xl">
+        <GlassCard variant="opaque" className="w-[400px] border-l border-white/20 h-full overflow-y-auto shadow-2xl rounded-l-none">
             <div className="p-6">
                 <div className="flex justify-between items-start mb-6">
                     <div className="flex items-center gap-2">
@@ -176,7 +177,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                         </span>
                         <span className="text-xs text-gray-500 font-mono">#{task.id}</span>
                     </div>
-                    <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded text-gray-500 transition-colors">
+                    <button type="button" onClick={onClose} className="p-1 hover:bg-gray-100 rounded text-gray-500 transition-colors">
                         <X size={20} />
                     </button>
                 </div>
@@ -187,7 +188,8 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                     <div className="flex justify-between items-center mb-2">
                         <h3 className="text-sm font-bold text-gray-900">Description</h3>
                         {!isEditingDescription && (
-                            <button 
+                            <button
+                                type="button"
                                 onClick={() => { setEditedDescription(task.description || ''); setIsEditingDescription(true); }}
                                 className="text-gray-400 hover:text-blue-600 p-1"
                                 title="Edit Description"
@@ -205,13 +207,14 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                 placeholder="Enter task description..."
                             />
                             <div className="flex justify-end gap-2">
-                                <button 
+                                <button
                                     onClick={() => setIsEditingDescription(false)}
                                     className="text-xs text-gray-600 px-3 py-1.5 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
                                 >
                                     Cancel
                                 </button>
-                                <button 
+                                <button
+                                    type="button"
                                     onClick={handleSaveDescription}
                                     className="text-xs text-white bg-blue-600 px-3 py-1.5 rounded hover:bg-blue-700 transition-colors flex items-center gap-1"
                                 >
@@ -243,14 +246,14 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                     key={ac.id}
                                     className={`group flex items-start gap-3 p-3 rounded-md border transition-all ${ac.isCompleted ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200 hover:border-blue-300'}`}
                                 >
-                                    <div 
+                                    <div
                                         className="flex items-start gap-3 flex-1 cursor-pointer"
                                         onClick={() => editingCriterionId !== ac.id && toggleCriterion(ac.id)}
                                     >
-                                        <button className={`mt-0.5 flex-shrink-0 ${ac.isCompleted ? 'text-green-600' : 'text-gray-400'}`}>
+                                        <button type="button" className={`mt-0.5 flex-shrink-0 ${ac.isCompleted ? 'text-green-600' : 'text-gray-400'}`}>
                                             {ac.isCompleted ? <CheckSquare size={18} /> : <Square size={18} />}
                                         </button>
-                                        
+
                                         {editingCriterionId === ac.id ? (
                                             <div className="flex-1 flex gap-2" onClick={(e) => e.stopPropagation()}>
                                                 <input
@@ -272,14 +275,14 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
 
                                     {editingCriterionId !== ac.id && (
                                         <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button 
+                                            <button
                                                 onClick={() => startEditingCriterion(ac.id, ac.text)}
                                                 className="text-gray-400 hover:text-blue-600 p-1 rounded hover:bg-gray-100"
                                                 title="Edit"
                                             >
                                                 <Edit size={14} />
                                             </button>
-                                            <button 
+                                            <button
                                                 onClick={() => handleDeleteCriterion(ac.id)}
                                                 className="text-gray-400 hover:text-red-600 p-1 rounded hover:bg-gray-100"
                                                 title="Delete"
@@ -335,17 +338,17 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                 <option value={EvidenceType.TEXT}>Note</option>
                                 <option value={EvidenceType.FILE}>File</option>
                             </select>
-                            
+
                             {evidenceType === EvidenceType.FILE ? (
                                 <div className="flex-1 flex items-center gap-2">
                                     <div className="flex-1 px-2 py-1.5 border border-dashed border-gray-300 rounded bg-white text-xs text-gray-500 truncate cursor-pointer hover:bg-gray-50" onClick={() => fileInputRef.current?.click()}>
                                         {selectedFile ? selectedFile.name : 'Choose a file...'}
                                     </div>
-                                    <input 
-                                        type="file" 
-                                        ref={fileInputRef} 
-                                        className="hidden" 
-                                        onChange={handleFileChange} 
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        className="hidden"
+                                        onChange={handleFileChange}
                                     />
                                 </div>
                             ) : (
@@ -363,7 +366,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             disabled={evidenceType !== EvidenceType.FILE && !evidenceContent}
                             className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 text-white text-xs font-bold py-2 rounded flex items-center justify-center gap-2 transition-colors"
                         >
-                            <Plus size={14} /> 
+                            <Plus size={14} />
                             {evidenceType === EvidenceType.FILE ? 'Upload & Attach' : 'Attach Evidence'}
                         </button>
                     </div>
@@ -381,7 +384,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                             <FileText size={14} className="text-gray-500 shrink-0" />
                                         )}
                                         {ev.type === EvidenceType.LINK ? (
-                                            <a 
+                                            <a
                                                 href={ensureProtocol(ev.content)}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
@@ -490,6 +493,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                         {[TaskStatus.TODO, TaskStatus.IN_PROGRESS, TaskStatus.DONE].map(status => (
                             <button
                                 key={status}
+                                type="button"
                                 onClick={() => handleStatusChange(status)}
                                 disabled={status === TaskStatus.DONE && (task.acceptanceCriteria || []).some(ac => !ac.isCompleted)}
                                 className={`flex-1 py-2 text-xs font-medium rounded-md border ${task.status === status
@@ -520,7 +524,8 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                 </div>
 
             </div>
-        </div>
+        </GlassCard>
+
     );
 };
 

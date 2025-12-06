@@ -12,6 +12,9 @@ export default defineConfig(({ mode }) => {
       proxy: {
         '/api': 'http://localhost:3001',
       },
+      watch: {
+        ignored: ['**/Data/**', '**/node_modules/**', '**/.git/**'],
+      },
     },
     plugins: [react(), libraryPlugin()],
     define: {

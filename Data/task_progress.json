@@ -7,18 +7,35 @@
     "isArchived": false,
     "isDeleted": false
   },
+  "9xh3tg9on": {
+    "status": "IN_PROGRESS",
+    "priority": "High",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
   "GS-1.1-001": {
     "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": true,
+    "deletedAt": "2025-12-06T15:00:17.736Z"
   },
   "GS-1.1-002": {
     "status": "TODO",
     "priority": "Medium",
-    "logs": [],
+    "logs": [
+      {
+        "id": "fv4xrftyl",
+        "date": "2025-12-07",
+        "durationMinutes": 60,
+        "subject": "Indian Society",
+        "description": "Task work log"
+      }
+    ],
     "evidences": [
       {
         "id": "0aebwzacl",
@@ -31,7 +48,7 @@
     "isDeleted": false
   },
   "GS-1.1-003": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -39,15 +56,22 @@
     "isDeleted": false
   },
   "GS-1.1-004": {
-    "status": "TODO",
-    "priority": "Medium",
+    "status": "IN_PROGRESS",
+    "priority": "High",
     "logs": [],
-    "evidences": [],
+    "evidences": [
+      {
+        "id": "5xfafvgqc",
+        "type": "LINK",
+        "content": "/uploads/1765033807659-836361929-modern_history_pyq_pdf_e476b1546c__1_.pdf",
+        "timestamp": "20:40:07"
+      }
+    ],
     "isArchived": false,
     "isDeleted": false
   },
   "GS-1.1-005": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -55,7 +79,7 @@
     "isDeleted": false
   },
   "GS-1.1-006": {
-    "status": "TODO",
+    "status": "DONE",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -132,7 +156,7 @@
     "isDeleted": false
   },
   "GS-1.1-014": {
-    "status": "TODO",
+    "status": "DONE",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -145,7 +169,8 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": true,
+    "deletedAt": "2025-12-06T15:00:07.959Z"
   },
   "GS-1.1-016": {
     "status": "TODO",
@@ -255,7 +280,7 @@
     "isDeleted": false
   },
   "GS-1.1-026": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -382,7 +407,7 @@
     "isDeleted": false
   },
   "GS-1.1-041": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -438,7 +463,7 @@
     "isDeleted": false
   },
   "GS-1.1-048": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -1093,7 +1118,7 @@
     "isDeleted": false
   },
   "GS-1.1-129": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -1133,7 +1158,7 @@
     "isDeleted": false
   },
   "GS-1.1-134": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -1738,7 +1763,8 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": false,
+    "deletedAt": "2025-11-27T00:09:06.325Z"
   },
   "task-003": {
     "status": "TODO",

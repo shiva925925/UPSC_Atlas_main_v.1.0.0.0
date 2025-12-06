@@ -6,6 +6,7 @@ import { Resource, ResourceType, Subject, SubjectCategory } from '../types';
 import { FileText, Link as LinkIcon, Video, Plus, ExternalLink, Search, Filter, Calendar as CalendarIcon, X, Trash2, Edit2, Image as ImageIcon } from 'lucide-react';
 import LibraryTree from './LibraryTree';
 import DetailPanel from './DetailPanel';
+import GlassCard from './ui/GlassCard';
 
 import { uploadFile } from '../services/uploadService';
 import { ensureProtocol } from '../utils/urlHelper';
@@ -37,8 +38,8 @@ const ResourcesView: React.FC = () => {
           userId: 'Schamala',
           title: item.title,
           type: ResourceType.PDF,
-          subject: item.subject as Subject || Subject.SYLLABUS,
-          url: `/library/${item.path || item.filename}`,
+          subject: item.subject as Subject || Subject.UPSC_SYLLABUS,
+          url: item.url, // Use the url field from the plugin
           description: item.description,
           path: item.path
         }));
@@ -55,8 +56,11 @@ const ResourcesView: React.FC = () => {
     setSelectedResource(null);
   };
 
+
+
   const filteredUserResources = dbResources.filter(r => {
-    const matchesSubject = filterSubject === 'ALL' || r.subject === filterSubject;
+    const subjectCategory = SUBJECT_HIERARCHY[r.subject] || SubjectCategory.GENERAL;
+    const matchesSubject = filterSubject === 'ALL' || subjectCategory === filterSubject;
     const matchesSearch = r.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       r.description?.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesSubject && matchesSearch;
@@ -92,37 +96,37 @@ const ResourcesView: React.FC = () => {
 
   const handleAddResource = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
-        let resourceUrl = newUrl;
-        
-        // Handle File Upload if applicable
-        if ((newType === ResourceType.PDF || newType === ResourceType.IMAGE) && selectedFile) {
-            const uploadResult = await uploadFile(selectedFile);
-            resourceUrl = uploadResult.url;
-        }
+      let resourceUrl = newUrl;
 
-        const newResource: Resource = {
-            id: editingId || Math.random().toString(36).substr(2, 9),
-            userId: 'Schamala',
-            title: newTitle,
-            type: newType,
-            subject: newSubject,
-            url: resourceUrl,
-            date: newDate || new Date().toISOString().split('T')[0],
-            description: newDescription
-        };
+      // Handle File Upload if applicable
+      if ((newType === ResourceType.PDF || newType === ResourceType.IMAGE) && selectedFile) {
+        const uploadResult = await uploadFile(selectedFile);
+        resourceUrl = uploadResult.url;
+      }
 
-        if (editingId) {
-            await db.resources.update(editingId, newResource);
-        } else {
-            await db.resources.add(newResource);
-        }
+      const newResource: Resource = {
+        id: editingId || Math.random().toString(36).substr(2, 9),
+        userId: 'Schamala',
+        title: newTitle,
+        type: newType,
+        subject: newSubject,
+        url: resourceUrl,
+        date: newDate || new Date().toISOString().split('T')[0],
+        description: newDescription
+      };
 
-        resetForm();
+      if (editingId) {
+        await db.resources.update(editingId, newResource);
+      } else {
+        await db.resources.add(newResource);
+      }
+
+      resetForm();
     } catch (error) {
-        console.error("Failed to add resource:", error);
-        alert("Failed to add resource. See console for details.");
+      console.error("Failed to add resource:", error);
+      alert("Failed to add resource. See console for details.");
     }
   };
 
@@ -158,7 +162,7 @@ const ResourcesView: React.FC = () => {
   const allSyllabusResources = libraryResources.filter(r => r.path);
 
   return (
-    <div className="p-4 md:p-8 h-full flex flex-col animate-fade-in bg-gray-50">
+    <div className="p-4 md:p-8 h-full flex flex-col animate-fade-in gap-6">
       {/* Header */}
       <header className="flex-shrink-0 flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
         <div>
@@ -183,10 +187,10 @@ const ResourcesView: React.FC = () => {
             placeholder="Search syllabus tree and resources..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border bg-white border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+            className="w-full pl-10 pr-4 py-2 border bg-white/10 backdrop-blur-md border-white/20 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-800 placeholder-gray-500 shadow-sm"
           />
         </div>
-        <div className="flex items-center space-x-2 bg-white border border-gray-300 px-3 py-2 rounded-md">
+        <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-2 rounded-xl shadow-sm">
           <Filter size={18} className="text-gray-500" />
           <select
             value={filterSubject}
@@ -199,21 +203,20 @@ const ResourcesView: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Content: 2-Column Layout */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-8 min-h-0">
+      <div className="flex-1 flex gap-6 min-h-0">{/* Changed from grid to flex */}
         {/* Left Column: Syllabus Tree */}
-        <div className="lg:col-span-1 bg-white p-3 rounded-lg border border-gray-200 overflow-y-auto custom-scrollbar">
-          <h3 className="text-lg font-semibold text-gray-700 mb-3 px-2">Syllabus Explorer</h3>
+        <GlassCard variant="opaque" className="w-1/3 p-3 overflow-y-auto custom-scrollbar border-white/20">{/* Changed from lg:col-span-1 to w-1/3 */}
+          <h3 className="text-lg font-semibold text-gray-800 mb-3 px-2">Syllabus Explorer</h3>
           <LibraryTree
             resources={allSyllabusResources}
             searchQuery={searchQuery}
             onSelectResource={handleSelectResource}
             selectedResource={selectedResource}
           />
-        </div>
+        </GlassCard>
 
         {/* Right Column: Contextual Panel or Board */}
-        <div className="lg:col-span-2 min-h-0 flex flex-col">
+        <div className="flex-1 flex flex-col h-full">{/* Changed from lg:col-span-2 to flex-1 */}
           {selectedResource ? (
             <DetailPanel
               selectedResource={selectedResource}
@@ -222,10 +225,13 @@ const ResourcesView: React.FC = () => {
               onSelectResource={handleSelectResource}
             />
           ) : (
-            <div className="h-full flex flex-col">
-              <h3 className="text-lg font-semibold text-gray-700 mb-3 flex-shrink-0">My Resources</h3>
+            <GlassCard variant="blur" className="h-full flex flex-col border-white/20">
+              <div className="p-4 border-b border-white/10">
+                <h3 className="text-lg font-semibold text-gray-800">My Resources</h3>
+              </div>
+
               {/* List Header */}
-              <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-white/5 border-b border-white/10 text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 <div className="col-span-5">Resource</div>
                 <div className="col-span-2">Type</div>
                 <div className="col-span-2">Subject</div>
@@ -236,7 +242,7 @@ const ResourcesView: React.FC = () => {
               {/* Resource List Body */}
               <div className="flex-1 overflow-y-auto custom-scrollbar">
                 {filteredUserResources.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                  <div className="flex flex-col items-center justify-center h-full text-gray-500">
                     <p>No custom resources found. Add one to get started!</p>
                   </div>
                 ) : (
@@ -246,18 +252,19 @@ const ResourcesView: React.FC = () => {
                     return (
                       <div
                         key={resource.id}
-                        className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-gray-100 items-center hover:bg-blue-50/50 transition-colors group"
+                        className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-white/10 items-center hover:bg-white/10 transition-colors group cursor-pointer"
+                        onClick={() => handleSelectResource(resource)}
                       >
                         {/* Resource Title */}
                         <div className="col-span-5">
-                          <h4 className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors">{resource.title}</h4>
+                          <h4 className="text-sm font-medium text-gray-800 group-hover:text-blue-700 transition-colors">{resource.title}</h4>
                           <p className="text-xs text-gray-500 line-clamp-1">{resource.description || 'No description'}</p>
                         </div>
 
                         {/* Type */}
                         <div className="col-span-2 flex items-center gap-1">
                           {getIcon(resource.type)}
-                          <span className="text-xs font-medium text-gray-700">{resource.type}</span>
+                          <span className="text-xs font-medium text-gray-600">{resource.type}</span>
                         </div>
 
                         {/* Subject */}
@@ -281,16 +288,16 @@ const ResourcesView: React.FC = () => {
 
                         {/* Actions */}
                         <div className="col-span-1 flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button onClick={() => handleEdit(resource)} className="p-1 text-gray-400 hover:text-blue-600 rounded" title="Edit"><Edit2 size={16} /></button>
-                          <button onClick={() => handleDelete(resource.id)} className="p-1 text-gray-400 hover:text-red-500 rounded" title="Delete"><Trash2 size={16} /></button>
-                          <button onClick={() => handleOpenResource(resource)} className="p-1 text-gray-400 hover:text-blue-600 rounded" title="Open"><ExternalLink size={16} /></button>
+                          <button onClick={(e) => { e.stopPropagation(); handleEdit(resource); }} className="p-1 text-gray-400 hover:text-blue-600 rounded" title="Edit"><Edit2 size={16} /></button>
+                          <button onClick={(e) => { e.stopPropagation(); handleDelete(resource.id); }} className="p-1 text-gray-400 hover:text-red-500 rounded" title="Delete"><Trash2 size={16} /></button>
+                          <button onClick={(e) => { e.stopPropagation(); handleOpenResource(resource); }} className="p-1 text-gray-400 hover:text-blue-600 rounded" title="Open"><ExternalLink size={16} /></button>
                         </div>
                       </div>
                     );
                   })
                 )}
               </div>
-            </div>
+            </GlassCard>
 
           )}
         </div>
@@ -298,13 +305,13 @@ const ResourcesView: React.FC = () => {
 
       {/* Modal for Adding/Editing Resource */}
       {isAdding && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 animate-scale-in max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-bold text-gray-800">{editingId ? 'Edit Resource' : 'Add New Resource'}</h3>
               <button onClick={resetForm} className="text-gray-500 hover:text-gray-700"><X size={20} /></button>
             </div>
-            
+
             <form onSubmit={handleAddResource} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>

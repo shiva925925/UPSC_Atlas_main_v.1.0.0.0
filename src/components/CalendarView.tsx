@@ -4,6 +4,7 @@ import { db } from '../db';
 import { Subject, SubjectCategory, CalendarFilter } from '../types';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../constants';
 import { ChevronLeft, ChevronRight, Filter } from 'lucide-react';
+import GlassCard from './ui/GlassCard';
 
 const CalendarView: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -53,7 +54,7 @@ const CalendarView: React.FC = () => {
         <div
           key={i}
           onClick={() => setSelectedDate(dateString)}
-          className={`min-h-[80px] border-b border-r border-gray-100 p-2 cursor-pointer transition-colors hover:bg-gray-50 relative ${selectedDate === dateString ? 'bg-blue-50/50' : ''}`}
+          className={`min-h-[80px] border-b border-r border-white/10 p-2 cursor-pointer transition-colors hover:bg-white/20 relative ${selectedDate === dateString ? 'bg-blue-50/50' : ''}`}
         >
           <span className={`text-sm font-medium w-6 h-6 flex items-center justify-center rounded-full ${dateString === new Date().toISOString().split('T')[0] ? 'bg-blue-600 text-white' : 'text-gray-700'}`}>
             {i}
@@ -71,8 +72,8 @@ const CalendarView: React.FC = () => {
     }
 
     return (
-      <div className="grid grid-cols-7 auto-rows-fr border-l border-t border-gray-200">
-        {emptyDays.map((_, i) => <div key={`empty-${i}`} className="min-h-[80px] bg-gray-50/30 border-b border-r border-gray-100"></div>)}
+      <div className="grid grid-cols-7 auto-rows-fr border-l border-t border-white/10">
+        {emptyDays.map((_, i) => <div key={`empty-${i}`} className="min-h-[80px] bg-white/5 border-b border-r border-white/10"></div>)}
         {days}
       </div>
     );
@@ -136,22 +137,22 @@ const CalendarView: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full animate-fade-in bg-white">
+    <div className="flex h-full animate-fade-in gap-6 p-4 md:p-8">
       {/* Calendar Grid */}
-      <div className="flex-1 p-6 overflow-y-auto flex flex-col">
-        <div className="flex justify-between items-center mb-6">
+      <GlassCard variant="blur" className="flex-1 overflow-y-auto flex flex-col border-white/20">
+        <div className="flex justify-between items-center mb-6 p-6 pb-0">
           <h2 className="text-2xl font-bold text-gray-800">
             {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
           </h2>
           <div className="flex gap-2">
-            <button onClick={handlePrevMonth} className="p-2 hover:bg-gray-100 rounded-full"><ChevronLeft size={20} /></button>
-            <button onClick={handleNextMonth} className="p-2 hover:bg-gray-100 rounded-full"><ChevronRight size={20} /></button>
+            <button onClick={handlePrevMonth} className="p-2 hover:bg-white/20 rounded-full transition-colors"><ChevronLeft size={20} /></button>
+            <button onClick={handleNextMonth} className="p-2 hover:bg-white/20 rounded-full transition-colors"><ChevronRight size={20} /></button>
           </div>
         </div>
 
-        <div className="grid grid-cols-7 bg-gray-50 border-b border-gray-200">
+        <div className="grid grid-cols-7 bg-white/5 border-b border-white/10">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <div key={day} className="p-3 text-center text-xs font-bold text-gray-500 uppercase">
+            <div key={day} className="p-3 text-center text-xs font-bold text-gray-600 uppercase">
               {day}
             </div>
           ))}
@@ -159,10 +160,10 @@ const CalendarView: React.FC = () => {
         <div className="flex-1 overflow-y-auto">
           {renderCalendarGrid()}
         </div>
-      </div>
+      </GlassCard>
 
       {/* Sidebar Details */}
-      <div className="w-80 border-l border-gray-200 bg-white p-6 overflow-y-auto">
+      <GlassCard variant="opaque" className="w-80 border-l border-white/20 p-6 overflow-y-auto">
         <div className="mb-6">
           <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Filter View</label>
           <div className="flex flex-wrap gap-2">
@@ -170,7 +171,7 @@ const CalendarView: React.FC = () => {
               <button
                 key={f}
                 onClick={() => setFilter(f)}
-                className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${filter === f ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}`}
+                className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${filter === f ? 'bg-blue-600 text-white border-blue-600' : 'bg-white/10 text-gray-600 border-white/20 hover:bg-white/30'}`}
               >
                 {f}
               </button>
@@ -178,7 +179,7 @@ const CalendarView: React.FC = () => {
           </div>
         </div>
         {renderSelectedDateDetails()}
-      </div>
+      </GlassCard>
     </div>
   );
 };

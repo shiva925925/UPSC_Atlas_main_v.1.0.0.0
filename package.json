@@ -12,10 +12,12 @@
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
+    "@tailwindcss/postcss": "^4.1.17",
     "@types/dagre": "^0.7.53",
     "@types/js-yaml": "^4.0.9",
     "@types/marked": "^5.0.2",
     "@xyflow/react": "^12.9.3",
+    "clsx": "^2.1.1",
     "concurrently": "^9.2.1",
     "cors": "^2.8.5",
     "dagre": "^0.8.5",
@@ -23,6 +25,7 @@
     "dexie-react-hooks": "^4.2.0",
     "exceljs": "^4.4.0",
     "express": "^5.1.0",
+    "framer-motion": "^12.23.25",
     "js-yaml": "^4.1.1",
     "lucide-react": "^0.554.0",
     "marked": "^17.0.1",
@@ -31,6 +34,7 @@
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.6",
     "recharts": "^3.5.0",
+    "tailwind-merge": "^3.4.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
@@ -38,6 +42,9 @@
     "@types/express": "^5.0.5",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "autoprefixer": "^10.4.22",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.17",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }

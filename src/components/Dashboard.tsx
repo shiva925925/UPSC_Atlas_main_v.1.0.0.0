@@ -4,6 +4,7 @@ import { db } from '../db';
 import { Subject, SubjectCategory } from '../types';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../constants';
 import { Clock, BookOpen, Target, CheckSquare } from 'lucide-react';
+import GlassCard from './ui/GlassCard';
 
 const Dashboard: React.FC = () => {
   const tasks = useLiveQuery(() => db.tasks.toArray()) || [];
@@ -26,7 +27,7 @@ const Dashboard: React.FC = () => {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+        <GlassCard variant="opaque" className="p-6 flex items-center gap-4">
           <div className="p-3 bg-blue-100 text-blue-600 rounded-lg">
             <Clock size={24} />
           </div>
@@ -34,9 +35,9 @@ const Dashboard: React.FC = () => {
             <p className="text-sm text-gray-500">Total Study Time</p>
             <h3 className="text-2xl font-bold text-gray-800">{totalHours}h</h3>
           </div>
-        </div>
+        </GlassCard>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+        <GlassCard variant="opaque" className="p-6 flex items-center gap-4">
           <div className="p-3 bg-green-100 text-green-600 rounded-lg">
             <CheckSquare size={24} />
           </div>
@@ -44,9 +45,9 @@ const Dashboard: React.FC = () => {
             <p className="text-sm text-gray-500">Tasks Completed</p>
             <h3 className="text-2xl font-bold text-gray-800">{completedTasks}</h3>
           </div>
-        </div>
+        </GlassCard>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+        <GlassCard variant="opaque" className="p-6 flex items-center gap-4">
           <div className="p-3 bg-yellow-100 text-yellow-600 rounded-lg">
             <BookOpen size={24} />
           </div>
@@ -54,9 +55,9 @@ const Dashboard: React.FC = () => {
             <p className="text-sm text-gray-500">In Progress</p>
             <h3 className="text-2xl font-bold text-gray-800">{inProgressTasks}</h3>
           </div>
-        </div>
+        </GlassCard>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+        <GlassCard variant="opaque" className="p-6 flex items-center gap-4">
           <div className="p-3 bg-purple-100 text-purple-600 rounded-lg">
             <Target size={24} />
           </div>
@@ -64,12 +65,12 @@ const Dashboard: React.FC = () => {
             <p className="text-sm text-gray-500">Target Year</p>
             <h3 className="text-2xl font-bold text-gray-800">{userProfile?.targetYear || 2025}</h3>
           </div>
-        </div>
+        </GlassCard>
       </div>
 
       {/* Recent Activity & Charts Placeholder */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+        <GlassCard variant="opaque" className="lg:col-span-2 p-6">
           <h3 className="text-lg font-bold text-gray-800 mb-4">Subject Distribution</h3>
           <div className="h-64 flex items-end justify-around gap-2">
             {/* Simple visual placeholder for chart */}
@@ -103,9 +104,9 @@ const Dashboard: React.FC = () => {
               });
             })()}
           </div>
-        </div>
+        </GlassCard>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+        <GlassCard variant="opaque" className="p-6">
           <h3 className="text-lg font-bold text-gray-800 mb-4">Recent Logs</h3>
           <div className="space-y-4">
             {allLogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5).map(log => (
@@ -119,7 +120,7 @@ const Dashboard: React.FC = () => {
             ))}
             {allLogs.length === 0 && <p className="text-sm text-gray-400">No study time logged yet.</p>}
           </div>
-        </div>
+        </GlassCard>
       </div>
     </div>
   );

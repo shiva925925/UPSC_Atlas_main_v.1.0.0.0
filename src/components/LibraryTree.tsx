@@ -48,7 +48,7 @@ function buildTree(resources: Resource[]): TreeNodeData {
             if (!nodeMap.has(currentPath)) {
                 const newNode: TreeNodeData = {
                     id: currentPath,
-                    name: isLastPart ? part.replace(/.pdf$/, '') : part,
+                    name: part, // Keep full filename including extension
                     isFile: isLastPart,
                     resource: isLastPart ? resource : null,
                     children: [],
@@ -90,10 +90,10 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, level, expandedFolders, toggl
     };
 
     const style = isSelected
-        ? 'bg-blue-100 text-blue-800'
+        ? 'bg-blue-500/20 text-blue-800'
         : searchHighlight
             ? 'bg-yellow-200'
-            : 'hover:bg-gray-100';
+            : 'hover:bg-black/5';
 
     return (
         <div>
@@ -115,22 +115,6 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, level, expandedFolders, toggl
                     </>
                 )}
             </div>
-            {isFolder && isExpanded && (
-                <div>
-                    {node.children.map(child => (
-                        <TreeNode
-                            key={child.id}
-                            node={child}
-                            level={level + 1}
-                            expandedFolders={expandedFolders}
-                            toggleFolder={toggleFolder}
-                            onSelectResource={onSelectResource}
-                            isSelected={false} // Only direct selection is highlighted this way
-                            searchHighlight={false}
-                        />
-                    ))}
-                </div>
-            )}
         </div>
     );
 };

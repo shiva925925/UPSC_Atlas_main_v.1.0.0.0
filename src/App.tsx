@@ -11,6 +11,9 @@ import { Bell, Search, HelpCircle, Menu } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from './db';
 
+import BackgroundGradient from './components/ui/BackgroundGradient';
+import GlassCard from './components/ui/GlassCard';
+
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [currentView, setCurrentView] = useState<ViewType>(ViewType.DASHBOARD);
@@ -62,8 +65,12 @@ const App: React.FC = () => {
     setIsMobileMenuOpen(false); // Close mobile menu on navigation
   };
 
+
+
   return (
-    <div className="flex h-screen overflow-hidden bg-[#f4f5f7]">
+    <div className="flex h-screen overflow-hidden relative bg-white/50">
+      <BackgroundGradient />
+
       {/* Mobile Overlay */}
       {isMobileMenuOpen && (
         <div
@@ -82,40 +89,48 @@ const App: React.FC = () => {
       {/* Main Content Wrapper - Adjust margin for desktop */}
       <div className="flex-1 flex flex-col ml-0 md:ml-64 min-w-0 transition-all duration-300">
         {/* Top Navigation Bar */}
-        <header className="h-14 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-6 sticky top-0 z-30">
-          <div className="flex items-center gap-3">
-            <button
-              className="md:hidden text-gray-500 hover:text-gray-700"
-              onClick={() => setIsMobileMenuOpen(true)}
-            >
-              <Menu size={24} />
-            </button>
-            <div className="relative hidden md:block">
-              <Search className="absolute left-2.5 top-1.5 text-gray-400" size={16} />
-              <input
-                type="text"
-                placeholder="Search"
-                className="pl-9 pr-4 py-1.5 bg-gray-100 border border-transparent focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-md text-sm text-gray-700 w-64 transition-all outline-none"
-              />
+        {/* Top Navigation Bar - Glass Effect */}
+        <div className="px-4 md:px-6 py-3 sticky top-0 z-30">
+          <GlassCard
+            variant="blur"
+            className="h-14 flex items-center justify-between px-4 rounded-xl border-white/20"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="flex items-center gap-3">
+              <button
+                className="md:hidden text-gray-500 hover:text-gray-700"
+                onClick={() => setIsMobileMenuOpen(true)}
+              >
+                <Menu size={24} />
+              </button>
+              <div className="relative hidden md:block">
+                <Search className="absolute left-2.5 top-1.5 text-gray-400" size={16} />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="pl-9 pr-4 py-1.5 bg-white/50 border border-transparent focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg text-sm text-gray-700 w-64 transition-all outline-none backdrop-blur-sm"
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-center space-x-2 md:space-x-4">
-            <button className="text-gray-500 hover:text-gray-700 transition-colors hidden sm:block">
-              <HelpCircle size={20} />
-            </button>
-            <button className="text-gray-500 hover:text-gray-700 transition-colors relative">
-              <Bell size={20} />
-              <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-            </button>
-            <div
-              className="h-8 w-8 rounded-full bg-gray-200 overflow-hidden cursor-pointer border border-gray-300"
-              onClick={() => setCurrentView(ViewType.PROFILE)}
-            >
-              {userProfile && <img src={userProfile.avatarUrl} alt="User" className="h-full w-full object-cover" />}
+            <div className="flex items-center space-x-2 md:space-x-4">
+              <button className="text-gray-500 hover:text-gray-700 transition-colors hidden sm:block">
+                <HelpCircle size={20} />
+              </button>
+              <button className="text-gray-500 hover:text-gray-700 transition-colors relative">
+                <Bell size={20} />
+                <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+              </button>
+              <div
+                className="h-8 w-8 rounded-full bg-gray-200 overflow-hidden cursor-pointer border border-gray-300 shadow-sm"
+                onClick={() => setCurrentView(ViewType.PROFILE)}
+              >
+                {userProfile && <img src={userProfile.avatarUrl} alt="User" className="h-full w-full object-cover" />}
+              </div>
             </div>
-          </div>
-        </header>
+          </GlassCard>
+        </div>
 
         {/* Main Content Area */}
         <main className="flex-1 overflow-hidden flex flex-col">

@@ -102,7 +102,11 @@ export function libraryPlugin(): Plugin {
                             filename: filename, // Keep for reference
                             subject: subject,
                             description: `Auto-detected PDF: ${title}`,
-                            path: urlPath // New field for tree structure
+                            // Store decoupled paths:
+                            // 1. path: Relative path for clean Tree structure (e.g. "History/Ancient/Notes.pdf")
+                            // 2. url: Absolute web path for browser access (e.g. "/library/History/Ancient/Notes.pdf")
+                            path: urlPath,
+                            url: `/library/${urlPath}`
                         };
                     });
 

@@ -55,5 +55,31 @@
     "evidences": [],
     "isArchived": false,
     "isDeleted": false
+  },
+  {
+    "id": "9xh3tg9on",
+    "userId": "Schamala",
+    "title": "srgdhjg",
+    "subject": "Social Justice",
+    "priority": "High",
+    "date": "2025-12-11",
+    "status": "TODO",
+    "description": "ghfmd",
+    "acceptanceCriteria": [
+      {
+        "id": "smnusz2up",
+        "text": "gbnhm",
+        "isCompleted": false
+      },
+      {
+        "id": "w0qd4n9dy",
+        "text": "fhjmg",
+        "isCompleted": false
+      }
+    ],
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
   }
 ]

@@ -15,12 +15,21 @@ interface DetailPanelProps {
 const DetailPanel: React.FC<DetailPanelProps> = ({ selectedResource, allResources, onClose, onSelectResource }) => {
     const { path: selectedPath } = selectedResource;
 
+    // Defensive check - if no path, show error state
+    if (!selectedPath) {
+        return (
+            <div className="bg-white h-full flex items-center justify-center border-l border-gray-200">
+                <p className="text-gray-500">Unable to load resource details</p>
+            </div>
+        );
+    }
+
     // Find all custom links where this resource is either the source or the target
-    const connections = useLiveQuery(() => 
+    const connections = useLiveQuery(() =>
         db.customLinks
-          .where('sourceNodeId').equals(selectedPath)
-          .or('targetNodeId').equals(selectedPath)
-          .toArray(),
+            .where('sourceNodeId').equals(selectedPath)
+            .or('targetNodeId').equals(selectedPath)
+            .toArray(),
         [selectedPath]
     ) || [];
 
@@ -31,7 +40,7 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ selectedResource, allResource
     };
 
     // Create a map for quick resource lookup by path
-    const resourceMap = React.useMemo(() => 
+    const resourceMap = React.useMemo(() =>
         new Map(allResources.map(r => [r.path, r])),
         [allResources]
     );
@@ -40,11 +49,11 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ selectedResource, allResource
     const selectedColors = CATEGORY_COLORS[selectedSubjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];
 
     return (
-        <div className="bg-white h-full flex flex-col border-l border-gray-200 animate-slide-in-left">
+        <div className="bg-white/95 backdrop-blur-sm h-full flex flex-col border-l border-gray-300 shadow-xl rounded-r-lg overflow-hidden">
             {/* Header */}
             <div className="p-4 border-b border-gray-200 flex-shrink-0">
                 <div className="flex justify-between items-center mb-2">
-                    <span 
+                    <span
                         className={`text-xs font-bold px-2 py-0.5 rounded-full ${selectedColors.background} ${selectedColors.text}`}
                     >
                         {selectedResource.subject}
@@ -90,8 +99,8 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ selectedResource, allResource
                                         className="text-left w-full"
                                     >
                                         <p className="font-semibold text-blue-600 hover:underline">{otherResource.title}</p>
-                                        <p 
-                                            className={`text-xs font-medium px-1.5 py-0.5 rounded-full mt-1 ${otherColors.background} ${otherColors.text}`} 
+                                        <p
+                                            className={`text-xs font-medium px-1.5 py-0.5 rounded-full mt-1 ${otherColors.background} ${otherColors.text}`}
                                             style={{ display: 'inline-block' }}
                                         >
                                             {otherResource.subject}
