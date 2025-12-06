@@ -26,6 +26,7 @@
     "js-yaml": "^4.1.1",
     "lucide-react": "^0.554.0",
     "marked": "^17.0.1",
+    "multer": "^2.0.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.6",

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Task, TaskStatus, EvidenceType, TimeLog, Evidence, SubjectCategory } from '../../types';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../../constants';
-import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit } from 'lucide-react';
+import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit, Upload } from 'lucide-react';
+import { uploadFile } from '../../services/uploadService';
+import { ensureProtocol } from '../../utils/urlHelper';
 
 interface TaskDetailPanelProps {
     task: Task;
@@ -18,6 +20,8 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
     // Evidence Form State
     const [evidenceType, setEvidenceType] = useState<EvidenceType>(EvidenceType.LINK);
     const [evidenceContent, setEvidenceContent] = useState('');
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Description Edit State
     const [isEditingDescription, setIsEditingDescription] = useState(false);
@@ -69,19 +73,46 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
         setLogDuration('30');
     };
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setSelectedFile(e.target.files[0]);
+        }
+    };
+
     const handleAddEvidence = async () => {
-        if (!evidenceContent) return;
+        if (evidenceType === EvidenceType.FILE && !selectedFile) return;
+        if (evidenceType !== EvidenceType.FILE && !evidenceContent) return;
+
+        let finalContent = evidenceContent;
+        let finalType = evidenceType;
+
+        if (evidenceType === EvidenceType.FILE && selectedFile) {
+            try {
+                const result = await uploadFile(selectedFile);
+                finalContent = result.url;
+                // Files uploaded become links to that file
+                finalType = EvidenceType.LINK; 
+            } catch (error) {
+                alert('Failed to upload file.');
+                console.error(error);
+                return;
+            }
+        }
 
         const newEvidence: Evidence = {
             id: Math.random().toString(36).substr(2, 9),
-            type: evidenceType,
-            content: evidenceContent,
+            type: finalType,
+            content: finalContent,
             timestamp: new Date().toLocaleTimeString()
         };
 
         const updatedEvidences = [...(task.evidences || []), newEvidence];
         await onUpdate(task.id, { evidences: updatedEvidences });
+        
+        // Reset form
         setEvidenceContent('');
+        setSelectedFile(null);
+        if (fileInputRef.current) fileInputRef.current.value = '';
     };
 
     const handleDeleteEvidence = async (id: string) => {
@@ -298,25 +329,42 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             <select
                                 value={evidenceType}
                                 onChange={(e) => setEvidenceType(e.target.value as EvidenceType)}
-                                className="text-xs border border-gray-300 rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none w-1/3"
+                                className="text-xs border border-gray-300 rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none min-w-[80px]"
                             >
                                 <option value={EvidenceType.LINK}>Link</option>
                                 <option value={EvidenceType.TEXT}>Note</option>
+                                <option value={EvidenceType.FILE}>File</option>
                             </select>
-                            <input
-                                type="text"
-                                value={evidenceContent}
-                                onChange={(e) => setEvidenceContent(e.target.value)}
-                                placeholder={evidenceType === EvidenceType.LINK ? "Paste URL here..." : "Type your note..."}
-                                className="flex-1 text-sm border border-gray-300 rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none"
-                            />
+                            
+                            {evidenceType === EvidenceType.FILE ? (
+                                <div className="flex-1 flex items-center gap-2">
+                                    <div className="flex-1 px-2 py-1.5 border border-dashed border-gray-300 rounded bg-white text-xs text-gray-500 truncate cursor-pointer hover:bg-gray-50" onClick={() => fileInputRef.current?.click()}>
+                                        {selectedFile ? selectedFile.name : 'Choose a file...'}
+                                    </div>
+                                    <input 
+                                        type="file" 
+                                        ref={fileInputRef} 
+                                        className="hidden" 
+                                        onChange={handleFileChange} 
+                                    />
+                                </div>
+                            ) : (
+                                <input
+                                    type="text"
+                                    value={evidenceContent}
+                                    onChange={(e) => setEvidenceContent(e.target.value)}
+                                    placeholder={evidenceType === EvidenceType.LINK ? "Paste URL here..." : "Type your note..."}
+                                    className="flex-1 text-sm border border-gray-300 rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none"
+                                />
+                            )}
                         </div>
                         <button
                             onClick={handleAddEvidence}
-                            disabled={!evidenceContent}
+                            disabled={evidenceType !== EvidenceType.FILE && !evidenceContent}
                             className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 text-white text-xs font-bold py-2 rounded flex items-center justify-center gap-2 transition-colors"
                         >
-                            <Plus size={14} /> Attach Evidence
+                            <Plus size={14} /> 
+                            {evidenceType === EvidenceType.FILE ? 'Upload & Attach' : 'Attach Evidence'}
                         </button>
                     </div>
 
@@ -327,8 +375,23 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             task.evidences.map(ev => (
                                 <div key={ev.id} className="flex items-center justify-between bg-white border border-gray-200 p-2 rounded-md group">
                                     <div className="flex items-center gap-2 overflow-hidden">
-                                        {ev.type === EvidenceType.LINK ? <LinkIcon size={14} className="text-blue-500 shrink-0" /> : <FileText size={14} className="text-gray-500 shrink-0" />}
-                                        <span className="text-xs text-gray-700 truncate">{ev.content}</span>
+                                        {ev.type === EvidenceType.LINK ? (
+                                            <LinkIcon size={14} className="text-blue-500 shrink-0" />
+                                        ) : (
+                                            <FileText size={14} className="text-gray-500 shrink-0" />
+                                        )}
+                                        {ev.type === EvidenceType.LINK ? (
+                                            <a 
+                                                href={ensureProtocol(ev.content)}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-xs text-blue-600 truncate hover:underline"
+                                            >
+                                                {ev.content}
+                                            </a>
+                                        ) : (
+                                            <span className="text-xs text-gray-700 truncate">{ev.content}</span>
+                                        )}
                                     </div>
                                     <button onClick={() => handleDeleteEvidence(ev.id)} className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <Trash2 size={14} />

@@ -5,6 +5,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { load } from 'js-yaml'; // Import js-yaml for YAML parsing
+import multer from 'multer'; // Import multer for file uploads
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -20,14 +21,47 @@ app.use(express.json()); // For parsing application/json
 const TASKS_FOLDER = path.join(__dirname, '..', 'Data', 'Tasks'); // e.g., Data/Tasks within project root
 const PROGRESS_FILE = path.join(__dirname, '..', 'Data', 'task_progress.json');
 const USER_TASKS_FILE = path.join(__dirname, '..', 'Data', 'user_tasks.json');
+const UPLOADS_FOLDER = path.join(__dirname, '..', 'public', 'uploads');
 
-// Ensure the tasks folder exists
+// Ensure directories exist
 if (!fs.existsSync(TASKS_FOLDER)) {
     fs.mkdirSync(TASKS_FOLDER, { recursive: true });
     console.log(`Created tasks folder: ${TASKS_FOLDER}`);
 }
+if (!fs.existsSync(UPLOADS_FOLDER)) {
+    fs.mkdirSync(UPLOADS_FOLDER, { recursive: true });
+    console.log(`Created uploads folder: ${UPLOADS_FOLDER}`);
+}
+
+// --- Multer Storage Config ---
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, UPLOADS_FOLDER);
+    },
+    filename: function (req, file, cb) {
+        // Use original name, but maybe prefix with timestamp to avoid collisions if needed
+        // For now, keep it simple as requested (original name) or safe name
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const safeName = file.originalname.replace(/[^a-z0-9.]/gi, '_').toLowerCase();
+        cb(null, uniqueSuffix + '-' + safeName);
+    }
+});
+
+const upload = multer({ storage: storage });
 
 // --- API Endpoints ---
+
+// File Upload Endpoint
+app.post('/api/upload', upload.single('file'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+    }
+    // Return the public URL. Since 'public' is the root of the frontend dev server,
+    // the URL should be /uploads/filename
+    const fileUrl = `/uploads/${req.file.filename}`;
+    res.json({ url: fileUrl, filename: req.file.filename, originalName: req.file.originalname });
+});
+
 app.get('/api/tasks', async (req, res) => {
     console.log('GET /api/tasks received.');
     try {

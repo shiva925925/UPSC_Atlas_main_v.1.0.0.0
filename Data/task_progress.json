@@ -19,7 +19,14 @@
     "status": "TODO",
     "priority": "Medium",
     "logs": [],
-    "evidences": [],
+    "evidences": [
+      {
+        "id": "0aebwzacl",
+        "type": "LINK",
+        "content": "https://vajiramweb-test.s3.ap-south-1.amazonaws.com/media/2023/10/9/17/22/6/Ancient_History_Previous_Year_Questions_UPSC.pdf",
+        "timestamp": "11:37:23 AM"
+      }
+    ],
     "isArchived": false,
     "isDeleted": false
   },
@@ -99,7 +106,20 @@
     "status": "TODO",
     "priority": "Medium",
     "logs": [],
-    "evidences": [],
+    "evidences": [
+      {
+        "id": "986yij8qw",
+        "type": "TEXT",
+        "content": "etyrjhgdf",
+        "timestamp": "12:07:36 AM"
+      },
+      {
+        "id": "xoftxcivz",
+        "type": "LINK",
+        "content": "/uploads/1764959868504-238393127-shiva_qa_resume.pdf",
+        "timestamp": "12:07:48 AM"
+      }
+    ],
     "isArchived": false,
     "isDeleted": false
   },
@@ -139,7 +159,20 @@
     "status": "TODO",
     "priority": "Medium",
     "logs": [],
-    "evidences": [],
+    "evidences": [
+      {
+        "id": "wfvmdom2w",
+        "type": "LINK",
+        "content": "file:///C:/Users/USER/Downloads/basic-text.pdf",
+        "timestamp": "12:06:48 AM"
+      },
+      {
+        "id": "vdj4z6ta6",
+        "type": "LINK",
+        "content": "/uploads/1764960556856-526408130-mains_pyqs_gs_iv__2013_2025_.pdf",
+        "timestamp": "12:19:16 AM"
+      }
+    ],
     "isArchived": false,
     "isDeleted": false
   },
@@ -171,7 +204,14 @@
     "status": "TODO",
     "priority": "Medium",
     "logs": [],
-    "evidences": [],
+    "evidences": [
+      {
+        "id": "gtlc0twg8",
+        "type": "LINK",
+        "content": "/uploads/1765000875197-992822197-basic_text.pdf",
+        "timestamp": "11:31:15 AM"
+      }
+    ],
     "isArchived": false,
     "isDeleted": false
   },
@@ -179,7 +219,14 @@
     "status": "TODO",
     "priority": "Medium",
     "logs": [],
-    "evidences": [],
+    "evidences": [
+      {
+        "id": "l70jt05y8",
+        "type": "LINK",
+        "content": "file:///C:/Users/USER/Downloads/basic-text.pdf",
+        "timestamp": "12:05:16 AM"
+      }
+    ],
     "isArchived": false,
     "isDeleted": false
   },
@@ -216,10 +263,17 @@
     "isDeleted": false
   },
   "GS-1.1-027": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Medium",
     "logs": [],
-    "evidences": [],
+    "evidences": [
+      {
+        "id": "fnpbl41cc",
+        "type": "LINK",
+        "content": "https://indianexpress.com/article/cities/kolkata/162-days-after-pushback-to-bangladesh-pregnant-sunali-khatun-son-return-to-india-10404774/?ref=hometop_hp",
+        "timestamp": "11:41:33 AM"
+      }
+    ],
     "isArchived": false,
     "isDeleted": false
   },
@@ -707,7 +761,14 @@
     "status": "TODO",
     "priority": "Medium",
     "logs": [],
-    "evidences": [],
+    "evidences": [
+      {
+        "id": "k8nz7aldr",
+        "type": "LINK",
+        "content": "file:///C:/Users/USER/Downloads/basic-text.pdf",
+        "timestamp": "11:53:07 PM"
+      }
+    ],
     "isArchived": false,
     "isDeleted": false
   },

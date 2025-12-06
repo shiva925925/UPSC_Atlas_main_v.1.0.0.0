@@ -7,6 +7,9 @@ import { FileText, Link as LinkIcon, Video, Plus, ExternalLink, Search, Filter, 
 import LibraryTree from './LibraryTree';
 import DetailPanel from './DetailPanel';
 
+import { uploadFile } from '../services/uploadService';
+import { ensureProtocol } from '../utils/urlHelper';
+
 const ResourcesView: React.FC = () => {
   const dbResources = useLiveQuery(() => db.resources.toArray()) || [];
   const [libraryResources, setLibraryResources] = useState<Resource[]>([]);
@@ -70,7 +73,7 @@ const ResourcesView: React.FC = () => {
   const resetForm = () => {
     setNewTitle('');
     setNewType(ResourceType.LINK);
-    setNewSubject(Subject.POLITY);
+    setNewSubject(Subject.GENERAL);
     setNewUrl('');
     setNewDate('');
     setNewDescription('');
@@ -89,8 +92,38 @@ const ResourcesView: React.FC = () => {
 
   const handleAddResource = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Logic to add/update resource in DB
-    resetForm();
+    
+    try {
+        let resourceUrl = newUrl;
+        
+        // Handle File Upload if applicable
+        if ((newType === ResourceType.PDF || newType === ResourceType.IMAGE) && selectedFile) {
+            const uploadResult = await uploadFile(selectedFile);
+            resourceUrl = uploadResult.url;
+        }
+
+        const newResource: Resource = {
+            id: editingId || Math.random().toString(36).substr(2, 9),
+            userId: 'Schamala',
+            title: newTitle,
+            type: newType,
+            subject: newSubject,
+            url: resourceUrl,
+            date: newDate || new Date().toISOString().split('T')[0],
+            description: newDescription
+        };
+
+        if (editingId) {
+            await db.resources.update(editingId, newResource);
+        } else {
+            await db.resources.add(newResource);
+        }
+
+        resetForm();
+    } catch (error) {
+        console.error("Failed to add resource:", error);
+        alert("Failed to add resource. See console for details.");
+    }
   };
 
   const handleEdit = (resource: Resource) => {
@@ -109,7 +142,7 @@ const ResourcesView: React.FC = () => {
       const url = URL.createObjectURL(resource.content);
       window.open(url, '_blank');
     } else {
-      window.open(resource.url, '_blank');
+      window.open(ensureProtocol(resource.url), '_blank');
     }
   };
 
@@ -271,7 +304,108 @@ const ResourcesView: React.FC = () => {
               <h3 className="text-lg font-bold text-gray-800">{editingId ? 'Edit Resource' : 'Add New Resource'}</h3>
               <button onClick={resetForm} className="text-gray-500 hover:text-gray-700"><X size={20} /></button>
             </div>
-            {/* Form content remains the same */}
+            
+            <form onSubmit={handleAddResource} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <input
+                  required
+                  type="text"
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                  placeholder="Resource Title"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                  <select
+                    value={newType}
+                    onChange={(e) => setNewType(e.target.value as ResourceType)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                  >
+                    {Object.values(ResourceType).map(t => (
+                      <option key={t} value={t}>{t}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                  <select
+                    value={newSubject}
+                    onChange={(e) => setNewSubject(e.target.value as Subject)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                  >
+                    {Object.values(Subject).map(s => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {newType === ResourceType.PDF || newType === ResourceType.IMAGE ? 'File' : 'URL'}
+                </label>
+                {newType === ResourceType.PDF || newType === ResourceType.IMAGE ? (
+                  <div className="flex items-center gap-2">
+                    <label className="flex-1 cursor-pointer">
+                      <div className="w-full px-3 py-2 border border-dashed border-gray-300 rounded-md hover:bg-gray-50 flex items-center justify-center text-sm text-gray-500">
+                        {selectedFile ? selectedFile.name : 'Choose a file...'}
+                      </div>
+                      <input type="file" className="hidden" onChange={handleFileChange} accept={newType === ResourceType.PDF ? ".pdf" : "image/*"} />
+                    </label>
+                  </div>
+                ) : (
+                  <input
+                    required
+                    type="url"
+                    value={newUrl}
+                    onChange={(e) => setNewUrl(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                    placeholder="https://..."
+                  />
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                <input
+                  type="date"
+                  value={newDate}
+                  onChange={(e) => setNewDate(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea
+                  value={newDescription}
+                  onChange={(e) => setNewDescription(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none h-24 resize-none"
+                  placeholder="Add details..."
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={resetForm}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium"
+                >
+                  {editingId ? 'Save Changes' : 'Add Resource'}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

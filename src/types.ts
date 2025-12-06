@@ -119,7 +119,8 @@ export interface TimeLog {
 export enum EvidenceType {
   LINK = 'LINK',
   TEXT = 'TEXT',
-  IMAGE = 'IMAGE'
+  IMAGE = 'IMAGE',
+  FILE = 'FILE'
 }
 
 export interface Evidence {
