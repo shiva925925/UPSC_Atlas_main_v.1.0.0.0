@@ -13,24 +13,18 @@ interface DetailPanelProps {
 }
 
 const DetailPanel: React.FC<DetailPanelProps> = ({ selectedResource, allResources, onClose, onSelectResource }) => {
-    const { path: selectedPath } = selectedResource;
-
-    // Defensive check - if no path, show error state
-    if (!selectedPath) {
-        return (
-            <div className="bg-white h-full flex items-center justify-center border-l border-gray-200">
-                <p className="text-gray-500">Unable to load resource details</p>
-            </div>
-        );
-    }
+    const { path: selectedPath, id: selectedId } = selectedResource;
 
     // Find all custom links where this resource is either the source or the target
+    // Use path if available, otherwise use id
+    const lookupKey = selectedPath || selectedId;
+
     const connections = useLiveQuery(() =>
         db.customLinks
-            .where('sourceNodeId').equals(selectedPath)
-            .or('targetNodeId').equals(selectedPath)
+            .where('sourceNodeId').equals(lookupKey)
+            .or('targetNodeId').equals(lookupKey)
             .toArray(),
-        [selectedPath]
+        [lookupKey]
     ) || [];
 
     const handleOpenFile = () => {
@@ -39,11 +33,15 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ selectedResource, allResource
         }
     };
 
-    // Create a map for quick resource lookup by path
-    const resourceMap = React.useMemo(() =>
-        new Map(allResources.map(r => [r.path, r])),
-        [allResources]
-    );
+    // Create a map for quick resource lookup by path or id
+    const resourceMap = React.useMemo(() => {
+        const map = new Map();
+        allResources.forEach(r => {
+            if (r.path) map.set(r.path, r);
+            if (r.id) map.set(r.id, r);
+        });
+        return map;
+    }, [allResources]);
 
     const selectedSubjectCategory = SUBJECT_HIERARCHY[selectedResource.subject] || SubjectCategory.GENERAL;
     const selectedColors = CATEGORY_COLORS[selectedSubjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];

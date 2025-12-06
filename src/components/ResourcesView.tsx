@@ -28,6 +28,7 @@ const ResourcesView: React.FC = () => {
   const [newDate, setNewDate] = useState('');
   const [newDescription, setNewDescription] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     fetch(`/api/library?t=${Date.now()}`)
@@ -96,6 +97,7 @@ const ResourcesView: React.FC = () => {
 
   const handleAddResource = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     try {
       let resourceUrl = newUrl;
@@ -119,19 +121,31 @@ const ResourcesView: React.FC = () => {
 
       if (editingId) {
         await db.resources.update(editingId, newResource);
+        alert('✅ Resource updated successfully!');
       } else {
         await db.resources.add(newResource);
+        alert('✅ Resource added successfully!');
       }
 
       resetForm();
     } catch (error) {
       console.error("Failed to add resource:", error);
-      alert("Failed to add resource. See console for details.");
+      alert(`❌ Failed to ${editingId ? 'update' : 'add'} resource. ${error instanceof Error ? error.message : 'Please try again.'}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleEdit = (resource: Resource) => {
-    // Logic to set form for editing
+    // Populate form with existing resource data
+    setEditingId(resource.id);
+    setNewTitle(resource.title);
+    setNewType(resource.type);
+    setNewSubject(resource.subject);
+    setNewUrl(resource.url);
+    setNewDate(resource.date || '');
+    setNewDescription(resource.description || '');
+    setSelectedFile(null); // Can't pre-populate file input for security reasons
     setIsAdding(true);
   };
 
@@ -164,14 +178,14 @@ const ResourcesView: React.FC = () => {
   return (
     <div className="p-4 md:p-8 h-full flex flex-col animate-fade-in gap-6">
       {/* Header */}
-      <header className="flex-shrink-0 flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+      <header className="flex-shrink-0 flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4 bg-white/80 backdrop-blur-sm p-4 rounded-lg shadow-sm border border-gray-200">
         <div>
           <h2 className="text-2xl font-bold text-gray-800">Study Library</h2>
           <p className="text-gray-500">Explore the syllabus tree and manage your custom resources.</p>
         </div>
         <button
           onClick={() => { resetForm(); setIsAdding(true); }}
-          className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors w-full md:w-auto justify-center"
+          className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors w-full md:w-auto justify-center shadow-md"
         >
           <Plus size={18} />
           <span>Add Resource</span>
@@ -401,15 +415,27 @@ const ResourcesView: React.FC = () => {
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium"
+                  disabled={isSubmitting}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium"
+                  disabled={isSubmitting}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
-                  {editingId ? 'Save Changes' : 'Add Resource'}
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      {editingId ? 'Saving...' : 'Adding...'}
+                    </>
+                  ) : (
+                    editingId ? 'Save Changes' : 'Add Resource'
+                  )}
                 </button>
               </div>
             </form>
