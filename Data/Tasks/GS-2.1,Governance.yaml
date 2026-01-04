@@ -1,0 +1,420 @@
+- id: GS-2.1-001
+  title: Health
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-002
+  title: Gender
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-003
+  title: Education
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-004
+  title: Poverty
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-005
+  title: Economic Issues
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-006
+  title: Concerns in Policy Design
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-007
+  title: Concerns in Policy Implementation
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-008
+  title: Suggestions for Improvement
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-009
+  title: Critical Assessment of Centrally Sponsored Schemes
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-010
+  title: Rationalisation of CSS
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-011
+  title: Beti Bachao Beti Padhao
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-012
+  title: Smart City Mission
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-013
+  title: Swachh Bharat Abhiyan
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-014
+  title: MGNREGA
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-015
+  title: Digital India
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-016
+  title: Make in India
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-017
+  title: Skill India
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-018
+  title: PM Jan Dhan Yojana
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-019
+  title: Start-up India
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-020
+  title: Role of Social Capital Organisations
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-021
+  title: Indian Context of Social Capital
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-022
+  title: Classification of Social Capital Organisations
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-023
+  title: Provisions for the Third Sector in the Indian Constitution
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-024
+  title: National Policy on the Voluntary Sector 2007
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-025
+  title: Role of NGOs
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-026
+  title: Impact of NGOs
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-027
+  title: Accreditation Issues in NGOs
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-028
+  title: Legitimacy Issues in NGOs
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-029
+  title: Accountability Issues in NGOs
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-030
+  title: Foreign Funding Issues
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-031
+  title: Need for SHGs
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-032
+  title: Benefits of SHGs
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-033
+  title: Weaknesses of SHGs
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-034
+  title: Challenges to SHGs
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-035
+  title: Measures to Make SHGs Effective
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-036
+  title: Kudumbashree (Kerala)
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-037
+  title: Mahila Arthik Vikas Mahamandal (Maharashtra)
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-038
+  title: Societies
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-039
+  title: Trusts
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-040
+  title: Religious Endowments
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-041
+  title: Need for Cooperatives
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-042
+  title: Constitutional Provisions for Cooperatives
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-043
+  title: National Policy on Cooperatives 2002
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-044
+  title: Issues in Cooperatives Sector
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-045
+  title: Challenges in Cooperatives Sector
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-046
+  title: Dimensions of Governance
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-047
+  title: Good Governance
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-048
+  title: Aspects of Good Governance
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-049
+  title: Barriers to Good Governance
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-050
+  title: Pre-conditions for Good Governance
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-051
+  title: Ensuring Good Governance
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-052
+  title: E-Governance Applications
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-053
+  title: E-Governance Models
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-054
+  title: E-Governance Successes
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-055
+  title: E-Governance Limitations
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-056
+  title: Potential of E-Governance
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-057
+  title: Recent E-Governance Initiatives
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-058
+  title: Components of Citizens Charter
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-059
+  title: Features of Citizens Charter
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-060
+  title: Six Principles of Citizens Charter
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-061
+  title: Shortcomings of Citizens Charter
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-062
+  title: Measures to Improve Citizens Charter
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-063
+  title: Sevottam Model
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-064
+  title: Aspects of Transparency
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-065
+  title: Types of Accountability
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-066
+  title: Means to Ensure Transparency
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-067
+  title: Means to Ensure Accountability
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-068
+  title: RTI
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-069
+  title: Social Audit
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-070
+  title: Whistleblower Protection Bill
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-071
+  title: Lokpal and Lokayuktas Act
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-072
+  title: Relationship Between Civil Service and Democracy
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-073
+  title: Advisory Role in Policy Making
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-074
+  title: Institutionalising Socio-economic Change
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-075
+  title: Discharging Delegated Functions
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-076
+  title: Administering Law of the Land
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-077
+  title: Civil Services as Watchdogs
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-078
+  title: Continuity During Political Instability
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-079
+  title: Record-Keeping by Civil Services
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-080
+  title: Civil Services as Channel of Communication
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-081
+  title: Lack of Professionalism in Civil Services
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-082
+  title: Poor Capacity Building
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-083
+  title: Inefficient Incentive Systems
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-084
+  title: Outdated Rules and Procedures
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-085
+  title: Inconsistencies in Promotion System
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-086
+  title: Lack of Transparency Mechanisms
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-087
+  title: Lack of Accountability Mechanisms
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-088
+  title: Arbitrary Transfers
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-089
+  title: Political Interference
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-090
+  title: Administrative Acquiescence
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-091
+  title: Erosion of Values and Ethics
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-092
+  title: Redtapism
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-093
+  title: Elitist Nature of Civil Services
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-094
+  title: Poor Pay Structure
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-095
+  title: Tendency to Capture Power
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-096
+  title: Setting Right Asymmetry of Power
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-097
+  title: Insulating Civil Servants from Political Interference
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-098
+  title: Professionalisation of Civil Services
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-099
+  title: Stability of Tenure
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-100
+  title: Promoting Competition in Civil Services
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-101
+  title: Citizen-Centric Administration
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-102
+  title: Strengthening Accountability
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-103
+  title: Outcome Orientation
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-104
+  title: Promoting Public Service Values
+  subject: Governance
+  priority: Medium
+- id: GS-2.1-105
+  title: Promoting Administrative Ethics
+  subject: Governance
+  priority: Medium

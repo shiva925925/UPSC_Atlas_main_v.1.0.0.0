@@ -1,0 +1,500 @@
+- id: GS-2-001
+  title: Regulating Act (1773) to Independence Act (1947)
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-002
+  title: Constituent Assembly
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-003
+  title: Objective Resolution
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-004
+  title: Enactment & Enforcement of Constitution
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-005
+  title: Written Constitution
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-006
+  title: Flexible & Rigid Nature
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-007
+  title: Federal & Unitary Features
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-008
+  title: Parliamentary Form of Government
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-009
+  title: List of Significant Amendments & Their Provisions
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-010
+  title: Procedure for Amending the Constitution
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-011
+  title: Fundamental Rights
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-012
+  title: Directive Principles of State Policy
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-013
+  title: Judicial Review
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-014
+  title: Universal Adult Franchise
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-015
+  title: Single Citizenship
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-016
+  title: Separation of Powers
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-017
+  title: Basic Structure Doctrine
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-018
+  title: Judgments & Important Cases (Basic Structure)
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-019
+  title: 7th Schedule
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-020
+  title: Legislative Functions
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-021
+  title: Financial Functions
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-022
+  title: Administrative & Quasi-Judicial Functions
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-023
+  title: Issues & Challenges in Federal Structure
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-024
+  title: Cooperative Federalism
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-025
+  title: Competitive Federalism
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-026
+  title: Legislative Relations
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-027
+  title: Administrative Relations
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-028
+  title: Financial Relations
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-029
+  title: Inter-state Water Disputes
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-030
+  title: Inter-State Councils
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-031
+  title: Public Acts, Records & Judicial Proceedings
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-032
+  title: Inter-State Trade & Commerce
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-033
+  title: Zonal Councils
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-034
+  title: Emergency Provisions
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-035
+  title: Role of Governor
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-036
+  title: 2nd ARC Recommendations
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-037
+  title: Punchhi Commission Recommendations
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-038
+  title: Sarkaria Commission Recommendations
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-039
+  title: Devolution of Powers to Local Bodies
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-040
+  title: State Finance Commission
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-041
+  title: 11th Schedule Subjects
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-042
+  title: 12th Schedule Subjects
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-043
+  title: Panchayat Devolution Index (NITI Aayog)
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-044
+  title: Measures to Improve Local Governance
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-045
+  title: Doctrine of Separation of Powers
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-046
+  title: Checks & Balances
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-047
+  title: RTI
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-048
+  title: PIL
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-049
+  title: Tribunals
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-050
+  title: Comparison with Constitutional Schemes of Other Countries
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-051
+  title: Federal System with Unitary Bias
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-052
+  title: Synthesis of Parliamentary Sovereignty & Judicial Supremacy
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-053
+  title: Integrated & Independent Judiciary
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-054
+  title: Fundamental Duties
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-055
+  title: Secular State
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-056
+  title: Three-tier Government
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-057
+  title: Due Process vs Procedure Established by Law
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-058
+  title: Impeachment of President
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-059
+  title: President of India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-060
+  title: Prime Minister
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-061
+  title: Council of Ministers
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-062
+  title: Cabinet Secretariat
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-063
+  title: Governor
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-064
+  title: Chief Minister
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-065
+  title: State Council of Ministers
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-066
+  title: State Secretariat
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-067
+  title: Chief Justice of India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-068
+  title: Supreme Court Judges
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-069
+  title: High Court Judges
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-070
+  title: Judicial Jurisdiction
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-071
+  title: Cabinet Ministries
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-072
+  title: Other Ministries
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-073
+  title: Parliamentary Secretaries
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-074
+  title: Characteristics of Pressure Groups
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-075
+  title: Pressure Groups & Political Parties
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-076
+  title: Pressure Groups & Interest Groups
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-077
+  title: Types of Pressure Groups
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-078
+  title: Functions of Pressure Groups
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-079
+  title: Methods of Pressure Groups
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-080
+  title: Pressure Groups in India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-081
+  title: Shortcomings of Pressure Groups
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-082
+  title: Salient Features of Representation of People's Act
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-083
+  title: Election Commission
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-084
+  title: Union Public Service Commission
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-085
+  title: State Public Service Commission
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-086
+  title: Finance Commission
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-087
+  title: National Commission for SCs
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-088
+  title: National Commission for STs
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-089
+  title: Special Officer for Linguistic Minorities
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-090
+  title: Comptroller and Auditor General of India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-091
+  title: Attorney General of India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-092
+  title: Advocate General of the State
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-093
+  title: NITI Aayog
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-094
+  title: Reserve Bank of India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-095
+  title: National Human Rights Commission
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-096
+  title: State Human Rights Commission
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-097
+  title: Central Information Commission
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-098
+  title: Central Vigilance Commission
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-099
+  title: Central Bureau of Investigation
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-100
+  title: Lokpal and Lokayuktas
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-101
+  title: National Commission for Women
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-102
+  title: National Commission for Backward Classes
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-103
+  title: National Commission for Minorities
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-104
+  title: Insurance Regulatory and Development Authority of India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-105
+  title: Securities and Exchange Board of India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-106
+  title: Competition Commission of India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-107
+  title: Telecom Regulatory Authority of India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-108
+  title: Central Electricity Regulatory Commission
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-109
+  title: Atomic Energy Regulatory Board
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-110
+  title: Central Pollution Control Board
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-111
+  title: Medical Council of India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-112
+  title: Inland Waterways Authority of India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-113
+  title: Central Ground Water Authority
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-114
+  title: Directorate General of Civil Aviation
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-115
+  title: Pension Fund Regulatory and Development Authority
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-116
+  title: Food Safety and Standards Authority of India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-117
+  title: Bar Council of India
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-118
+  title: University Grants Commission
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-119
+  title: Financial Stability and Development Council
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-120
+  title: All India Council for Technical Education
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-121
+  title: National Green Tribunal
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-122
+  title: Competition Appellate Tribunal
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-123
+  title: Income-Tax Appellate Tribunal
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-124
+  title: Cyber Appellate Tribunal
+  subject: Polity and Governance
+  priority: Medium
+- id: GS-2-125
+  title: Intellectual Property Appellate Board
+  subject: Polity and Governance
+  priority: Medium

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Task, TaskStatus, EvidenceType, TimeLog, Evidence, SubjectCategory, Priority } from '../../types';
+import { Task, TaskStatus, Subject, EvidenceType, TimeLog, Evidence, SubjectCategory, Priority } from '../../types';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../../constants';
 import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit, Upload } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
@@ -166,15 +166,22 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
     const colors = CATEGORY_COLORS[subjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];
 
     return (
-        <GlassCard variant="opaque" className="w-[400px] border-l border-white/20 h-full overflow-y-auto shadow-2xl rounded-l-none">
+        <GlassCard variant="blur" className="w-[400px] border-l border-white/20 h-full overflow-y-auto shadow-2xl rounded-l-none bg-white/30 backdrop-blur-xl">
             <div className="p-6">
                 <div className="flex justify-between items-start mb-6">
-                    <div className="flex items-center gap-2">
-                        <span
-                            className={`text-xs font-bold px-2 py-1 rounded ${colors.background} ${colors.text}`}
-                        >
-                            {task.subject}
-                        </span>
+                    <div className="flex items-center gap-3">
+                        <div>
+                            <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Subject</label>
+                            <select
+                                value={task.subject}
+                                onChange={(e) => onUpdate(task.id, { subject: e.target.value as Subject })}
+                                className={`text-xs font-bold px-3 py-1.5 rounded border-2 transition-colors ${colors.background} ${colors.text} border-transparent hover:border-blue-400 focus:border-blue-500 focus:outline-none cursor-pointer`}
+                            >
+                                {Object.values(Subject).map(subject => (
+                                    <option key={subject} value={subject}>{subject}</option>
+                                ))}
+                            </select>
+                        </div>
                         <span className="text-xs text-gray-500 font-mono">#{task.id}</span>
                     </div>
                     <button type="button" onClick={onClose} className="p-1 hover:bg-gray-100 rounded text-gray-500 transition-colors">
@@ -263,8 +270,8 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                                     className="flex-1 text-sm border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500 outline-none"
                                                     autoFocus
                                                 />
-                                                <button onClick={saveCriterion} className="text-green-600 hover:bg-green-50 p-1 rounded"><Save size={14} /></button>
-                                                <button onClick={() => setEditingCriterionId(null)} className="text-gray-400 hover:bg-gray-100 p-1 rounded"><X size={14} /></button>
+                                                <button type="button" onClick={saveCriterion} className="text-green-600 hover:bg-green-50 p-1 rounded"><Save size={14} /></button>
+                                                <button type="button" onClick={() => setEditingCriterionId(null)} className="text-gray-400 hover:bg-gray-100 p-1 rounded"><X size={14} /></button>
                                             </div>
                                         ) : (
                                             <span className={`text-sm flex-1 ${ac.isCompleted ? 'text-green-800 line-through decoration-green-800/50' : 'text-gray-700'}`}>
@@ -276,6 +283,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                     {editingCriterionId !== ac.id && (
                                         <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <button
+                                                type="button"
                                                 onClick={() => startEditingCriterion(ac.id, ac.text)}
                                                 className="text-gray-400 hover:text-blue-600 p-1 rounded hover:bg-gray-100"
                                                 title="Edit"
@@ -283,6 +291,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                                 <Edit size={14} />
                                             </button>
                                             <button
+                                                type="button"
                                                 onClick={() => handleDeleteCriterion(ac.id)}
                                                 className="text-gray-400 hover:text-red-600 p-1 rounded hover:bg-gray-100"
                                                 title="Delete"
@@ -307,6 +316,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             className="flex-1 text-sm border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                         />
                         <button
+                            type="button"
                             onClick={handleAddCriterion}
                             disabled={!newCriterion.trim()}
                             className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded border border-gray-300 transition-colors disabled:opacity-50"
@@ -362,6 +372,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             )}
                         </div>
                         <button
+                            type="button"
                             onClick={handleAddEvidence}
                             disabled={evidenceType !== EvidenceType.FILE && !evidenceContent}
                             className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 text-white text-xs font-bold py-2 rounded flex items-center justify-center gap-2 transition-colors"
@@ -396,7 +407,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                             <span className="text-xs text-gray-700 truncate">{ev.content}</span>
                                         )}
                                     </div>
-                                    <button onClick={() => handleDeleteEvidence(ev.id)} className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button type="button" onClick={() => handleDeleteEvidence(ev.id)} className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <Trash2 size={14} />
                                     </button>
                                 </div>
@@ -448,6 +459,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             />
                         </div>
                         <button
+                            type="button"
                             onClick={handleLogTime}
                             className="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 rounded flex items-center justify-center gap-2 transition-colors"
                         >
@@ -509,10 +521,20 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
 
                 {/* Footer */}
                 <div className="border-t border-gray-100 pt-6">
-                    <div className="flex gap-6 text-xs text-gray-500">
+                    <div className="flex justify-between items-center text-xs text-gray-500">
                         <div className="flex items-center gap-2">
-                            <Clock size={14} />
-                            <span>Created {task.date}</span>
+                            <div className="flex flex-col">
+                                <label className="text-[10px] font-bold text-gray-400 uppercase mb-0.5">Due Date</label>
+                                <div className="flex items-center gap-1.5 hover:bg-gray-50 p-1 rounded transition-colors group cursor-pointer">
+                                    <Clock size={14} className="text-gray-400 group-hover:text-blue-500" />
+                                    <input
+                                        type="date"
+                                        value={task.date}
+                                        onChange={(e) => onUpdate(task.id, { date: e.target.value })}
+                                        className="bg-transparent border-none p-0 text-xs font-medium text-gray-600 focus:ring-0 cursor-pointer"
+                                    />
+                                </div>
+                            </div>
                         </div>
                         {task.priority && (
                             <div className="flex items-center gap-2">

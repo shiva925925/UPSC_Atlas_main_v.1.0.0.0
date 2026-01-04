@@ -260,42 +260,86 @@ async function smartUpdate(
     const existingTask = existingTasksMap.get(taskId);
     const progressFromServer = serverProgress[taskId] || {};
 
-    // Helper to compare string fields loosely
-    const stringsAreDifferent = (a: string | undefined, b: string | undefined) => {
+    // Helper: Normalize strings (trim, handle nulls) - strict case for normal fields
+    const stringsDiffer = (a: string | undefined, b: string | undefined) => {
         return (a || '').trim() !== (b || '').trim();
     };
 
+    // Helper: Case-insensitive Comparison for Enums (Subject, Priority)
+    const enumsDiffer = (a: string | undefined, b: string | undefined) => {
+        return (a || '').trim().toLowerCase() !== (b || '').trim().toLowerCase();
+    };
+
+    // Helper: Deep Comparison that ignores key order
+    const deepDiffer = (a: any, b: any) => {
+        return JSON.stringify(a) !== JSON.stringify(b);
+        // Note: Ideally use a real deepEqual, but for now we trust identical structure from server/file
+        // We will improve AC comparison below specifically.
+    };
+
     if (existingTask) {
-        // Hybrid Update: Update content fields from file, merge/prioritize progress fields from server
         const updates: Partial<Task> = {};
 
-        // Fields from file (overwrites existing if different)
-        // Fields from file (overwrites existing if different)
-        if (stringsAreDifferent(existingTask.title, fileTaskData.title)) updates.title = fileTaskData.title;
-        if (stringsAreDifferent(existingTask.date, fileTaskData.date)) updates.date = fileTaskData.date;
-        if (stringsAreDifferent(existingTask.subject, fileTaskData.subject)) updates.subject = fileTaskData.subject;
-        if (stringsAreDifferent(existingTask.description, fileTaskData.description)) updates.description = fileTaskData.description;
-        // Priority: Only update from file if NOT overridden by server progress
+        // 1. Core Fields (File Overwrites DB if different)
+        if (stringsDiffer(existingTask.title, fileTaskData.title)) updates.title = fileTaskData.title;
+        if (stringsDiffer(existingTask.date, fileTaskData.date)) updates.date = fileTaskData.date;
+        if (stringsDiffer(existingTask.description, fileTaskData.description)) updates.description = fileTaskData.description;
+        if (stringsDiffer(existingTask.sourceFile, fileTaskData.sourceFile)) updates.sourceFile = fileTaskData.sourceFile;
+
+        // 2. Subject (Only update if truly different)
+        // Skip if exactly the same
+        if (existingTask.subject !== fileTaskData.subject) {
+            // They differ. Check if it's ONLY a case difference
+            const caseInsensitiveMatch = (existingTask.subject || '').trim().toLowerCase() ===
+                (fileTaskData.subject || '').trim().toLowerCase();
+
+            if (!caseInsensitiveMatch) {
+                // Truly different values - file wins
+                updates.subject = fileTaskData.subject;
+            }
+            // If caseInsensitiveMatch is true, they're the same except for case - don't update
+        }
+
+        // 3. Priority (Server Progress > File Data > Existing)
         if (progressFromServer.priority) {
             if (existingTask.priority !== progressFromServer.priority) updates.priority = progressFromServer.priority;
-        } else if (existingTask.priority !== fileTaskData.priority) {
+        } else if (fileTaskData.priority && enumsDiffer(existingTask.priority, fileTaskData.priority)) {
             updates.priority = fileTaskData.priority;
         }
-        if (stringsAreDifferent(existingTask.sourceFile, fileTaskData.sourceFile)) updates.sourceFile = fileTaskData.sourceFile;
 
-        // Acceptance Criteria: Overwrite from file if changed, as file is source of truth for structure
-        if (fileTaskData.acceptanceCriteria && JSON.stringify(existingTask.acceptanceCriteria?.map(ac => ({ text: ac.text }))) !== JSON.stringify(fileTaskData.acceptanceCriteria?.map((ac: any) => ({ text: ac.text })))) {
-            updates.acceptanceCriteria = fileTaskData.acceptanceCriteria;
+        // 4. Acceptance Criteria (Complex)
+        // File data might vary (strings vs objects). Normalize to text content for comparison.
+        // DB has { id, text, isCompleted }. File might have strings or partial objects.
+        const dbCriteriaTexts = (existingTask.acceptanceCriteria || []).map(ac => ac.text.trim()).sort();
+        const fileCriteriaTexts = (fileTaskData.acceptanceCriteria || []).map((ac: any) =>
+            (typeof ac === 'string' ? ac : ac.text || '').trim()
+        ).sort();
+
+        if (JSON.stringify(dbCriteriaTexts) !== JSON.stringify(fileCriteriaTexts)) {
+            // Content changed! We must update.
+            // BUT we should try to preserve IDs/completion status of matching items if possible.
+            // For now, simpler approach: If changed, overwrite from file (resetting completion).
+            // A smarter merge is out of scope for "fixing loop", we just ensuring stability.
+            // If file has raw strings, convert to objects.
+            const newCriteria = (fileTaskData.acceptanceCriteria || []).map((ac: any) => {
+                if (typeof ac === 'string') return { id: Math.random().toString(36).substr(2, 9), text: ac, isCompleted: false };
+                return {
+                    id: ac.id || Math.random().toString(36).substr(2, 9),
+                    text: ac.text || '',
+                    isCompleted: !!ac.isCompleted
+                };
+            });
+            updates.acceptanceCriteria = newCriteria;
         }
 
-        // Progress-related fields from server (prioritize server state)
+        // 5. Server Progress Fields (Status, Logs, Evidences, Flags)
         if (progressFromServer.status !== undefined && existingTask.status !== progressFromServer.status) {
             updates.status = progressFromServer.status;
         }
-        if (progressFromServer.logs !== undefined && JSON.stringify(existingTask.logs) !== JSON.stringify(progressFromServer.logs)) {
+        if (progressFromServer.logs !== undefined && deepDiffer(existingTask.logs, progressFromServer.logs)) {
             updates.logs = progressFromServer.logs;
         }
-        if (progressFromServer.evidences !== undefined && JSON.stringify(existingTask.evidences) !== JSON.stringify(progressFromServer.evidences)) {
+        if (progressFromServer.evidences !== undefined && deepDiffer(existingTask.evidences, progressFromServer.evidences)) {
             updates.evidences = progressFromServer.evidences;
         }
         if (progressFromServer.isArchived !== undefined && existingTask.isArchived !== progressFromServer.isArchived) {
@@ -367,5 +411,42 @@ export async function saveTaskProgress(allTasks: Task[]) {
     } catch (error) {
         console.error('%c[Sync Service] Error saving task progress:', 'color: red; font-weight: bold;', error);
         throw error; // Re-throw to allow calling components to handle it
+    }
+}
+
+export async function updateTaskProgress(taskId: string, updates: Partial<Task>) {
+    console.log(`%c[Sync Service] Incrementally updating task '${taskId}'...`, 'color: purple; font-weight: bold;', updates);
+
+    // Filter updates to only include progress-related fields
+    const progressUpdates: Partial<Task> = {};
+    if (updates.status !== undefined) progressUpdates.status = updates.status;
+    if (updates.priority !== undefined) progressUpdates.priority = updates.priority;
+    if (updates.logs !== undefined) progressUpdates.logs = updates.logs;
+    if (updates.evidences !== undefined) progressUpdates.evidences = updates.evidences;
+    if (updates.isArchived !== undefined) progressUpdates.isArchived = updates.isArchived;
+    if (updates.isDeleted !== undefined) progressUpdates.isDeleted = updates.isDeleted;
+    if (updates.deletedAt !== undefined) progressUpdates.deletedAt = updates.deletedAt;
+
+    if (Object.keys(progressUpdates).length === 0) {
+        console.log('[Sync Service] No progress fields to update. Skipping server sync.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${PROGRESS_API}/${encodeURIComponent(taskId)}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(progressUpdates),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to update task progress: ${response.statusText}`);
+        }
+        console.log(`%c[Sync Service] Task '${taskId}' updated successfully.`, 'color: purple; font-weight: bold;');
+    } catch (error) {
+        console.error(`%c[Sync Service] Error updating task '${taskId}':`, 'color: red; font-weight: bold;', error);
+        throw error;
     }
 }

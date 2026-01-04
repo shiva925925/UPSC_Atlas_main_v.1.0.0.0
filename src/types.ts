@@ -18,14 +18,14 @@ export enum Subject {
   HISTORY = 'History',
   GEOGRAPHY = 'Geography',
   INDIAN_SOCIETY = 'Indian Society',
-  POLITY_GOVERNANCE = 'Polity & Governance',
+  POLITY_GOVERNANCE = 'Polity and Governance',
   ECONOMY = 'Economy',
-  ENVIRONMENT_SCIENCE = 'Environment & Science',
+  ENVIRONMENT_SCIENCE = 'Environment and Science',
   SECURITY = 'Security',
   ETHICS = 'Ethics',
 
   // Specific History & Culture (GS 1)
-  ART_AND_CULTURE = 'Art & Culture',
+  ART_AND_CULTURE = 'Art and Culture',
   ANCIENT_HISTORY = 'Ancient History',
   MEDIEVAL_HISTORY = 'Medieval History',
   MODERN_HISTORY = 'Modern History',
@@ -34,7 +34,7 @@ export enum Subject {
 
   // Specific Geography (GS 1)
   PHYSICAL_GEOGRAPHY = 'Physical Geography',
-  HUMAN_ECONOMIC_GEOGRAPHY = 'Human & Economic Geography',
+  HUMAN_ECONOMIC_GEOGRAPHY = 'Human and Economic Geography',
   INDIAN_GEOGRAPHY = 'Indian Geography',
   WORLD_GEOGRAPHY = 'World Geography',
 
@@ -50,15 +50,15 @@ export enum Subject {
   AGRICULTURE = 'Agriculture',
 
   // Specific Science, Tech & Environment (GS 3)
-  SCIENCE_TECHNOLOGY = 'Science & Technology',
-  BIODIVERSITY_ENVIRONMENT = 'Biodiversity & Environment',
+  SCIENCE_TECHNOLOGY = 'Science and Technology',
+  BIODIVERSITY_ENVIRONMENT = 'Biodiversity and Environment',
   DISASTER_MANAGEMENT = 'Disaster Management',
 
   // Specific Internal Security (GS 3)
   INTERNAL_SECURITY = 'Internal Security',
 
   // Specific Ethics (GS 4)
-  ETHICS_INTEGRITY = 'Ethics & Integrity',
+  ETHICS_INTEGRITY = 'Ethics and Integrity',
   CASE_STUDIES = 'Case Studies',
 
   // General / Others
@@ -164,7 +164,7 @@ export interface CustomLink {
   userId: string;
   sourceNodeId: string;
   targetNodeId: string;
-  type: 'prerequisite' | 'related' | 'example' | 'reference' | 'custom';
+  type: 'prerequisite' | 'related' | 'example' | 'reference' | 'custom' | 'task_link';
   label?: string;
   color?: string;
   bidirectional: boolean;
@@ -194,4 +194,11 @@ export enum CalendarFilter {
   TIME_LOGS = 'Time Logs',
   ACHIEVEMENTS = 'Achievements',
   RESOURCES = 'Resources'
+}
+
+export interface DayMetadata {
+  id: string; // date string YYYY-MM-DD
+  userId: string;
+  heading?: string;
+  notes?: string;
 }

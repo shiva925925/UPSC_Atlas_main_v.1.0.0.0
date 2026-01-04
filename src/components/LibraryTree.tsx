@@ -76,7 +76,6 @@ function buildTree(resources: Resource[]): TreeNodeData {
     return treeRoot;
 }
 
-// TreeNode Component
 const TreeNode: React.FC<TreeNodeProps> = ({ node, level, expandedFolders, toggleFolder, onSelectResource, isSelected, searchHighlight }) => {
     const isExpanded = expandedFolders.has(node.path);
     const isFolder = !node.isFile;
@@ -89,32 +88,43 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, level, expandedFolders, toggl
         }
     };
 
-    const style = isSelected
-        ? 'bg-blue-500/20 text-blue-800'
-        : searchHighlight
-            ? 'bg-yellow-200'
-            : 'hover:bg-black/5';
+    // Typography hierarchy: Root folders larger, deeper items smaller
+    const fontSize = level === 0 ? 'text-sm' : 'text-xs';
+    const fontWeight = isSelected ? 'font-semibold' : (level === 0 ? 'font-semibold' : 'font-medium');
+
+    // Glass Styling
+    const baseStyle = "flex items-center mx-1 my-0.5 rounded-r-md cursor-pointer transition-all duration-200 border-l-2";
+
+    // Selection & Hover States
+    let stateStyle = "border-transparent text-gray-700 hover:bg-white/10"; // Default
+    if (isSelected) {
+        stateStyle = "bg-blue-500/10 border-blue-500 text-blue-700 shadow-sm";
+    } else if (searchHighlight) {
+        stateStyle = "bg-yellow-100/50 border-yellow-400 text-yellow-900";
+    }
 
     return (
-        <div>
-            <div
-                className={`flex items-center p-1.5 rounded-md cursor-pointer transition-colors ${style}`}
-                style={{ paddingLeft: `${level * 1.5 + 0.5}rem` }}
-                onClick={handleClick}
-            >
-                {isFolder ? (
-                    <>
-                        {isExpanded ? <ChevronDown size={18} className="mr-2 text-gray-500" /> : <ChevronRight size={18} className="mr-2 text-gray-500" />}
-                        <Folder size={18} className="mr-2 text-blue-500" />
-                        <span className="font-medium text-gray-800">{node.name}</span>
-                    </>
-                ) : (
-                    <>
-                        <FileIcon size={18} className="mr-2 text-gray-700" />
-                        <span className={`flex-1 ${isSelected ? 'font-semibold' : 'text-gray-700'}`}>{node.name}</span>
-                    </>
-                )}
-            </div>
+        <div
+            className={`${baseStyle} ${stateStyle} ${fontSize} ${fontWeight} py-1.5`}
+            style={{ paddingLeft: `${level === 0 ? 0.5 : 0.5}rem` }} // Reduced padding as we use border indentation for hierarchy
+            onClick={handleClick}
+        >
+            {isFolder ? (
+                <>
+                    {isExpanded ?
+                        <ChevronDown size={level === 0 ? 16 : 14} className="mr-1.5 opacity-60" /> :
+                        <ChevronRight size={level === 0 ? 16 : 14} className="mr-1.5 opacity-60" />
+                    }
+                    <Folder size={level === 0 ? 16 : 14} className={`mr-2 ${isSelected ? 'text-blue-500' : 'text-blue-400/80'}`} />
+                    <span className="truncate">{node.name}</span>
+                </>
+            ) : (
+                <>
+                    <div className="w-4 mr-1.5" /> {/* Spacer for file alignment */}
+                    <FileIcon size={14} className={`mr-2 ${isSelected ? 'text-blue-600' : 'text-gray-400'}`} />
+                    <span className="truncate flex-1">{node.name}</span>
+                </>
+            )}
         </div>
     );
 };
@@ -137,15 +147,12 @@ const LibraryTree: React.FC<LibraryTreeProps> = ({ resources, searchQuery, onSel
 
         function searchTree(node: TreeNodeData) {
             let foundInChildren = node.children.some(child => searchTree(child));
-
             const isMatch = node.name.toLowerCase().includes(searchQuery.toLowerCase());
 
             if (isMatch) {
                 if (node.isFile) {
                     newMatches.add(node.path);
                 } else {
-                    // If folder matches, expand it and maybe highlight it (optional, currently only files are highlighted)
-                    // For now, let's just ensure it's expanded if it matches
                     newExpanded.add(node.path);
                 }
             }
@@ -158,7 +165,6 @@ const LibraryTree: React.FC<LibraryTreeProps> = ({ resources, searchQuery, onSel
         }
 
         tree.children.forEach(child => searchTree(child));
-
         setExpandedFolders(newExpanded);
         setSearchMatches(newMatches);
 
@@ -192,7 +198,12 @@ const LibraryTree: React.FC<LibraryTreeProps> = ({ resources, searchQuery, onSel
                     isSelected={isSelected}
                     searchHighlight={searchHighlight}
                 />
-                {expandedFolders.has(node.path) && node.children.map(child => renderTree(child, level + 1))}
+                {/* Recursive Children with Indentation Border */}
+                {expandedFolders.has(node.path) && node.children.length > 0 && (
+                    <div className="ml-3 border-l border-white/20 pl-1">
+                        {node.children.map(child => renderTree(child, level + 1))}
+                    </div>
+                )}
             </div>
         );
     }

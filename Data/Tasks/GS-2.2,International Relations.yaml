@@ -1,0 +1,324 @@
+- id: GS-2.2-001
+  title: India–China Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-002
+  title: India–Pakistan Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-003
+  title: India–Myanmar Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-004
+  title: India–Bhutan Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-005
+  title: India–Bangladesh Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-006
+  title: India–Sri Lanka Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-007
+  title: India–Afghanistan Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-008
+  title: India–Nepal Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-009
+  title: India–Maldives Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-010
+  title: Non-Aligned Movement
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-011
+  title: Nuclear Doctrine
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-012
+  title: Gujral Doctrine
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-013
+  title: Look East to Act East Policy
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-014
+  title: Think West Policy
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-015
+  title: India–USA Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-016
+  title: India–Russia Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-017
+  title: India–Japan Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-018
+  title: India–Central Asia Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-019
+  title: India–West Asia Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-020
+  title: India–Africa Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-021
+  title: India–Australia Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-022
+  title: India–New Zealand Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-023
+  title: India–EU Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-024
+  title: India–European Countries Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-025
+  title: India–Latin America Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-026
+  title: India–Pacific Countries Relations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-027
+  title: SAARC
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-028
+  title: BRICS
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-029
+  title: BBIN Initiative
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-030
+  title: BCIM Initiative
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-031
+  title: BIMSTEC
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-032
+  title: IBSA
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-033
+  title: ASEAN
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-034
+  title: RCEP
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-035
+  title: India–Africa Forum Summit
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-036
+  title: Shanghai Cooperation Organisation (SCO)
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-037
+  title: Ashgabat Agreement
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-038
+  title: FIPIC
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-039
+  title: IOR–ARC
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-040
+  title: Mekong–Ganga Cooperation
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-041
+  title: Raisina Dialogue
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-042
+  title: Heart of Asia Conference
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-043
+  title: East Asia Summit
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-044
+  title: G20
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-045
+  title: Asian Development Bank
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-046
+  title: National Security Summit
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-047
+  title: Wassenaar Arrangement
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-048
+  title: Missile Technology Control Regime (MTCR)
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-049
+  title: Australia Group
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-050
+  title: APEC
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-051
+  title: One Belt One Road
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-052
+  title: International North–South Transport Corridor
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-053
+  title: Global Trade War
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-054
+  title: Global Currency War
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-055
+  title: Syrian Crisis
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-056
+  title: UN Reforms
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-057
+  title: WTO Reforms
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-058
+  title: South China Sea Conflict
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-059
+  title: Brexit
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-060
+  title: Deglobalisation
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-061
+  title: Protectionism
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-062
+  title: US Sanctions on Iran
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-063
+  title: US Pullout from Paris Agreement
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-064
+  title: H-1B Visa Issue
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-065
+  title: OPEC Oil Price Manipulation
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-066
+  title: Spread of Indian Diaspora
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-067
+  title: India’s Diaspora Policy
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-068
+  title: Overseas Citizen of India (OCI)
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-069
+  title: Pravasi Bharatiya Divas
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-070
+  title: Know India Programme
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-071
+  title: LM Singhvi Committee on Diaspora
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-072
+  title: Role of Indian Diaspora
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-073
+  title: Dual Nationality Issues
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-074
+  title: Remittance Issues
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-075
+  title: United Nations
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-076
+  title: UN Agencies
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-077
+  title: World Trade Organization
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-078
+  title: World Bank
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-079
+  title: International Monetary Fund
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-080
+  title: World Economic Forum
+  subject: International Relations
+  priority: Medium
+- id: GS-2.2-081
+  title: Commonwealth of Nations
+  subject: International Relations
+  priority: Medium

@@ -1,0 +1,648 @@
+- id: AC001
+  title: Indian Art Forms
+  subject: Art and Culture
+  priority: Medium
+- id: AC002
+  title: Indian Paintings
+  subject: Art and Culture
+  priority: Medium
+- id: AC003
+  title: Mural Paintings
+  subject: Art and Culture
+  priority: Medium
+- id: AC004
+  title: Miniature Paintings
+  subject: Art and Culture
+  priority: Medium
+- id: AC005
+  title: Mughal Paintings
+  subject: Art and Culture
+  priority: Medium
+- id: AC006
+  title: Rajput Paintings
+  subject: Art and Culture
+  priority: Medium
+- id: AC007
+  title: Pahari Paintings
+  subject: Art and Culture
+  priority: Medium
+- id: AC008
+  title: Classical Dance Forms
+  subject: Art and Culture
+  priority: Medium
+- id: AC009
+  title: Folk Dance Forms
+  subject: Art and Culture
+  priority: Medium
+- id: AC010
+  title: Modern Dance
+  subject: Art and Culture
+  priority: Medium
+- id: AC011
+  title: Classical Music
+  subject: Art and Culture
+  priority: Medium
+- id: AC012
+  title: Folk Music
+  subject: Art and Culture
+  priority: Medium
+- id: AC013
+  title: String Puppets
+  subject: Art and Culture
+  priority: Medium
+- id: AC014
+  title: Shadow Puppets
+  subject: Art and Culture
+  priority: Medium
+- id: AC015
+  title: Rod Puppets
+  subject: Art and Culture
+  priority: Medium
+- id: AC016
+  title: Glove puppets
+  subject: Art and Culture
+  priority: Medium
+- id: AC017
+  title: Modern Puppetry
+  subject: Art and Culture
+  priority: Medium
+- id: AC018
+  title: Tribal Puppetry
+  subject: Art and Culture
+  priority: Medium
+- id: AC019
+  title: Ochre Coloured Pottery
+  subject: Art and Culture
+  priority: Medium
+- id: AC020
+  title: Black and Red Ware
+  subject: Art and Culture
+  priority: Medium
+- id: AC021
+  title: Painted Grey Ware
+  subject: Art and Culture
+  priority: Medium
+- id: AC022
+  title: Northern Black Polished Ware
+  subject: Art and Culture
+  priority: Medium
+- id: AC023
+  title: Glazed Pottery
+  subject: Art and Culture
+  priority: Medium
+- id: AC024
+  title: Unglazed Pottery
+  subject: Art and Culture
+  priority: Medium
+- id: AC025
+  title: Classical Sanskrit Theatre
+  subject: Art and Culture
+  priority: Medium
+- id: AC026
+  title: Regional Theatre
+  subject: Art and Culture
+  priority: Medium
+- id: AC027
+  title: Modern Theatre
+  subject: Art and Culture
+  priority: Medium
+- id: AC028
+  title: Thang Ta
+  subject: Art and Culture
+  priority: Medium
+- id: AC029
+  title: Gatka
+  subject: Art and Culture
+  priority: Medium
+- id: AC030
+  title: Kalaripayattu
+  subject: Art and Culture
+  priority: Medium
+- id: AC031
+  title: Mallakhamb
+  subject: Art and Culture
+  priority: Medium
+- id: AC032
+  title: Silambam
+  subject: Art and Culture
+  priority: Medium
+- id: AC033
+  title: Other Important Martial Arts
+  subject: Art and Culture
+  priority: Medium
+- id: AC034
+  title: Sculptures of Harappan Civilization
+  subject: Art and Culture
+  priority: Medium
+- id: AC035
+  title: Sculptures of the Mauryan Age
+  subject: Art and Culture
+  priority: Medium
+- id: AC036
+  title: Jain Sculptures
+  subject: Art and Culture
+  priority: Medium
+- id: AC037
+  title: Buddhist Sculpture
+  subject: Art and Culture
+  priority: Medium
+- id: AC038
+  title: Gupta Sculpture
+  subject: Art and Culture
+  priority: Medium
+- id: AC039
+  title: Medieval School of Sculpture
+  subject: Art and Culture
+  priority: Medium
+- id: AC040
+  title: Modern Indian Sculpture
+  subject: Art and Culture
+  priority: Medium
+- id: AC041
+  title: Spread of Bhakti and Sufi Movements
+  subject: Art and Culture
+  priority: Medium
+- id: AC042
+  title: Women Poets of Bhakti
+  subject: Art and Culture
+  priority: Medium
+- id: AC043
+  title: Classical Sanskrit Literature
+  subject: Art and Culture
+  priority: Medium
+- id: AC044
+  title: Vedas
+  subject: Art and Culture
+  priority: Medium
+- id: AC045
+  title: Upanishads
+  subject: Art and Culture
+  priority: Medium
+- id: AC046
+  title: Puranas
+  subject: Art and Culture
+  priority: Medium
+- id: AC047
+  title: Books by Kalidasa
+  subject: Art and Culture
+  priority: Medium
+- id: AC048
+  title: Books by Vishakhadatta
+  subject: Art and Culture
+  priority: Medium
+- id: AC049
+  title: Ancient Buddhist Literature
+  subject: Art and Culture
+  priority: Medium
+- id: AC050
+  title: Ancient Jainism Literature
+  subject: Art and Culture
+  priority: Medium
+- id: AC051
+  title: Early Dravidian Literature
+  subject: Art and Culture
+  priority: Medium
+- id: AC052
+  title: Trends in Medieval Literature
+  subject: Art and Culture
+  priority: Medium
+- id: AC053
+  title: Modern Indian Literature
+  subject: Art and Culture
+  priority: Medium
+- id: AC054
+  title: Harappan Architecture
+  subject: Art and Culture
+  priority: Medium
+- id: AC055
+  title: Mauryan Architecture
+  subject: Art and Culture
+  priority: Medium
+- id: AC056
+  title: Gupta Period Architecture
+  subject: Art and Culture
+  priority: Medium
+- id: AC057
+  title: Nagara Style
+  subject: Art and Culture
+  priority: Medium
+- id: AC058
+  title: Dravida Style
+  subject: Art and Culture
+  priority: Medium
+- id: AC059
+  title: Vesara Style
+  subject: Art and Culture
+  priority: Medium
+- id: AC060
+  title: Buddhist Caves
+  subject: Art and Culture
+  priority: Medium
+- id: AC061
+  title: Jaina Caves
+  subject: Art and Culture
+  priority: Medium
+- id: AC062
+  title: Gupta Period Caves
+  subject: Art and Culture
+  priority: Medium
+- id: AC063
+  title: Imperial Style Delhi Sultanate
+  subject: Art and Culture
+  priority: Medium
+- id: AC064
+  title: Provincial Style
+  subject: Art and Culture
+  priority: Medium
+- id: AC065
+  title: Mughal Style
+  subject: Art and Culture
+  priority: Medium
+- id: AC066
+  title: Sikh Style of Architecture
+  subject: Art and Culture
+  priority: Medium
+- id: AC067
+  title: Rajput Architecture
+  subject: Art and Culture
+  priority: Medium
+- id: AC068
+  title: Salient features
+  subject: Art and Culture
+  priority: Medium
+- id: AC069
+  title: European Influence
+  subject: Art and Culture
+  priority: Medium
+- id: AC070
+  title: Indo-Saracenic Architecture
+  subject: Art and Culture
+  priority: Medium
+- id: AC071
+  title: Post-Independence Architecture
+  subject: Art and Culture
+  priority: Medium
+- id: AC072
+  title: Contribution of Buddhism to Indian Architecture
+  subject: Art and Culture
+  priority: Medium
+- id: AC073
+  title: Contribution of Jainism to Indian Architecture
+  subject: Art and Culture
+  priority: Medium
+- id: AC074
+  title: South Indian Rock Cut Architecture
+  subject: Art and Culture
+  priority: Medium
+- id: AC075
+  title: Western Indian Rock Cut Architecture
+  subject: Art and Culture
+  priority: Medium
+- id: AC076
+  title: Eastern Indian Rock Cut Architecture
+  subject: Art and Culture
+  priority: Medium
+- id: AC077
+  title: Stone Age
+  subject: Ancient History
+  priority: Medium
+- id: AC078
+  title: Chalcolithic Age
+  subject: Ancient History
+  priority: Medium
+- id: AC079
+  title: Iron Age
+  subject: Ancient History
+  priority: Medium
+- id: AC080
+  title: Town Planning
+  subject: Ancient History
+  priority: Medium
+- id: AC081
+  title: Harappan Society
+  subject: Ancient History
+  priority: Medium
+- id: AC082
+  title: Characteristics of Major Centers
+  subject: Ancient History
+  priority: Medium
+- id: AC083
+  title: Harappan Art & Architecture
+  subject: Ancient History
+  priority: Medium
+- id: AC084
+  title: Decline of Harappan Culture
+  subject: Ancient History
+  priority: Medium
+- id: AC085
+  title: Original Home of Aryans
+  subject: Ancient History
+  priority: Medium
+- id: AC086
+  title: Socio-Economic Characters of Vedic Society
+  subject: Ancient History
+  priority: Medium
+- id: AC087
+  title: Vedic Literature
+  subject: Ancient History
+  priority: Medium
+- id: AC088
+  title: Social Organization and Varna System
+  subject: Ancient History
+  priority: Medium
+- id: AC089
+  title: Religion and Thought
+  subject: Ancient History
+  priority: Medium
+- id: AC090
+  title: Mahajanpadas
+  subject: Ancient History
+  priority: Medium
+- id: AC091
+  title: Haryanka dynasty
+  subject: Ancient History
+  priority: Medium
+- id: AC092
+  title: Shishunaga dynasty
+  subject: Ancient History
+  priority: Medium
+- id: AC093
+  title: Nanda dynasty
+  subject: Ancient History
+  priority: Medium
+- id: AC094
+  title: Gautam Buddha
+  subject: Ancient History
+  priority: Medium
+- id: AC095
+  title: Mahavira
+  subject: Ancient History
+  priority: Medium
+- id: AC096
+  title: Growth of Jainism
+  subject: Ancient History
+  priority: Medium
+- id: AC097
+  title: Growth of Buddhism
+  subject: Ancient History
+  priority: Medium
+- id: AC098
+  title: Chandragupta
+  subject: Ancient History
+  priority: Medium
+- id: AC099
+  title: Bindusara
+  subject: Ancient History
+  priority: Medium
+- id: AC100
+  title: Arthasastra
+  subject: Ancient History
+  priority: Medium
+- id: AC101
+  title: Megasthenes
+  subject: Ancient History
+  priority: Medium
+- id: AC102
+  title: Asoka
+  subject: Ancient History
+  priority: Medium
+- id: AC103
+  title: Asoka’s Successors
+  subject: Ancient History
+  priority: Medium
+- id: AC104
+  title: Asoka’s Inscriptions
+  subject: Ancient History
+  priority: Medium
+- id: AC105
+  title: Asoka’s Sites
+  subject: Ancient History
+  priority: Medium
+- id: AC106
+  title: Asoka’s Dhamma
+  subject: Ancient History
+  priority: Medium
+- id: AC107
+  title: Mauryan Administration
+  subject: Ancient History
+  priority: Medium
+- id: AC108
+  title: Mauryan Economy
+  subject: Ancient History
+  priority: Medium
+- id: AC109
+  title: Mauryan Society
+  subject: Ancient History
+  priority: Medium
+- id: AC110
+  title: Mauryan Art
+  subject: Ancient History
+  priority: Medium
+- id: AC111
+  title: Decline of Maurya
+  subject: Ancient History
+  priority: Medium
+- id: AC112
+  title: Indo-Greeks
+  subject: Ancient History
+  priority: Medium
+- id: AC113
+  title: Shakas
+  subject: Ancient History
+  priority: Medium
+- id: AC114
+  title: Parthians
+  subject: Ancient History
+  priority: Medium
+- id: AC115
+  title: Kushanas
+  subject: Ancient History
+  priority: Medium
+- id: AC116
+  title: Satavahanas
+  subject: Ancient History
+  priority: Medium
+- id: AC117
+  title: Other Indigenous Dynasties
+  subject: Ancient History
+  priority: Medium
+- id: AC118
+  title: Gandhara School of Art
+  subject: Ancient History
+  priority: Medium
+- id: AC119
+  title: Mathura School of Art
+  subject: Ancient History
+  priority: Medium
+- id: AC120
+  title: Amravati School of Art
+  subject: Ancient History
+  priority: Medium
+- id: AC121
+  title: Political history of Guptas
+  subject: Ancient History
+  priority: Medium
+- id: AC122
+  title: Gupta Administration
+  subject: Ancient History
+  priority: Medium
+- id: AC123
+  title: Development of Art & Culture
+  subject: Ancient History
+  priority: Medium
+- id: AC124
+  title: Economic Conditions in Gupta Period
+  subject: Ancient History
+  priority: Medium
+- id: AC125
+  title: Urban centres in Gupta Period
+  subject: Ancient History
+  priority: Medium
+- id: AC126
+  title: Sources for Harsha’s Period
+  subject: Ancient History
+  priority: Medium
+- id: AC127
+  title: Early life of Harsha
+  subject: Ancient History
+  priority: Medium
+- id: AC128
+  title: Harsha’s Administration
+  subject: Ancient History
+  priority: Medium
+- id: AC129
+  title: Important Officials of Harsha’s Empire
+  subject: Ancient History
+  priority: Medium
+- id: AC130
+  title: Economy under Harsha
+  subject: Ancient History
+  priority: Medium
+- id: AC131
+  title: Huen Tsang
+  subject: Ancient History
+  priority: Medium
+- id: AC132
+  title: Society under Harsha
+  subject: Ancient History
+  priority: Medium
+- id: AC133
+  title: Religion under Harsha
+  subject: Ancient History
+  priority: Medium
+- id: AC134
+  title: Satavahanas of South India
+  subject: Ancient History
+  priority: Medium
+- id: AC135
+  title: Pallavas
+  subject: Ancient History
+  priority: Medium
+- id: AC136
+  title: Chalukyas
+  subject: Ancient History
+  priority: Medium
+- id: AC137
+  title: Pandyas of Madurai
+  subject: Ancient History
+  priority: Medium
+- id: AC138
+  title: Chola Dynasty
+  subject: Ancient History
+  priority: Medium
+- id: AC139
+  title: Rashtrakutas
+  subject: Ancient History
+  priority: Medium
+- id: AC140
+  title: Slave Dynasty
+  subject: Medieval History
+  priority: Medium
+- id: AC141
+  title: Khilji Dynasty
+  subject: Medieval History
+  priority: Medium
+- id: AC142
+  title: Tughluq dynasty
+  subject: Medieval History
+  priority: Medium
+- id: AC143
+  title: Sayyid Dynasty
+  subject: Medieval History
+  priority: Medium
+- id: AC144
+  title: Lodi dynasty
+  subject: Medieval History
+  priority: Medium
+- id: AC145
+  title: Afghans in North India
+  subject: Medieval History
+  priority: Medium
+- id: AC146
+  title: Rajputs in North India
+  subject: Medieval History
+  priority: Medium
+- id: AC147
+  title: Mughals in North India
+  subject: Medieval History
+  priority: Medium
+- id: AC148
+  title: Babur
+  subject: Medieval History
+  priority: Medium
+- id: AC149
+  title: Humayun
+  subject: Medieval History
+  priority: Medium
+- id: AC150
+  title: Akbar
+  subject: Medieval History
+  priority: Medium
+- id: AC151
+  title: Jahangir
+  subject: Medieval History
+  priority: Medium
+- id: AC152
+  title: Shah Jahan
+  subject: Medieval History
+  priority: Medium
+- id: AC153
+  title: Aurangzeb
+  subject: Medieval History
+  priority: Medium
+- id: AC154
+  title: Later Mughals
+  subject: Medieval History
+  priority: Medium
+- id: AC155
+  title: Decline of Mughal Empire
+  subject: Medieval History
+  priority: Medium
+- id: AC156
+  title: Sur Dynasty
+  subject: Medieval History
+  priority: Medium
+- id: AC157
+  title: Maratha Empire
+  subject: Medieval History
+  priority: Medium
+- id: AC158
+  title: Ahmednagar Sultanate
+  subject: Medieval History
+  priority: Medium
+- id: AC159
+  title: Bijapur Sultanate
+  subject: Medieval History
+  priority: Medium
+- id: AC160
+  title: Berar Sultanate
+  subject: Medieval History
+  priority: Medium
+- id: AC161
+  title: Golconda Sultanate
+  subject: Medieval History
+  priority: Medium
+- id: AC162
+  title: Bidar Sultanate
+  subject: Medieval History
+  priority: Medium

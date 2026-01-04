@@ -25,27 +25,37 @@ const COLUMN_ALIASES = {
 // This map mirrors the Subject enum from src/types.ts for lookup in this Node.js script.
 // It must be kept in sync with src/types.ts.
 const SUBJECT_MAP = {
-    // Generic Subjects (these map directly to their SubjectCategory counterparts)
+    // Generic Subjects
     'history': 'History',
     'geography': 'Geography',
     'indian society': 'Indian Society',
-    'polity & governance': 'Polity & Governance',
+    'society': 'Indian Society',
+    'polity & governance': 'Polity and Governance',
+    'polity and governance': 'Polity and Governance',
+    'polity': 'Polity and Governance',
     'economy': 'Economy',
-    'environment & science': 'Environment & Science',
+    'eco': 'Economy',
+    'environment & science': 'Environment and Science',
+    'environment and science': 'Environment and Science',
     'security': 'Security',
     'ethics': 'Ethics',
 
     // Specific History & Culture (GS 1)
-    'art & culture': 'Art & Culture',
+    'art & culture': 'Art and Culture',
+    'art and culture': 'Art and Culture',
     'ancient history': 'Ancient History',
+    'ancient': 'Ancient History',
     'medieval history': 'Medieval History',
+    'medieval': 'Medieval History',
     'modern history': 'Modern History',
+    'modern': 'Modern History',
     'post-independence india': 'Post-Independence India',
     'world history': 'World History',
 
     // Specific Geography (GS 1)
     'physical geography': 'Physical Geography',
-    'human & economic geography': 'Human & Economic Geography',
+    'human & economic geography': 'Human and Economic Geography',
+    'human and economic geography': 'Human and Economic Geography',
     'indian geography': 'Indian Geography',
     'world geography': 'World Geography',
 
@@ -59,17 +69,21 @@ const SUBJECT_MAP = {
     'indian economy': 'Indian Economy',
     'economic development': 'Economic Development',
     'agriculture': 'Agriculture',
+    'agri': 'Agriculture',
 
     // Specific Science, Tech & Environment (GS 3)
-    'science & technology': 'Science & Technology',
-    'biodiversity & environment': 'Biodiversity & Environment',
+    'science & technology': 'Science and Technology',
+    'science and technology': 'Science and Technology',
+    'biodiversity & environment': 'Biodiversity and Environment',
+    'biodiversity and environment': 'Biodiversity and Environment',
     'disaster management': 'Disaster Management',
 
     // Specific Internal Security (GS 3)
     'internal security': 'Internal Security',
 
     // Specific Ethics (GS 4)
-    'ethics & integrity': 'Ethics & Integrity',
+    'ethics & integrity': 'Ethics and Integrity',
+    'ethics and integrity': 'Ethics and Integrity',
     'case studies': 'Case Studies',
 
     // General / Others
@@ -88,10 +102,25 @@ function normalizeSubject(subjectString) {
     if (!subjectString) {
         return SUBJECT_MAP['general'];
     }
-    const normalizedInput = String(subjectString).trim().toLowerCase();
-    
+
+    // Normalize input: trim, lowercase, and replace '&' with 'and' for easier matching
+    const normalizedInput = String(subjectString)
+        .trim()
+        .toLowerCase()
+        .replace(/\s*&\s*/g, ' and ');
+
+    // Try direct match in map
     if (SUBJECT_MAP[normalizedInput]) {
         return SUBJECT_MAP[normalizedInput];
+    }
+
+    // Try matching without 'and' vs '&' if still not found
+    const simplifiedInput = normalizedInput.replace(/\s+and\s+/g, ' ');
+    for (const key in SUBJECT_MAP) {
+        const simplifiedKey = key.replace(/\s*&\s*/g, ' ').replace(/\s+and\s+/g, ' ');
+        if (simplifiedKey === simplifiedInput) {
+            return SUBJECT_MAP[key];
+        }
     }
 
     console.warn(`Warning: Unknown subject '${subjectString}'. Defaulting to 'General'.`);
@@ -144,7 +173,7 @@ async function convertExcelToYaml(excelFilePath) {
     const workbook = XLSX.readFile(excelFilePath, { type: 'file' });
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
-    
+
     // Get headers from the first row
     const headers = XLSX.utils.sheet_to_json(worksheet, { header: 1 })[0];
     if (!headers) {

@@ -1,5 +1,31 @@
 {
+  "81xv1qgrx": {
+    "status": "TODO",
+    "priority": "High",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
   "9fthd3c3r": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": true,
+    "deletedAt": "2025-12-18T14:51:00.760Z"
+  },
+  "9xh3tg9on": {
+    "status": "IN_PROGRESS",
+    "priority": "High",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": true,
+    "deletedAt": "2025-12-18T14:51:03.943Z"
+  },
+  "AC001": {
     "status": "TODO",
     "priority": "Medium",
     "logs": [],
@@ -7,9 +33,1081 @@
     "isArchived": false,
     "isDeleted": false
   },
-  "9xh3tg9on": {
-    "status": "IN_PROGRESS",
-    "priority": "High",
+  "AC002": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC003": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC004": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC005": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC006": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC007": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC008": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC009": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC010": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC011": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC012": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC013": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC014": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC015": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC016": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC017": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC018": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC019": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC020": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC021": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC022": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC023": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC050": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC051": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC052": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC053": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC054": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC055": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC056": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC057": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC058": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC059": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC060": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC061": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC062": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC063": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC064": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC065": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC066": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC067": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC068": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC069": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC070": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC071": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC072": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC073": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC074": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC075": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC076": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC077": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC078": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC079": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC080": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC081": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC082": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC083": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC084": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC085": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC086": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC087": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC088": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC089": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC090": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC091": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC092": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC093": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC094": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC095": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC096": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC097": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC098": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC099": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC100": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC101": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC102": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC103": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC104": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC105": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC106": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC107": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC108": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC109": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC110": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC111": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC112": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC113": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC114": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC115": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC116": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC117": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC118": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC119": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC120": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC121": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC122": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC123": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC124": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC125": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC126": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC127": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC128": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC129": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC130": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC131": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC132": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC133": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC134": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC135": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC136": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC137": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC138": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC139": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC140": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC141": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC142": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC143": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC144": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC145": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC146": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC147": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC148": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC149": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC150": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC151": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC152": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC153": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC154": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC155": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC156": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC157": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC158": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC159": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC160": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC161": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "AC162": {
+    "status": "TODO",
+    "priority": "Medium",
     "logs": [],
     "evidences": [],
     "isArchived": false,
@@ -21,8 +1119,7 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": true,
-    "deletedAt": "2025-12-06T15:00:17.736Z"
+    "isDeleted": false
   },
   "GS-1.1-002": {
     "status": "TODO",
@@ -48,7 +1145,7 @@
     "isDeleted": false
   },
   "GS-1.1-003": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -56,22 +1153,15 @@
     "isDeleted": false
   },
   "GS-1.1-004": {
-    "status": "IN_PROGRESS",
-    "priority": "High",
+    "status": "TODO",
+    "priority": "Medium",
     "logs": [],
-    "evidences": [
-      {
-        "id": "5xfafvgqc",
-        "type": "LINK",
-        "content": "/uploads/1765033807659-836361929-modern_history_pyq_pdf_e476b1546c__1_.pdf",
-        "timestamp": "20:40:07"
-      }
-    ],
+    "evidences": [],
     "isArchived": false,
     "isDeleted": false
   },
   "GS-1.1-005": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -79,7 +1169,7 @@
     "isDeleted": false
   },
   "GS-1.1-006": {
-    "status": "DONE",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -130,20 +1220,7 @@
     "status": "TODO",
     "priority": "Medium",
     "logs": [],
-    "evidences": [
-      {
-        "id": "986yij8qw",
-        "type": "TEXT",
-        "content": "etyrjhgdf",
-        "timestamp": "12:07:36 AM"
-      },
-      {
-        "id": "xoftxcivz",
-        "type": "LINK",
-        "content": "/uploads/1764959868504-238393127-shiva_qa_resume.pdf",
-        "timestamp": "12:07:48 AM"
-      }
-    ],
+    "evidences": [],
     "isArchived": false,
     "isDeleted": false
   },
@@ -156,7 +1233,7 @@
     "isDeleted": false
   },
   "GS-1.1-014": {
-    "status": "DONE",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -169,8 +1246,7 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": true,
-    "deletedAt": "2025-12-06T15:00:07.959Z"
+    "isDeleted": false
   },
   "GS-1.1-016": {
     "status": "TODO",
@@ -184,20 +1260,7 @@
     "status": "TODO",
     "priority": "Medium",
     "logs": [],
-    "evidences": [
-      {
-        "id": "wfvmdom2w",
-        "type": "LINK",
-        "content": "file:///C:/Users/USER/Downloads/basic-text.pdf",
-        "timestamp": "12:06:48 AM"
-      },
-      {
-        "id": "vdj4z6ta6",
-        "type": "LINK",
-        "content": "/uploads/1764960556856-526408130-mains_pyqs_gs_iv__2013_2025_.pdf",
-        "timestamp": "12:19:16 AM"
-      }
-    ],
+    "evidences": [],
     "isArchived": false,
     "isDeleted": false
   },
@@ -229,14 +1292,7 @@
     "status": "TODO",
     "priority": "Medium",
     "logs": [],
-    "evidences": [
-      {
-        "id": "gtlc0twg8",
-        "type": "LINK",
-        "content": "/uploads/1765000875197-992822197-basic_text.pdf",
-        "timestamp": "11:31:15 AM"
-      }
-    ],
+    "evidences": [],
     "isArchived": false,
     "isDeleted": false
   },
@@ -244,14 +1300,7 @@
     "status": "TODO",
     "priority": "Medium",
     "logs": [],
-    "evidences": [
-      {
-        "id": "l70jt05y8",
-        "type": "LINK",
-        "content": "file:///C:/Users/USER/Downloads/basic-text.pdf",
-        "timestamp": "12:05:16 AM"
-      }
-    ],
+    "evidences": [],
     "isArchived": false,
     "isDeleted": false
   },
@@ -280,7 +1329,7 @@
     "isDeleted": false
   },
   "GS-1.1-026": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -288,17 +1337,10 @@
     "isDeleted": false
   },
   "GS-1.1-027": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
-    "evidences": [
-      {
-        "id": "fnpbl41cc",
-        "type": "LINK",
-        "content": "https://indianexpress.com/article/cities/kolkata/162-days-after-pushback-to-bangladesh-pregnant-sunali-khatun-son-return-to-india-10404774/?ref=hometop_hp",
-        "timestamp": "11:41:33 AM"
-      }
-    ],
+    "evidences": [],
     "isArchived": false,
     "isDeleted": false
   },
@@ -407,7 +1449,7 @@
     "isDeleted": false
   },
   "GS-1.1-041": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -463,7 +1505,7 @@
     "isDeleted": false
   },
   "GS-1.1-048": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -786,14 +1828,7 @@
     "status": "TODO",
     "priority": "Medium",
     "logs": [],
-    "evidences": [
-      {
-        "id": "k8nz7aldr",
-        "type": "LINK",
-        "content": "file:///C:/Users/USER/Downloads/basic-text.pdf",
-        "timestamp": "11:53:07 PM"
-      }
-    ],
+    "evidences": [],
     "isArchived": false,
     "isDeleted": false
   },
@@ -1118,7 +2153,7 @@
     "isDeleted": false
   },
   "GS-1.1-129": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -1749,6 +2784,870 @@
     "isArchived": false,
     "isDeleted": false
   },
+  "GS-1.2-001": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-002": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-003": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-004": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-005": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-006": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-007": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-008": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-009": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-010": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-011": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-012": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-013": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-014": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-015": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-016": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-017": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-018": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-019": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-020": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-021": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-022": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-023": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-024": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-025": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-026": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-027": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-028": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-029": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-030": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-031": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-032": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-033": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-034": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-035": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-036": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-037": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-038": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-039": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-040": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-041": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-042": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-043": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-044": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-045": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-046": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-047": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-048": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-049": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-050": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-051": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-052": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-053": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-054": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-055": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-056": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-057": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-058": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-059": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-060": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-061": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-062": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-063": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-064": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-065": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-066": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-067": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-068": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-069": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-070": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-071": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-072": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-073": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-074": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-075": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-076": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-077": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-078": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-079": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-080": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-081": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-082": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-083": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-084": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-085": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-086": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-087": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-088": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-089": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-090": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-091": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-092": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-093": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-094": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-095": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-096": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-097": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-098": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-099": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-100": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-101": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-102": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-103": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-104": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-105": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-106": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "GS-1.2-107": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  "bip46u33h": {
+    "status": "TODO",
+    "priority": "Medium",
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
   "es8u2k56t": {
     "status": "TODO",
     "priority": "Medium",
@@ -1815,7 +3714,7 @@
     "isDeleted": false
   },
   "xl3r155b8": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Low",
     "logs": [],
     "evidences": [],

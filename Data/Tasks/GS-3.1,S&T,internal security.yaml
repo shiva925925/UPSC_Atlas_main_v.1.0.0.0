@@ -1,0 +1,580 @@
+- id: GS-3.1-001
+  title: Artificial Sweetening Agents
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-002
+  title: Food Preservatives
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-003
+  title: Antacid
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-004
+  title: Antihistamines
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-005
+  title: Neurologically Active Drugs
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-006
+  title: Tranquilizers
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-007
+  title: Analgesics
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-008
+  title: Antimicrobials
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-009
+  title: Antibiotics
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-010
+  title: Antiseptic
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-011
+  title: Disinfectant
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-012
+  title: Anti-Fertility Drugs
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-013
+  title: Soaps
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-014
+  title: Synthetic detergents
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-015
+  title: Glass
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-016
+  title: Water Softener
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-017
+  title: Water Purification
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-018
+  title: Water Disinfection
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-019
+  title: Microwave Oven
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-020
+  title: Chandrasekhara Venkata Raman
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-021
+  title: Acharya Jagadish Chandra Bose
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-022
+  title: Satyendra Nath Bose
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-023
+  title: Meghnad Saha
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-024
+  title: Homi Jehangir Bhabha
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-025
+  title: Subrahmanyan Chandrasekhar
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-026
+  title: A.P.J. Abdul Kalam
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-027
+  title: Vikram Sarabhai
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-028
+  title: Mokshagundam Visvesvaraya
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-029
+  title: Har Gobind Khorana
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-030
+  title: Tessy Thomas
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-031
+  title: C.N.R. Rao
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-032
+  title: IT and Computers
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-033
+  title: Space Technology
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-034
+  title: Nanotechnology
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-035
+  title: Biotechnology
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-036
+  title: Robotics
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-037
+  title: Defence Technology
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-038
+  title: Nuclear Technology
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-039
+  title: Need for Intellectual Property Rights
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-040
+  title: Types of IPR
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-041
+  title: IPR Regime in India
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-042
+  title: International Agreements on IPR
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-043
+  title: Geographical Indicators
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-044
+  title: Evergreening
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-045
+  title: Compulsory Licensing
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-046
+  title: Prominent IPR Cases
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-047
+  title: Definition of Biodiversity
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-048
+  title: Genetic Biodiversity
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-049
+  title: Species Biodiversity
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-050
+  title: Ecosystem Biodiversity
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-051
+  title: Ecosystem Services
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-052
+  title: Bio Resources of Economic Importance
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-053
+  title: Social Benefits of Biodiversity
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-054
+  title: Reasons for Loss of Biodiversity
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-055
+  title: In-situ Conservation
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-056
+  title: Ex-situ Conservation
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-057
+  title: Eco-Sensitive Areas
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-058
+  title: Ecological Hotspots
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-059
+  title: National Biodiversity Guidelines
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-060
+  title: National Biodiversity Legislations
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-061
+  title: National Biodiversity Programmes
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-062
+  title: International Biodiversity Agreements
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-063
+  title: Air Pollution
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-064
+  title: Water Pollution
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-065
+  title: Soil Pollution
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-066
+  title: Noise Pollution
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-067
+  title: Radioactive Pollution
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-068
+  title: Thermal Pollution
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-069
+  title: Impact of Pollution
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-070
+  title: Ozone Layer Depletion
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-071
+  title: Ozone Hole
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-072
+  title: Greenhouse Effect
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-073
+  title: Global Warming
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-074
+  title: Eutrophication
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-075
+  title: Desertification
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-076
+  title: Acid Rain
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-077
+  title: Hazardous Waste
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-078
+  title: Sources of Pollution
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-079
+  title: Prevention of Pollution
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-080
+  title: Control of Pollution
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-081
+  title: National Environment Agencies
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-082
+  title: National Environment Legislations
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-083
+  title: National Environment Policies
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-084
+  title: International Environment Agencies
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-085
+  title: International Environment Agreements
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-086
+  title: Definition of EIA
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-087
+  title: Indian EIA Guidelines
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-088
+  title: Indian EIA Legislations
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-089
+  title: EIA Process
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-090
+  title: Need for EIA
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-091
+  title: Benefits of EIA
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-092
+  title: Shortcomings of EIA
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-093
+  title: Measures to Improve EIA
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-094
+  title: Natural Disasters
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-095
+  title: Human-Induced Disasters
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-096
+  title: Disaster Management Strategies
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-097
+  title: Community Disaster Management
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-098
+  title: Government Disaster Management Initiatives
+  subject: Science and Technology
+  priority: Medium
+- id: GS-3.1-099
+  title: Factors Responsible for Extremism
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-100
+  title: Steps to Reduce Extremism from Underdevelopment
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-101
+  title: Naxalism
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-102
+  title: Threats from Non-State Actors
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-103
+  title: J&K Separatism
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-104
+  title: Left Wing Extremism
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-105
+  title: North East Insurgency
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-106
+  title: Terrorism in Hinterland
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-107
+  title: Terrorism in Border Areas
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-108
+  title: Right Wing Terrorism
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-109
+  title: Reasons for Spread of Terrorism
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-110
+  title: State Sponsored Terrorism
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-111
+  title: NIA
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-112
+  title: NATGRID
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-113
+  title: MAC
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-114
+  title: UAPA
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-115
+  title: TADA
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-116
+  title: POTA
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-117
+  title: NCTC
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-118
+  title: Challenges from Communication Networks
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-119
+  title: Role of Media in Internal Security
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-120
+  title: Role of Social Networking Sites in Security Challenges
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-121
+  title: Challenges in Managing Social Media
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-122
+  title: Steps to Manage Social Media Challenges
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-123
+  title: Basics of Cyber Security
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-124
+  title: Cyber Security Threats in India
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-125
+  title: Steps Taken for Cyber Security
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-126
+  title: International Cyber Security Cooperation
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-127
+  title: Cyber Warfare
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-128
+  title: Terms Related to Cyber Security
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-129
+  title: Process of Money Laundering
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-130
+  title: Impact of Money Laundering
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-131
+  title: Challenges in Tackling Money Laundering
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-132
+  title: Steps to Counter Money Laundering
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-133
+  title: Terms Related to Money Laundering
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-134
+  title: Coastal Border Security Challenges
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-135
+  title: Terrestrial Border Security Challenges
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-136
+  title: Land Boundary Disputes
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-137
+  title: India’s Border Security Policy
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-138
+  title: Types of Organised Crime
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-139
+  title: Challenges in Controlling Organised Crime
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-140
+  title: Organised Crime–Terrorism Link in India
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-141
+  title: Central Armed Police Forces
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-142
+  title: Central Paramilitary Forces
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-143
+  title: IB
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-144
+  title: RAW
+  subject: Internal Security
+  priority: Medium
+- id: GS-3.1-145
+  title: Other Security and Intelligence Agencies
+  subject: Internal Security
+  priority: Medium

@@ -41,12 +41,20 @@ const App: React.FC = () => {
   //   return <LoginView onLogin={() => setIsAuthenticated(true)} />;
   // }
 
+  // Navigation State
+  const [initialSelectedTaskId, setInitialSelectedTaskId] = useState<string | null>(null);
+
+  const handleNavigateToTask = (taskId: string) => {
+    setInitialSelectedTaskId(taskId);
+    setCurrentView(ViewType.TASKS);
+  };
+
   const renderContent = () => {
     switch (currentView) {
       case ViewType.DASHBOARD:
         return <Dashboard />;
       case ViewType.TASKS:
-        return <TasksView />;
+        return <TasksView initialSelectedTaskId={initialSelectedTaskId} onTaskSelected={() => setInitialSelectedTaskId(null)} />;
       case ViewType.CALENDAR:
         return <CalendarView />;
       case ViewType.PROFILE:
@@ -54,7 +62,7 @@ const App: React.FC = () => {
       case ViewType.AI_ADVISOR:
         return <GeminiAdvisor />;
       case ViewType.RESOURCES:
-        return <ResourcesView />;
+        return <ResourcesView onNavigateToTask={handleNavigateToTask} />;
       default:
         return <Dashboard />;
     }
@@ -88,49 +96,7 @@ const App: React.FC = () => {
 
       {/* Main Content Wrapper - Adjust margin for desktop */}
       <div className="flex-1 flex flex-col ml-0 md:ml-64 min-w-0 transition-all duration-300">
-        {/* Top Navigation Bar */}
-        {/* Top Navigation Bar - Glass Effect */}
-        <div className="px-4 md:px-6 py-3 sticky top-0 z-30">
-          <GlassCard
-            variant="blur"
-            className="h-14 flex items-center justify-between px-4 rounded-xl border-white/20"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <div className="flex items-center gap-3">
-              <button
-                className="md:hidden text-gray-500 hover:text-gray-700"
-                onClick={() => setIsMobileMenuOpen(true)}
-              >
-                <Menu size={24} />
-              </button>
-              <div className="relative hidden md:block">
-                <Search className="absolute left-2.5 top-1.5 text-gray-400" size={16} />
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="pl-9 pr-4 py-1.5 bg-white/50 border border-transparent focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg text-sm text-gray-700 w-64 transition-all outline-none backdrop-blur-sm"
-                />
-              </div>
-            </div>
 
-            <div className="flex items-center space-x-2 md:space-x-4">
-              <button className="text-gray-500 hover:text-gray-700 transition-colors hidden sm:block">
-                <HelpCircle size={20} />
-              </button>
-              <button className="text-gray-500 hover:text-gray-700 transition-colors relative">
-                <Bell size={20} />
-                <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-              </button>
-              <div
-                className="h-8 w-8 rounded-full bg-gray-200 overflow-hidden cursor-pointer border border-gray-300 shadow-sm"
-                onClick={() => setCurrentView(ViewType.PROFILE)}
-              >
-                {userProfile && <img src={userProfile.avatarUrl} alt="User" className="h-full w-full object-cover" />}
-              </div>
-            </div>
-          </GlassCard>
-        </div>
 
         {/* Main Content Area */}
         <main className="flex-1 overflow-hidden flex flex-col">

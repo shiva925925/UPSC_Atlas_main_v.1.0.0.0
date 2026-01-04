@@ -1,0 +1,324 @@
+- id: GS-2.3-001
+  title: SC Welfare Schemes
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-002
+  title: ST Welfare Schemes
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-003
+  title: Minority Welfare Schemes
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-004
+  title: Child Welfare Schemes
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-005
+  title: Elderly Welfare Schemes
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-006
+  title: Disability Welfare Schemes
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-007
+  title: Women Welfare Schemes
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-008
+  title: Transgender Welfare Schemes
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-009
+  title: Performance of Welfare Schemes
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-010
+  title: Protection of Civil Rights Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-011
+  title: SC/ST Prevention of Atrocities Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-012
+  title: National Commission for Scheduled Castes
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-013
+  title: Scheduled Castes Sub Plan
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-014
+  title: Rehabilitation Council of India Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-015
+  title: Persons with Disabilities Act (Equal Opportunities)
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-016
+  title: Mental Retardation and Multiple Disabilities Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-017
+  title: National Trust Act for Persons with Disabilities
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-018
+  title: Rights of Persons with Disabilities Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-019
+  title: National Commission for Scheduled Tribes
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-020
+  title: Tribal Sub Plan
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-021
+  title: TRIFED
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-022
+  title: Forest Rights Act (Recognition of Forest Rights)
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-023
+  title: National Commission for Minorities
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-024
+  title: National Commission for Religious and Linguistic Minorities
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-025
+  title: Immoral Traffic (Prevention) Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-026
+  title: Indecent Representation of Women (Prevention) Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-027
+  title: Dowry Prohibition Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-028
+  title: Commission of Sati (Prevention) Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-029
+  title: Prohibition of Child Marriage Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-030
+  title: Protection of Women from Domestic Violence Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-031
+  title: Juvenile Justice Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-032
+  title: Central Adoption Resource Agency (CARA)
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-033
+  title: POCSO Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-034
+  title: Sexual Harassment at Workplace Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-035
+  title: PC & PNDT Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-036
+  title: Gender Budgeting
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-037
+  title: National Policy for Women
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-038
+  title: Maternity Benefit Amendment Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-039
+  title: Maintenance and Welfare of Parents and Senior Citizens Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-040
+  title: India’s Performance on Health Indicators
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-041
+  title: Weaknesses of Indian Healthcare System
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-042
+  title: Health Infrastructure in India
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-043
+  title: Universal Health Coverage
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-044
+  title: 12th Five Year Plan Health Strategy
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-045
+  title: Health Insurance
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-046
+  title: National Family Health Survey
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-047
+  title: National Health Policy
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-048
+  title: National Health Mission
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-049
+  title: Maternal Health
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-050
+  title: Adolescent Health
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-051
+  title: Child Health
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-052
+  title: Antimicrobial Resistance
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-053
+  title: Disease Burden in India
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-054
+  title: Measures for Better Health Outcomes
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-055
+  title: Health-related Government Initiatives
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-056
+  title: Status of Literacy in India
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-057
+  title: Education Structure in India
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-058
+  title: Challenges in Indian Education Sector
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-059
+  title: Education Sector Reforms Required
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-060
+  title: Education-related Government Initiatives
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-061
+  title: ASER Report
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-062
+  title: Financing Education
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-063
+  title: Subramanian Panel Report
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-064
+  title: Need for Skill Development
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-065
+  title: Skill Development Initiatives
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-066
+  title: Challenges in Skill Development
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-067
+  title: Shortcomings in Skill Development Programs
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-068
+  title: Skill Development Reforms
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-069
+  title: Steps to Improve Skill Development
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-070
+  title: Relation between Poverty and Hunger
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-071
+  title: Distribution of Poverty and Hunger
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-072
+  title: Magnitude of Poverty and Hunger
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-073
+  title: Trends in Poverty and Hunger
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-074
+  title: Causes of Poverty and Hunger
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-075
+  title: Impact of Poverty and Malnutrition
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-076
+  title: MDGs and SDGs (Poverty & Hunger Perspective)
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-077
+  title: Food and Nutrition Insecurity due to Structural Inequities
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-078
+  title: Constraints in Reducing Poverty and Hunger
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-079
+  title: National Food Security Act
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-080
+  title: Mid-day Meal Scheme
+  subject: Social Justice
+  priority: Medium
+- id: GS-2.3-081
+  title: MGNREGA (Poverty & Hunger Context)
+  subject: Social Justice
+  priority: Medium

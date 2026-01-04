@@ -1,0 +1,716 @@
+- id: GS-3-001
+  title: Meaning of Planning
+  subject: Economy
+  priority: Medium
+- id: GS-3-002
+  title: Need for Planning in Economic Development
+  subject: Economy
+  priority: Medium
+- id: GS-3-003
+  title: Imperative Planning
+  subject: Economy
+  priority: Medium
+- id: GS-3-004
+  title: Indicative Planning
+  subject: Economy
+  priority: Medium
+- id: GS-3-005
+  title: Structural Planning
+  subject: Economy
+  priority: Medium
+- id: GS-3-006
+  title: Objectives of Planning
+  subject: Economy
+  priority: Medium
+- id: GS-3-007
+  title: Indian Planning History
+  subject: Economy
+  priority: Medium
+- id: GS-3-008
+  title: Techniques of Indian Planning
+  subject: Economy
+  priority: Medium
+- id: GS-3-009
+  title: Achievements of Indian Planning
+  subject: Economy
+  priority: Medium
+- id: GS-3-010
+  title: Failures of Indian Planning
+  subject: Economy
+  priority: Medium
+- id: GS-3-011
+  title: Shortcomings of Planning in India
+  subject: Economy
+  priority: Medium
+- id: GS-3-012
+  title: NITI Aayog vs Planning Commission
+  subject: Economy
+  priority: Medium
+- id: GS-3-013
+  title: Financial Resources
+  subject: Economy
+  priority: Medium
+- id: GS-3-014
+  title: Human Resources
+  subject: Economy
+  priority: Medium
+- id: GS-3-015
+  title: Natural Resources
+  subject: Economy
+  priority: Medium
+- id: GS-3-016
+  title: Need for Resource Mobilisation
+  subject: Economy
+  priority: Medium
+- id: GS-3-017
+  title: Role of Savings
+  subject: Economy
+  priority: Medium
+- id: GS-3-018
+  title: Role of Investment
+  subject: Economy
+  priority: Medium
+- id: GS-3-019
+  title: Government Tax Resources
+  subject: Economy
+  priority: Medium
+- id: GS-3-020
+  title: Government Non-Tax Resources
+  subject: Economy
+  priority: Medium
+- id: GS-3-021
+  title: Banking Sector
+  subject: Economy
+  priority: Medium
+- id: GS-3-022
+  title: NBFCs
+  subject: Economy
+  priority: Medium
+- id: GS-3-023
+  title: Capital Market
+  subject: Economy
+  priority: Medium
+- id: GS-3-024
+  title: FDI
+  subject: Economy
+  priority: Medium
+- id: GS-3-025
+  title: ODA
+  subject: Economy
+  priority: Medium
+- id: GS-3-026
+  title: Public Borrowing
+  subject: Economy
+  priority: Medium
+- id: GS-3-027
+  title: Management of Public Debt
+  subject: Economy
+  priority: Medium
+- id: GS-3-028
+  title: Challenges in Mobilising Resources
+  subject: Economy
+  priority: Medium
+- id: GS-3-029
+  title: Steps to Improve Resource Mobilisation
+  subject: Economy
+  priority: Medium
+- id: GS-3-030
+  title: Meaning of Development
+  subject: Economy
+  priority: Medium
+- id: GS-3-031
+  title: Meaning of Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-032
+  title: Difference between Development and Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-033
+  title: Determinants of Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-034
+  title: Determinants of Development
+  subject: Economy
+  priority: Medium
+- id: GS-3-035
+  title: Importance of Economic Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-036
+  title: Limitations of Economic Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-037
+  title: Jobless Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-038
+  title: Pro-Poor Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-039
+  title: Balanced Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-040
+  title: Unbalanced Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-041
+  title: Dimensions of Development
+  subject: Economy
+  priority: Medium
+- id: GS-3-042
+  title: Measurement of Development
+  subject: Economy
+  priority: Medium
+- id: GS-3-043
+  title: Indicators of Development
+  subject: Economy
+  priority: Medium
+- id: GS-3-044
+  title: Market-Based Approach
+  subject: Economy
+  priority: Medium
+- id: GS-3-045
+  title: Role of State Approach
+  subject: Economy
+  priority: Medium
+- id: GS-3-046
+  title: Planned Approach
+  subject: Economy
+  priority: Medium
+- id: GS-3-047
+  title: Mixed Economy Approach
+  subject: Economy
+  priority: Medium
+- id: GS-3-048
+  title: Challenges to Development
+  subject: Economy
+  priority: Medium
+- id: GS-3-049
+  title: Challenges to Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-050
+  title: Rural Employment
+  subject: Economy
+  priority: Medium
+- id: GS-3-051
+  title: Urban Employment
+  subject: Economy
+  priority: Medium
+- id: GS-3-052
+  title: Formal Employment
+  subject: Economy
+  priority: Medium
+- id: GS-3-053
+  title: Informal Employment
+  subject: Economy
+  priority: Medium
+- id: GS-3-054
+  title: Labour Force Participation Rate
+  subject: Economy
+  priority: Medium
+- id: GS-3-055
+  title: Employment Rate
+  subject: Economy
+  priority: Medium
+- id: GS-3-056
+  title: Working Age Population
+  subject: Economy
+  priority: Medium
+- id: GS-3-057
+  title: Sectoral Distribution of Employment
+  subject: Economy
+  priority: Medium
+- id: GS-3-058
+  title: Quality of Employment
+  subject: Economy
+  priority: Medium
+- id: GS-3-059
+  title: Causes of Lack of Employment
+  subject: Economy
+  priority: Medium
+- id: GS-3-060
+  title: Restructuring of Workforce
+  subject: Economy
+  priority: Medium
+- id: GS-3-061
+  title: Government Employment Initiatives
+  subject: Economy
+  priority: Medium
+- id: GS-3-062
+  title: Meaning of Inclusive Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-063
+  title: Elements of Inclusive Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-064
+  title: Need for Inclusive Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-065
+  title: Indicators of Inclusive Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-066
+  title: Challenges in Inclusive Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-067
+  title: Inclusive Growth in 12th FYP
+  subject: Economy
+  priority: Medium
+- id: GS-3-068
+  title: Need for Government Budgeting
+  subject: Economy
+  priority: Medium
+- id: GS-3-069
+  title: Revenue Receipts
+  subject: Economy
+  priority: Medium
+- id: GS-3-070
+  title: Revenue Expenditure
+  subject: Economy
+  priority: Medium
+- id: GS-3-071
+  title: Capital Receipts
+  subject: Economy
+  priority: Medium
+- id: GS-3-072
+  title: Capital Expenditure
+  subject: Economy
+  priority: Medium
+- id: GS-3-073
+  title: Changes in Budget Process 2017
+  subject: Economy
+  priority: Medium
+- id: GS-3-074
+  title: Revenue Deficit
+  subject: Economy
+  priority: Medium
+- id: GS-3-075
+  title: Fiscal Deficit
+  subject: Economy
+  priority: Medium
+- id: GS-3-076
+  title: Primary Deficit
+  subject: Economy
+  priority: Medium
+- id: GS-3-077
+  title: Deficit Reduction
+  subject: Economy
+  priority: Medium
+- id: GS-3-078
+  title: FRBM Act
+  subject: Economy
+  priority: Medium
+- id: GS-3-079
+  title: Outcome Budget
+  subject: Economy
+  priority: Medium
+- id: GS-3-080
+  title: Zero-Based Budget
+  subject: Economy
+  priority: Medium
+- id: GS-3-081
+  title: Rationale for Land Reforms
+  subject: Economy
+  priority: Medium
+- id: GS-3-082
+  title: Components of Land Reforms
+  subject: Economy
+  priority: Medium
+- id: GS-3-083
+  title: Impact of Land Reforms
+  subject: Economy
+  priority: Medium
+- id: GS-3-084
+  title: Problems in Implementing Land Reforms
+  subject: Economy
+  priority: Medium
+- id: GS-3-085
+  title: Success of Land Reforms
+  subject: Economy
+  priority: Medium
+- id: GS-3-086
+  title: Land Leasing
+  subject: Economy
+  priority: Medium
+- id: GS-3-087
+  title: Land Acquisition
+  subject: Economy
+  priority: Medium
+- id: GS-3-088
+  title: Rehabilitation and Resettlement Act
+  subject: Economy
+  priority: Medium
+- id: GS-3-089
+  title: Phases of Liberalisation
+  subject: Economy
+  priority: Medium
+- id: GS-3-090
+  title: Impact of Liberalisation on Economy
+  subject: Economy
+  priority: Medium
+- id: GS-3-091
+  title: Changes in Industrial Policy
+  subject: Economy
+  priority: Medium
+- id: GS-3-092
+  title: Industrial Policy Before 1991
+  subject: Economy
+  priority: Medium
+- id: GS-3-093
+  title: Industrial Policy After 1991
+  subject: Economy
+  priority: Medium
+- id: GS-3-094
+  title: Phases of Industrial Growth
+  subject: Economy
+  priority: Medium
+- id: GS-3-095
+  title: Linkage between Reforms and Outcomes
+  subject: Economy
+  priority: Medium
+- id: GS-3-096
+  title: Weaknesses of Industrial Policies
+  subject: Economy
+  priority: Medium
+- id: GS-3-097
+  title: Failures of Industrial Policies
+  subject: Economy
+  priority: Medium
+- id: GS-3-098
+  title: National Manufacturing Policy
+  subject: Economy
+  priority: Medium
+- id: GS-3-099
+  title: SEZs
+  subject: Economy
+  priority: Medium
+- id: GS-3-100
+  title: Make in India
+  subject: Economy
+  priority: Medium
+- id: GS-3-101
+  title: Energy Infrastructure
+  subject: Economy
+  priority: Medium
+- id: GS-3-102
+  title: Ports Infrastructure
+  subject: Economy
+  priority: Medium
+- id: GS-3-103
+  title: Road Infrastructure
+  subject: Economy
+  priority: Medium
+- id: GS-3-104
+  title: Airport Infrastructure
+  subject: Economy
+  priority: Medium
+- id: GS-3-105
+  title: Railway Infrastructure
+  subject: Economy
+  priority: Medium
+- id: GS-3-106
+  title: Need for Investment
+  subject: Economy
+  priority: Medium
+- id: GS-3-107
+  title: Domestic Investment Models
+  subject: Economy
+  priority: Medium
+- id: GS-3-108
+  title: Public Investment Model
+  subject: Economy
+  priority: Medium
+- id: GS-3-109
+  title: Private Investment Model
+  subject: Economy
+  priority: Medium
+- id: GS-3-110
+  title: PPP Investment Model
+  subject: Economy
+  priority: Medium
+- id: GS-3-111
+  title: FDI Investment Model
+  subject: Economy
+  priority: Medium
+- id: GS-3-112
+  title: FII Investment Model
+  subject: Economy
+  priority: Medium
+- id: GS-3-113
+  title: Sector-Specific Investment Models
+  subject: Economy
+  priority: Medium
+- id: GS-3-114
+  title: Cluster-Based Investment Models
+  subject: Economy
+  priority: Medium
+- id: GS-3-115
+  title: Investment Models Followed by India
+  subject: Economy
+  priority: Medium
+- id: GS-3-116
+  title: Major Crops
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-117
+  title: Cropping Patterns
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-118
+  title: Importance of Cropping Pattern
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-119
+  title: Types of Cropping Pattern
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-120
+  title: Reasons for Cropping Pattern Differences
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-121
+  title: Factors Influencing Cropping Pattern
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-122
+  title: Emerging Trends in Cropping Pattern
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-123
+  title: Long-Run Effects of Cropping Pattern Trends
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-124
+  title: Modes of Irrigation
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-125
+  title: Sources of Irrigation
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-126
+  title: Choosing an Irrigation System
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-127
+  title: Problems with Irrigation
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-128
+  title: Irrigation Under Five Year Plans
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-129
+  title: Environmental Effects of Irrigation
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-130
+  title: Need for Irrigation Reforms
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-131
+  title: Need for National Water Policy
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-132
+  title: Marketing Channels
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-133
+  title: Agricultural Market Functionaries
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-134
+  title: Agricultural Marketing Costs
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-135
+  title: Role of FCI
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-136
+  title: Regulated Markets
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-137
+  title: Warehousing
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-138
+  title: Cooperative Marketing
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-139
+  title: Shortcomings of Agricultural Marketing
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-140
+  title: APMCs
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-141
+  title: National Agricultural Market
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-142
+  title: Farmer Producer Organisations
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-143
+  title: Contract Farming
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-144
+  title: Futures Trading in Agriculture
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-145
+  title: E-Technology for Farmers
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-146
+  title: Technology Missions
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-147
+  title: Agricultural Pricing Policy
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-148
+  title: Rationale for Subsidies
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-149
+  title: Types of Subsidies
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-150
+  title: Problems of Subsidies
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-151
+  title: WTO Issues with Subsidies
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-152
+  title: PDS Objectives
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-153
+  title: PDS Functioning
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-154
+  title: Fair Price Shops
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-155
+  title: FCI Operations
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-156
+  title: Ration Cards
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-157
+  title: Aadhar Linking in PDS
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-158
+  title: Problems with PDS
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-159
+  title: Need to Improve PDS
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-160
+  title: Measures to Improve PDS
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-161
+  title: Government Steps for PDS Reform
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-162
+  title: Objectives of Buffer Stock
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-163
+  title: Buffer Stock Norms
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-164
+  title: Impact of Procurement
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-165
+  title: Impact of Distribution
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-166
+  title: Need for Food Security
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-167
+  title: NFSM
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-168
+  title: Other Food Security Initiatives
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-169
+  title: Economics of Animal Rearing
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-170
+  title: Scope of Food Processing
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-171
+  title: Potential of Food Processing
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-172
+  title: Significance of Food Processing
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-173
+  title: Location of Food Processing Industries
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-174
+  title: Constraints in Food Processing
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-175
+  title: Upstream Requirements
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-176
+  title: Downstream Requirements
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-177
+  title: Supply Chain Management
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-178
+  title: SAMPADA Scheme
+  subject: Agriculture
+  priority: Medium
+- id: GS-3-179
+  title: 12th FYP Food Processing Initiatives
+  subject: Agriculture
+  priority: Medium

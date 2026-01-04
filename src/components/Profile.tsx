@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { Subject, SubjectCategory, DiaryEntry } from '../types';
+import { Subject, SubjectCategory, DiaryEntry, UserProfile } from '../types';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../constants';
 import { Edit2, BookHeart, Send, Trash2 } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 import GlassCard from './ui/GlassCard';
+
+import { syncProfile, saveUserProfile, syncDiary, addDiaryEntry, deleteDiaryEntry } from '../services/profileSyncService';
+
+import EditProfileModal from './profile/EditProfileModal';
+import BackgroundGradient from './ui/BackgroundGradient';
+import Skeleton from './ui/Skeleton';
 
 const Profile: React.FC = () => {
   // Fetch user profile from DB
@@ -14,6 +20,13 @@ const Profile: React.FC = () => {
   const entries = useLiveQuery(() => db.diary.orderBy('date').reverse().toArray()) || [];
 
   const [newEntry, setNewEntry] = useState('');
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
+  // Initial Sync
+  React.useEffect(() => {
+    syncProfile();
+    syncDiary();
+  }, []);
 
   const handleAddEntry = async () => {
     if (!newEntry.trim()) return;
@@ -23,18 +36,60 @@ const Profile: React.FC = () => {
       date: new Date().toISOString().split('T')[0],
       content: newEntry
     };
-    await db.diary.add(entry);
+    await addDiaryEntry(entry); // Use Service
     setNewEntry('');
   };
 
   const handleDeleteEntry = async (id: number) => {
-    await db.diary.delete(id);
+    await deleteDiaryEntry(id); // Use Service
   };
 
-  if (!userProfile) return <div>Loading profile...</div>;
+  const handleSaveProfile = async (updated: UserProfile) => {
+    await saveUserProfile(updated);
+  };
 
+  if (!userProfile) {
+    return (
+      <div className="p-4 md:p-8 h-full flex flex-col gap-6 animate-pulse">
+        {/* Cover Photo Skeleton */}
+        <Skeleton className="h-48 w-full rounded-xl" />
+
+        {/* Profile Header Skeleton */}
+        <div className="relative px-6">
+          <div className="-mt-16 mb-4 flex flex-col md:flex-row items-end md:items-center justify-between gap-4">
+            <Skeleton className="w-32 h-32 rounded-full border-4 border-white" />
+            <div className="flex-1 pb-2">
+              <Skeleton className="h-8 w-48 mb-2" />
+              <Skeleton className="h-4 w-32" />
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Grid Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-24 rounded-xl" />)}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
+          <div className="lg:col-span-2 space-y-6">
+            <Skeleton className="h-64 rounded-xl" />
+          </div>
+          <div className="space-y-6">
+            <Skeleton className="h-64 rounded-xl" />
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="p-4 md:p-8 max-w-4xl mx-auto animate-fade-in overflow-y-auto h-full">
+      <EditProfileModal
+        isOpen={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        userProfile={userProfile}
+        onSave={handleSaveProfile}
+      />
+
       <GlassCard variant="blur" className="overflow-hidden mb-8 border-white/20">
         {/* Cover Photo */}
         <div className="h-32 bg-gradient-to-r from-blue-600/80 to-indigo-700/80 backdrop-blur-md"></div>
@@ -52,7 +107,10 @@ const Profile: React.FC = () => {
                   <h1 className="text-2xl font-bold text-gray-800">{userProfile.name}</h1>
                   <p className="text-gray-600">UPSC Aspirant • Target {userProfile.targetYear}</p>
                 </div>
-                <button className="flex items-center justify-center px-4 py-2 border border-white/30 rounded-md text-sm font-medium text-gray-700 bg-white/20 hover:bg-white/40 transition-colors w-full sm:w-auto backdrop-blur-md">
+                <button
+                  onClick={() => setIsEditOpen(true)}
+                  className="flex items-center justify-center px-4 py-2 border border-white/30 rounded-md text-sm font-medium text-gray-700 bg-white/20 hover:bg-white/40 transition-colors w-full sm:w-auto backdrop-blur-md"
+                >
                   <Edit2 size={16} className="mr-2" />
                   Edit Profile
                 </button>

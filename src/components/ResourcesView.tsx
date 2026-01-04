@@ -7,11 +7,16 @@ import { FileText, Link as LinkIcon, Video, Plus, ExternalLink, Search, Filter, 
 import LibraryTree from './LibraryTree';
 import DetailPanel from './DetailPanel';
 import GlassCard from './ui/GlassCard';
+import EmptyState from './ui/EmptyState';
 
 import { uploadFile } from '../services/uploadService';
 import { ensureProtocol } from '../utils/urlHelper';
 
-const ResourcesView: React.FC = () => {
+interface ResourcesViewProps {
+  onNavigateToTask?: (taskId: string) => void;
+}
+
+const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
   const dbResources = useLiveQuery(() => db.resources.toArray()) || [];
   const [libraryResources, setLibraryResources] = useState<Resource[]>([]);
   const [filterSubject, setFilterSubject] = useState<SubjectCategory | 'ALL'>('ALL');
@@ -178,7 +183,7 @@ const ResourcesView: React.FC = () => {
   return (
     <div className="p-4 md:p-8 h-full flex flex-col animate-fade-in gap-6">
       {/* Header */}
-      <header className="flex-shrink-0 flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4 bg-white/80 backdrop-blur-sm p-4 rounded-lg shadow-sm border border-gray-200">
+      <header className="flex-shrink-0 flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4 bg-white/30 backdrop-blur-xl p-4 rounded-lg shadow-sm border border-white/20">
         <div>
           <h2 className="text-2xl font-bold text-gray-800">Study Library</h2>
           <p className="text-gray-500">Explore the syllabus tree and manage your custom resources.</p>
@@ -237,6 +242,7 @@ const ResourcesView: React.FC = () => {
               allResources={allSyllabusResources}
               onClose={handleClosePanel}
               onSelectResource={handleSelectResource}
+              onNavigateToTask={onNavigateToTask}
             />
           ) : (
             <GlassCard variant="blur" className="h-full flex flex-col border-white/20">
@@ -256,9 +262,13 @@ const ResourcesView: React.FC = () => {
               {/* Resource List Body */}
               <div className="flex-1 overflow-y-auto custom-scrollbar">
                 {filteredUserResources.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center h-full text-gray-500">
-                    <p>No custom resources found. Add one to get started!</p>
-                  </div>
+                  <EmptyState
+                    icon={FileText}
+                    title="No Resources Found"
+                    message="Your study library is empty. Add a new resource to get started!"
+                    actionLabel="Add Resource"
+                    onAction={() => { resetForm(); setIsAdding(true); }}
+                  />
                 ) : (
                   filteredUserResources.map(resource => {
                     const resourceSubjectCategory = SUBJECT_HIERARCHY[resource.subject] || SubjectCategory.GENERAL;

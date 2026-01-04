@@ -9,15 +9,17 @@ export class UpscDatabase extends Dexie {
     userProfile!: Table<UserProfile>;
     diary!: Table<DiaryEntry>;
     customLinks!: Table<CustomLink>;
+    dayMetadata!: Table<import('./types').DayMetadata>;
 
     constructor() {
         super('UpscAtlasDB');
-        this.version(7).stores({ // Increment version
+        this.version(8).stores({ // Increment version
             tasks: 'id, userId, status, subject, date, isArchived, isDeleted, sourceFile',
             resources: 'id, userId, subject, type',
             userProfile: 'id',
             diary: 'id, userId, date',
-            customLinks: 'id, userId, sourceNodeId, targetNodeId'
+            customLinks: 'id, userId, sourceNodeId, targetNodeId',
+            dayMetadata: 'id, userId' // id is the date string
         });
     }
 }
