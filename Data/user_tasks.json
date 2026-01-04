@@ -232,5 +232,20 @@
     "evidences": [],
     "isArchived": false,
     "isDeleted": false
+  },
+  {
+    "id": "ypjzdrkhf",
+    "userId": "Schamala",
+    "title": "lkjhgfd",
+    "subject": "Current Affairs",
+    "priority": "Medium",
+    "date": "2026-01-04",
+    "status": "TODO",
+    "description": "",
+    "acceptanceCriteria": [],
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
   }
 ]

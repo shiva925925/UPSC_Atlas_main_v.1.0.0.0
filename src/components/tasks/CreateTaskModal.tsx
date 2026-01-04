@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Subject, Task, TaskStatus } from '../../types';
+import { Subject, Task, TaskStatus, SubjectCategory } from '../../types';
+import { SUBJECT_HIERARCHY } from '../../constants';
 import { X, Plus, Trash2 } from 'lucide-react';
 
 interface CreateTaskModalProps {
@@ -30,7 +31,7 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose, onCr
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         const formattedCriteria = criteria.map(text => ({
             id: Math.random().toString(36).substr(2, 9),
             text,
@@ -84,17 +85,39 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose, onCr
                             placeholder="e.g. Complete Chapter 1"
                         />
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                        <select
-                            value={newTaskSubject}
-                            onChange={(e) => setNewTaskSubject(e.target.value as Subject)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                        >
-                            {Object.values(Subject).map(s => (
-                                <option key={s} value={s}>{s}</option>
-                            ))}
-                        </select>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                            <select
+                                value={SUBJECT_HIERARCHY[newTaskSubject] || SubjectCategory.GENERAL}
+                                onChange={(e) => {
+                                    const newCategory = e.target.value as SubjectCategory;
+                                    // Find first topic in this category
+                                    const firstTopic = Object.entries(SUBJECT_HIERARCHY)
+                                        .find(([_, cat]) => cat === newCategory)?.[0] as Subject;
+                                    if (firstTopic) setNewTaskSubject(firstTopic);
+                                }}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                            >
+                                {Object.values(SubjectCategory).map(c => (
+                                    <option key={c} value={c}>{c}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Topic</label>
+                            <select
+                                value={newTaskSubject}
+                                onChange={(e) => setNewTaskSubject(e.target.value as Subject)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                            >
+                                {Object.entries(SUBJECT_HIERARCHY)
+                                    .filter(([_, cat]) => cat === (SUBJECT_HIERARCHY[newTaskSubject] || SubjectCategory.GENERAL))
+                                    .map(([s, _]) => (
+                                        <option key={s} value={s}>{s}</option>
+                                    ))}
+                            </select>
+                        </div>
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
@@ -135,7 +158,7 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose, onCr
                             placeholder="Task details..."
                         />
                     </div>
-                    
+
                     {/* Acceptance Criteria Input */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Acceptance Criteria</label>
@@ -157,7 +180,7 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClose, onCr
                                 <Plus size={20} />
                             </button>
                         </div>
-                        
+
                         {criteria.length > 0 && (
                             <div className="space-y-2 max-h-32 overflow-y-auto custom-scrollbar bg-gray-50 p-2 rounded-md border border-gray-100">
                                 {criteria.map((text, index) => (

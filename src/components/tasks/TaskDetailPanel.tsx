@@ -1,18 +1,21 @@
 import React, { useState, useRef } from 'react';
 import { Task, TaskStatus, Subject, EvidenceType, TimeLog, Evidence, SubjectCategory, Priority } from '../../types';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../../constants';
-import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit, Upload } from 'lucide-react';
+import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit, Upload, ExternalLink } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import { uploadFile } from '../../services/uploadService';
 import { ensureProtocol } from '../../utils/urlHelper';
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 interface TaskDetailPanelProps {
     task: Task;
     onClose: () => void;
     onUpdate: (taskId: string, updates: Partial<Task>) => Promise<void>;
+    className?: string;
 }
 
-const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpdate }) => {
+const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpdate, className }) => {
     // Time Logging Form State
     const [logDuration, setLogDuration] = useState<string>('30');
     const [logDate, setLogDate] = useState<string>(new Date().toISOString().split('T')[0]);
@@ -166,32 +169,62 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
     const colors = CATEGORY_COLORS[subjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];
 
     return (
-        <GlassCard variant="blur" className="w-[400px] border-l border-white/20 h-full overflow-y-auto shadow-2xl rounded-l-none bg-white/30 backdrop-blur-xl">
-            <div className="p-6">
-                <div className="flex justify-between items-start mb-6">
-                    <div className="flex items-center gap-3">
-                        <div>
-                            <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Subject</label>
-                            <select
-                                value={task.subject}
-                                onChange={(e) => onUpdate(task.id, { subject: e.target.value as Subject })}
-                                className={`text-xs font-bold px-3 py-1.5 rounded border-2 transition-colors ${colors.background} ${colors.text} border-transparent hover:border-blue-400 focus:border-blue-500 focus:outline-none cursor-pointer`}
-                            >
-                                {Object.values(Subject).map(subject => (
-                                    <option key={subject} value={subject}>{subject}</option>
-                                ))}
-                            </select>
+        <GlassCard variant="blur" className={twMerge(clsx("w-[400px] border-l border-white/20 h-full overflow-y-auto shadow-2xl rounded-l-none bg-white/30 backdrop-blur-xl", className))}>
+            <div className="p-4">
+                <div className="flex justify-between items-start mb-4">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <div className="flex gap-2 flex-1 min-w-0">
+                            <div className="min-w-0 flex-1">
+                                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Subject</label>
+                                <select
+                                    value={subjectCategory}
+                                    onChange={(e) => {
+                                        const newCategory = e.target.value as SubjectCategory;
+                                        const firstTopic = Object.entries(SUBJECT_HIERARCHY)
+                                            .find(([_, cat]) => cat === newCategory)?.[0] as Subject;
+                                        if (firstTopic) onUpdate(task.id, { subject: firstTopic });
+                                    }}
+                                    className="w-full text-xs font-bold px-2 py-1.5 rounded border border-gray-300 bg-white text-gray-700 hover:border-blue-400 focus:border-blue-500 focus:outline-none cursor-pointer truncate"
+                                >
+                                    {Object.values(SubjectCategory).map(category => (
+                                        <option key={category} value={category}>{category}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="min-w-0 flex-1">
+                                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Topic</label>
+                                <select
+                                    value={task.subject}
+                                    onChange={(e) => onUpdate(task.id, { subject: e.target.value as Subject })}
+                                    className="w-full text-xs font-bold px-2 py-1.5 rounded border border-gray-300 bg-white text-gray-700 hover:border-blue-400 focus:border-blue-500 focus:outline-none cursor-pointer truncate"
+                                >
+                                    {Object.entries(SUBJECT_HIERARCHY)
+                                        .filter(([_, cat]) => cat === subjectCategory)
+                                        .map(([subject, _]) => (
+                                            <option key={subject} value={subject}>{subject}</option>
+                                        ))}
+                                </select>
+                            </div>
                         </div>
-                        <span className="text-xs text-gray-500 font-mono">#{task.id}</span>
                     </div>
-                    <button type="button" onClick={onClose} className="p-1 hover:bg-gray-100 rounded text-gray-500 transition-colors">
-                        <X size={20} />
-                    </button>
+                    <div className="flex items-center">
+                        <button
+                            type="button"
+                            onClick={() => window.open(`/task/${task.id}`, '_blank')}
+                            className="p-1 hover:bg-gray-100 rounded text-gray-500 transition-colors flex-shrink-0 ml-2"
+                            title="Open in New Tab"
+                        >
+                            <ExternalLink size={20} />
+                        </button>
+                        <button type="button" onClick={onClose} className="p-1 hover:bg-gray-100 rounded text-gray-500 transition-colors flex-shrink-0 ml-1">
+                            <X size={20} />
+                        </button>
+                    </div>
                 </div>
 
-                <h2 className="text-xl font-bold text-gray-900 mb-6">{task.title}</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">{task.title}</h2>
 
-                <div className="mb-8">
+                <div className="mb-5">
                     <div className="flex justify-between items-center mb-2">
                         <h3 className="text-sm font-bold text-gray-900">Description</h3>
                         {!isEditingDescription && (
@@ -230,28 +263,28 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             </div>
                         </div>
                     ) : (
-                        <div className="text-sm text-gray-700 leading-relaxed bg-gray-50 p-4 rounded-md border border-gray-100 whitespace-pre-wrap">
+                        <div className="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-md border border-gray-100 whitespace-pre-wrap">
                             {task.description || "No description provided."}
                         </div>
                     )}
                 </div>
 
-                <div className="mb-8">
-                    <div className="flex items-center justify-between mb-3">
+                <div className="mb-5">
+                    <div className="flex items-center justify-between mb-2">
                         <h3 className="text-sm font-bold text-gray-900">Acceptance Criteria</h3>
                         <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
                             {calculateProgress(task)}% Completed
                         </span>
                     </div>
 
-                    <div className="space-y-2 mb-3">
+                    <div className="space-y-2 mb-2">
                         {(!task.acceptanceCriteria || task.acceptanceCriteria.length === 0) ? (
                             <p className="text-sm text-gray-400 italic">No acceptance criteria defined.</p>
                         ) : (
                             task.acceptanceCriteria.map(ac => (
                                 <div
                                     key={ac.id}
-                                    className={`group flex items-start gap-3 p-3 rounded-md border transition-all ${ac.isCompleted ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200 hover:border-blue-300'}`}
+                                    className={`group flex items-start gap-3 p-2 rounded-md border transition-all ${ac.isCompleted ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200 hover:border-blue-300'}`}
                                 >
                                     <div
                                         className="flex items-start gap-3 flex-1 cursor-pointer"
@@ -327,8 +360,8 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                 </div>
 
                 {/* Evidence Section */}
-                <div className="mb-8">
-                    <div className="flex items-center justify-between mb-3">
+                <div className="mb-5">
+                    <div className="flex items-center justify-between mb-2">
                         <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
                             <Paperclip size={16} /> Evidences
                         </h3>
@@ -337,8 +370,8 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                         </span>
                     </div>
 
-                    <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4">
-                        <div className="flex gap-2 mb-3">
+                    <div className="bg-gray-50 p-3 rounded-lg border border-gray-200 mb-3">
+                        <div className="flex gap-2 mb-2">
                             <select
                                 value={evidenceType}
                                 onChange={(e) => setEvidenceType(e.target.value as EvidenceType)}
@@ -417,8 +450,8 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                 </div>
 
                 {/* Time Logging Section */}
-                <div className="mb-8 border-t border-gray-100 pt-6">
-                    <div className="flex items-center justify-between mb-3">
+                <div className="mb-5 border-t border-gray-100 pt-4">
+                    <div className="flex items-center justify-between mb-2">
                         <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
                             <Clock size={16} /> Time Tracking
                         </h3>
@@ -427,8 +460,8 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                         </span>
                     </div>
 
-                    <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                        <div className="flex gap-2 mb-3">
+                    <div className="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                        <div className="flex gap-2 mb-2">
                             <div className="flex-1">
                                 <label className="block text-xs font-medium text-gray-500 mb-1">Duration (min)</label>
                                 <input
@@ -448,7 +481,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                 />
                             </div>
                         </div>
-                        <div className="mb-3">
+                        <div className="mb-2">
                             <label className="block text-xs font-medium text-gray-500 mb-1">Work Description (Optional)</label>
                             <input
                                 type="text"
@@ -467,7 +500,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                         </button>
                     </div>
 
-                    <div className="mt-4 space-y-2 max-h-40 overflow-y-auto custom-scrollbar">
+                    <div className="mt-3 space-y-2 max-h-40 overflow-y-auto custom-scrollbar">
                         {(!task.logs || task.logs.length === 0) ? (
                             <p className="text-xs text-gray-400 italic text-center py-2">No time logged yet.</p>
                         ) : (
@@ -485,7 +518,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                 </div>
 
                 {/* Priority Selection */}
-                <div className="mb-8">
+                <div className="mb-5">
                     <h3 className="text-sm font-bold text-gray-900 mb-2">Priority</h3>
                     <select
                         value={task.priority}
@@ -499,7 +532,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                 </div>
 
                 {/* Status Status */}
-                <div className="mb-8">
+                <div className="mb-5">
                     <h3 className="text-sm font-bold text-gray-900 mb-2">Status</h3>
                     <div className="flex gap-2">
                         {[TaskStatus.TODO, TaskStatus.IN_PROGRESS, TaskStatus.DONE].map(status => (
@@ -542,6 +575,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                 <span>{task.priority} Priority</span>
                             </div>
                         )}
+                        <span className="text-xs text-gray-400 font-mono ml-4">#{task.id}</span>
                     </div>
                 </div>
 

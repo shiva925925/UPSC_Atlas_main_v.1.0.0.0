@@ -13,6 +13,8 @@ import { db } from './db';
 
 import BackgroundGradient from './components/ui/BackgroundGradient';
 import GlassCard from './components/ui/GlassCard';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import FullTaskView from './components/tasks/FullTaskView';
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -74,6 +76,17 @@ const App: React.FC = () => {
   };
 
 
+
+  const location = useLocation();
+
+  // Check for standalone task view
+  if (location.pathname.startsWith('/task/')) {
+    return (
+      <Routes>
+        <Route path="/task/:taskId" element={<FullTaskView />} />
+      </Routes>
+    );
+  }
 
   return (
     <div className="flex h-screen overflow-hidden relative bg-white/50">

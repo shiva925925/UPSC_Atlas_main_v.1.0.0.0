@@ -338,7 +338,7 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
         </div>
 
         {/* Task List Header */}
-        <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-white/5 border-b border-white/10 text-xs font-semibold text-gray-500 uppercase tracking-wider backdrop-blur-md z-10 sticky top-0">
+        <div className="grid grid-cols-12 gap-4 px-6 py-2 bg-white/5 border-b border-white/10 text-xs font-semibold text-gray-500 uppercase tracking-wider backdrop-blur-md z-10 sticky top-0">
           <div className="col-span-4">Task</div>
           <div className="col-span-2">Status</div>
           <div className="col-span-2">Subject</div>

@@ -44,19 +44,19 @@ const TaskItem: React.FC<TaskItemProps> = ({
     return (
         <div
             onClick={() => onClick(task)}
-            className={`grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/10 items-center hover:bg-white/10 cursor-pointer transition-colors group ${isSelected ? 'bg-blue-500/5' : ''}`}
+            className={`grid grid-cols-12 gap-4 px-6 py-2 border-b border-white/10 items-center hover:bg-white/10 cursor-pointer transition-colors group ${isSelected ? 'bg-blue-500/5' : ''}`}
         >
             {/* Task Title & Progress */}
-            <div className="col-span-4">
-                <h4 className="text-sm font-medium text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">{task.title}</h4>
-                <div className="flex items-center gap-2">
-                    <div className="w-24 bg-gray-200/50 rounded-full h-1.5">
+            <div className="col-span-4 flex items-center justify-between gap-4 pr-4">
+                <h4 className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors truncate" title={task.title}>{task.title}</h4>
+                <div className="flex items-center gap-2 shrink-0">
+                    <div className="w-16 bg-gray-200/50 rounded-full h-1.5">
                         <div
                             className="bg-blue-500 h-1.5 rounded-full"
                             style={{ width: `${calculateProgress(task)}%` }}
                         ></div>
                     </div>
-                    <span className="text-[10px] text-gray-400">{calculateProgress(task)}%</span>
+                    <span className="text-[10px] text-gray-400 w-6 text-right">{calculateProgress(task)}%</span>
                 </div>
             </div>
 
