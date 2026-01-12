@@ -18,9 +18,10 @@ app.use(cors()); // Allow cross-origin requests from your frontend
 app.use(express.json()); // For parsing application/json
 
 // --- Configuration ---
-const TASKS_FOLDER = path.join(__dirname, '..', 'Data', 'Tasks'); // e.g., Data/Tasks within project root
+const TASKS_FOLDER = path.join(__dirname, '..', 'Data', 'Tasks');
 const PROGRESS_FILE = path.join(__dirname, '..', 'Data', 'task_progress.json');
 const USER_TASKS_FILE = path.join(__dirname, '..', 'Data', 'user_tasks.json');
+const MASTER_CACHE_FILE = path.join(__dirname, '..', 'Data', 'master_task_cache.json');
 const UPLOADS_FOLDER = path.join(__dirname, '..', 'public', 'uploads');
 
 // Ensure directories exist
@@ -33,62 +34,116 @@ if (!fs.existsSync(UPLOADS_FOLDER)) {
     console.log(`Created uploads folder: ${UPLOADS_FOLDER}`);
 }
 
-// --- Multer Storage Config ---
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, UPLOADS_FOLDER);
-    },
-    filename: function (req, file, cb) {
-        // Use original name, but maybe prefix with timestamp to avoid collisions if needed
-        // For now, keep it simple as requested (original name) or safe name
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const safeName = file.originalname.replace(/[^a-z0-9.]/gi, '_').toLowerCase();
-        cb(null, uniqueSuffix + '-' + safeName);
-    }
-});
+// --- Task Cacher Logic ---
+let isRebuilding = false;
 
-const upload = multer({ storage: storage });
+async function rebuildTaskCache() {
+    if (isRebuilding) return;
+    isRebuilding = true;
+    console.log('%c[Server] Rebuilding master task cache...', 'color: orange; font-weight: bold;');
 
-// --- API Endpoints ---
-
-// File Upload Endpoint
-app.post('/api/upload', upload.single('file'), (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ message: 'No file uploaded' });
-    }
-    // Return the public URL. Since 'public' is the root of the frontend dev server,
-    // the URL should be /uploads/filename
-    const fileUrl = `/uploads/${req.file.filename}`;
-    res.json({ url: fileUrl, filename: req.file.filename, originalName: req.file.originalname });
-});
-
-app.get('/api/tasks', async (req, res) => {
-    console.log('GET /api/tasks received.');
     try {
         const allTasks = [];
+        const fullTaskIds = [];
+
+        // 1. Load Progress and User Tasks for merging
+        let progressData = {};
+        if (fs.existsSync(PROGRESS_FILE)) {
+            const data = await fs.promises.readFile(PROGRESS_FILE, 'utf8');
+            if (data.trim()) progressData = JSON.parse(data);
+        }
+
+        let userTasks = [];
+        if (fs.existsSync(USER_TASKS_FILE)) {
+            const data = await fs.promises.readFile(USER_TASKS_FILE, 'utf8');
+            if (data.trim()) userTasks = JSON.parse(data);
+        }
+
+        // 2. Scan YAML Files
         const files = fs.readdirSync(TASKS_FOLDER);
         const yamlFiles = files.filter(file => file.endsWith('.yaml') || file.endsWith('.yml'));
 
         for (const file of yamlFiles) {
             const filePath = path.join(TASKS_FOLDER, file);
-            console.log(`Parsing YAML file: ${file}`);
             try {
                 const fileContent = await fs.promises.readFile(filePath, 'utf8');
                 const tasksFromFile = load(fileContent);
+                let tasksInThisFile = [];
+
                 if (Array.isArray(tasksFromFile)) {
-                    allTasks.push(...tasksFromFile.map(task => ({ ...task, sourceFile: file })));
+                    tasksInThisFile = tasksFromFile.map(task => ({ ...task, sourceFile: file }));
                 } else if (typeof tasksFromFile === 'object' && tasksFromFile !== null) {
-                    allTasks.push({ ...tasksFromFile, sourceFile: file });
+                    tasksInThisFile = [{ ...tasksFromFile, sourceFile: file }];
                 }
-            } catch (parseError) {
-                console.error(`Error parsing file ${file}:`, parseError);
-                // Continue to next file even if one fails
+
+                for (const task of tasksInThisFile) {
+                    if (!task.id) continue;
+
+                    // Merge with progress
+                    const progress = progressData[task.id] || {};
+                    const mergedTask = {
+                        ...task,
+                        date: task.date || new Date().toISOString().split('T')[0], // Default to Today
+                        status: progress.status || task.status || 'TODO',
+                        priority: progress.priority || task.priority || 'Medium',
+                        logs: progress.logs || [],
+                        evidences: progress.evidences || [],
+                        isArchived: progress.isArchived || false,
+                        isDeleted: progress.isDeleted || false,
+                        deletedAt: progress.deletedAt || null,
+                        acceptanceCriteria: task.acceptanceCriteria || []
+                    };
+
+                    allTasks.push(mergedTask);
+                    fullTaskIds.push(task.id);
+                }
+            } catch (err) {
+                console.error(`Error processing ${file}:`, err);
             }
         }
-        res.json(allTasks);
+
+        // 3. Add User Tasks
+        for (const task of userTasks) {
+            if (!task.id) continue;
+            allTasks.push(task);
+            fullTaskIds.push(task.id);
+        }
+
+        const cachePayload = {
+            tasks: allTasks,
+            fullTaskIds: [...new Set(fullTaskIds)],
+            timestamp: Date.now()
+        };
+
+        await fs.promises.writeFile(MASTER_CACHE_FILE, JSON.stringify(cachePayload, null, 2), 'utf8');
+        console.log(`%c[Server] Cache rebuilt successfully (${allTasks.length} tasks).`, 'color: green;');
     } catch (error) {
-        console.error('Failed to read tasks from file system:', error);
-        res.status(500).json({ message: 'Failed to retrieve tasks', error: error.message });
+        console.error('Failed to rebuild task cache:', error);
+    } finally {
+        isRebuilding = false;
+    }
+}
+
+// Watch for file changes in Data/Tasks
+let watchTimeout = null;
+fs.watch(TASKS_FOLDER, (eventType, filename) => {
+    if (filename && (filename.endsWith('.yaml') || filename.endsWith('.yml'))) {
+        console.log(`[Watcher] Detect change in ${filename}. Scheduling rebuild...`);
+        if (watchTimeout) clearTimeout(watchTimeout);
+        watchTimeout = setTimeout(rebuildTaskCache, 1000); // 1s debounce
+    }
+});
+
+// App Endpoints
+app.get('/api/tasks', async (req, res) => {
+    try {
+        if (!fs.existsSync(MASTER_CACHE_FILE)) {
+            await rebuildTaskCache();
+        }
+        const data = await fs.promises.readFile(MASTER_CACHE_FILE, 'utf8');
+        res.json(JSON.parse(data));
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to serve master cache', error: error.message });
     }
 });
 
@@ -112,6 +167,7 @@ app.post('/api/progress', async (req, res) => {
     try {
         const progressUpdates = req.body;
         await fs.promises.writeFile(PROGRESS_FILE, JSON.stringify(progressUpdates, null, 2), 'utf8');
+        rebuildTaskCache();
         res.status(200).json({ message: 'Task progress updated successfully' });
     } catch (error) {
         console.error('Error writing task progress file:', error);
@@ -142,6 +198,11 @@ app.patch('/api/progress/:taskId', async (req, res) => {
         };
 
         await fs.promises.writeFile(PROGRESS_FILE, JSON.stringify(progressData, null, 2), 'utf8');
+
+        // Trigger cache rebuild (async, but we don't necessarily need to wait for it to return 200, 
+        // though for safety we'll await it or let it run in background)
+        rebuildTaskCache();
+
         res.status(200).json({ message: `Task ${taskId} progress updated successfully` });
     } catch (error) {
         console.error(`Error updating progress for task ${req.params.taskId}:`, error);

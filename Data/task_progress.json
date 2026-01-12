@@ -26,7 +26,7 @@
     "deletedAt": "2025-12-18T14:51:03.943Z"
   },
   "AC001": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -34,7 +34,7 @@
     "isDeleted": false
   },
   "AC002": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -50,7 +50,7 @@
     "isDeleted": false
   },
   "AC004": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Medium",
     "logs": [],
     "evidences": [],

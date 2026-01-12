@@ -6,12 +6,33 @@
   }
 }
 
+:root {
+  --app-bg: #f8fafc;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --card-bg-blur: rgba(255, 255, 255, 0.1);
+  --card-border: rgba(255, 255, 255, 0.4);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --aside-bg: #ffffff;
+}
+
+.dark {
+  --app-bg: #020617;
+  --card-bg: rgba(30, 41, 59, 0.7);
+  --card-bg-blur: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --aside-bg: #1e293b;
+}
+
 @theme {
-  --color-glass-white: rgba(255, 255, 255, 0.8);
-  --color-glass-white-blur: rgba(255, 255, 255, 0.1);
-  --color-glass-border: rgba(255, 255, 255, 0.2);
-  --color-glass-text: #1f2937;
-  --color-glass-text-muted: #6b7280;
+  --color-app-bg: var(--app-bg);
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-aside-bg: var(--aside-bg);
 }
 
 @layer utilities {

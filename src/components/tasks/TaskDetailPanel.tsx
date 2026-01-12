@@ -169,7 +169,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
     const colors = CATEGORY_COLORS[subjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];
 
     return (
-        <GlassCard variant="blur" className={twMerge(clsx("w-[400px] border-l border-white/20 h-full overflow-y-auto shadow-2xl rounded-l-none bg-white/30 backdrop-blur-xl", className))}>
+        <GlassCard variant="blur" className={twMerge(clsx("w-full border-card-border h-full overflow-y-auto shadow-2xl rounded-2xl bg-card-bg transition-colors duration-300", className))}>
             <div className="p-4">
                 <div className="flex justify-between items-start mb-4">
                     <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -222,11 +222,11 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                     </div>
                 </div>
 
-                <h2 className="text-xl font-bold text-gray-900 mb-4">{task.title}</h2>
+                <h2 className="text-xl font-bold text-text-main mb-4">{task.title}</h2>
 
                 <div className="mb-5">
                     <div className="flex justify-between items-center mb-2">
-                        <h3 className="text-sm font-bold text-gray-900">Description</h3>
+                        <h3 className="text-sm font-bold text-text-main">Description</h3>
                         {!isEditingDescription && (
                             <button
                                 type="button"
@@ -263,7 +263,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             </div>
                         </div>
                     ) : (
-                        <div className="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-md border border-gray-100 whitespace-pre-wrap">
+                        <div className="text-sm text-text-main leading-relaxed bg-text-main/5 p-3 rounded-md border border-card-border whitespace-pre-wrap">
                             {task.description || "No description provided."}
                         </div>
                     )}
@@ -271,8 +271,8 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
 
                 <div className="mb-5">
                     <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-sm font-bold text-gray-900">Acceptance Criteria</h3>
-                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                        <h3 className="text-sm font-bold text-text-main">Acceptance Criteria</h3>
+                        <span className="text-xs text-text-muted bg-text-main/5 px-2 py-1 rounded">
                             {calculateProgress(task)}% Completed
                         </span>
                     </div>
@@ -300,14 +300,14 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                                     type="text"
                                                     value={editedCriterionText}
                                                     onChange={(e) => setEditedCriterionText(e.target.value)}
-                                                    className="flex-1 text-sm border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500 outline-none"
+                                                    className="flex-1 text-sm border border-card-border bg-card-bg rounded px-2 py-1 focus:ring-1 focus:ring-blue-500 outline-none text-text-main"
                                                     autoFocus
                                                 />
-                                                <button type="button" onClick={saveCriterion} className="text-green-600 hover:bg-green-50 p-1 rounded"><Save size={14} /></button>
-                                                <button type="button" onClick={() => setEditingCriterionId(null)} className="text-gray-400 hover:bg-gray-100 p-1 rounded"><X size={14} /></button>
+                                                <button type="button" onClick={saveCriterion} className="text-green-600 hover:bg-green-500/10 p-1 rounded"><Save size={14} /></button>
+                                                <button type="button" onClick={() => setEditingCriterionId(null)} className="text-text-muted hover:bg-white/10 p-1 rounded"><X size={14} /></button>
                                             </div>
                                         ) : (
-                                            <span className={`text-sm flex-1 ${ac.isCompleted ? 'text-green-800 line-through decoration-green-800/50' : 'text-gray-700'}`}>
+                                            <span className={`text-sm flex-1 ${ac.isCompleted ? 'text-green-500/80 line-through decoration-green-500/50' : 'text-text-main'}`}>
                                                 {ac.text}
                                             </span>
                                         )}
@@ -345,14 +345,14 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             value={newCriterion}
                             onChange={(e) => setNewCriterion(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleAddCriterion()}
-                            placeholder="Add new acceptance criteria..."
-                            className="flex-1 text-sm border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                            placeholder="Add new criterion..."
+                            className="flex-1 text-sm border border-card-border bg-card-bg/50 rounded px-3 py-2 focus:ring-1 focus:ring-blue-500 outline-none text-text-main"
                         />
                         <button
                             type="button"
                             onClick={handleAddCriterion}
                             disabled={!newCriterion.trim()}
-                            className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded border border-gray-300 transition-colors disabled:opacity-50"
+                            className="bg-card-bg/50 hover:bg-card-bg/80 text-text-main px-3 py-2 rounded border border-card-border transition-colors disabled:opacity-50"
                         >
                             <Plus size={16} />
                         </button>
@@ -362,20 +362,20 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                 {/* Evidence Section */}
                 <div className="mb-5">
                     <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                        <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
                             <Paperclip size={16} /> Evidences
                         </h3>
-                        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                        <span className="text-xs bg-text-main/5 text-text-muted px-2 py-1 rounded">
                             {(task.evidences || []).length} Attached
                         </span>
                     </div>
 
-                    <div className="bg-gray-50 p-3 rounded-lg border border-gray-200 mb-3">
+                    <div className="bg-text-main/5 p-3 rounded-lg border border-card-border mb-3">
                         <div className="flex gap-2 mb-2">
                             <select
                                 value={evidenceType}
                                 onChange={(e) => setEvidenceType(e.target.value as EvidenceType)}
-                                className="text-xs border border-gray-300 rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none min-w-[80px]"
+                                className="text-xs border border-card-border bg-card-bg rounded px-2 py-1.5 focus:ring-1 focus:ring-blue-500 outline-none min-w-[80px] text-text-main"
                             >
                                 <option value={EvidenceType.LINK}>Link</option>
                                 <option value={EvidenceType.TEXT}>Note</option>
@@ -400,7 +400,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                     value={evidenceContent}
                                     onChange={(e) => setEvidenceContent(e.target.value)}
                                     placeholder={evidenceType === EvidenceType.LINK ? "Paste URL here..." : "Type your note..."}
-                                    className="flex-1 text-sm border border-gray-300 rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none"
+                                    className="flex-1 text-sm border border-card-border bg-card-bg rounded px-2 py-1.5 focus:ring-1 focus:ring-blue-500 outline-none text-text-main"
                                 />
                             )}
                         </div>
@@ -420,12 +420,12 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             <p className="text-xs text-gray-400 italic text-center">No evidences attached yet.</p>
                         ) : (
                             task.evidences.map(ev => (
-                                <div key={ev.id} className="flex items-center justify-between bg-white border border-gray-200 p-2 rounded-md group">
+                                <div key={ev.id} className="flex items-center justify-between bg-card-bg/50 border border-card-border p-2 rounded-md group">
                                     <div className="flex items-center gap-2 overflow-hidden">
                                         {ev.type === EvidenceType.LINK ? (
                                             <LinkIcon size={14} className="text-blue-500 shrink-0" />
                                         ) : (
-                                            <FileText size={14} className="text-gray-500 shrink-0" />
+                                            <FileText size={14} className="text-text-muted shrink-0" />
                                         )}
                                         {ev.type === EvidenceType.LINK ? (
                                             <a
@@ -437,10 +437,10 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                                 {ev.content}
                                             </a>
                                         ) : (
-                                            <span className="text-xs text-gray-700 truncate">{ev.content}</span>
+                                            <span className="text-xs text-text-main truncate">{ev.content}</span>
                                         )}
                                     </div>
-                                    <button type="button" onClick={() => handleDeleteEvidence(ev.id)} className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button type="button" onClick={() => handleDeleteEvidence(ev.id)} className="text-text-muted hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <Trash2 size={14} />
                                     </button>
                                 </div>
@@ -450,45 +450,45 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                 </div>
 
                 {/* Time Logging Section */}
-                <div className="mb-5 border-t border-gray-100 pt-4">
+                <div className="mb-5 border-t border-card-border pt-4">
                     <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                        <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
                             <Clock size={16} /> Time Tracking
                         </h3>
-                        <span className="text-xs font-bold bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                            Total: {calculateTotalTime(task)}
+                        <span className="text-xs font-bold bg-blue-500/10 text-blue-500 px-2 py-1 rounded">
+                            {calculateTotalTime(task)}
                         </span>
                     </div>
 
                     <div className="bg-gray-50 p-3 rounded-lg border border-gray-200">
                         <div className="flex gap-2 mb-2">
                             <div className="flex-1">
-                                <label className="block text-xs font-medium text-gray-500 mb-1">Duration (min)</label>
+                                <label className="block text-xs font-medium text-text-muted mb-1">Duration (min)</label>
                                 <input
                                     type="number"
                                     value={logDuration}
                                     onChange={(e) => setLogDuration(e.target.value)}
-                                    className="w-full text-sm border border-gray-300 rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none"
+                                    className="w-full text-sm border border-card-border bg-card-bg rounded px-2 py-1.5 focus:ring-1 focus:ring-blue-500 outline-none text-text-main"
                                 />
                             </div>
                             <div className="flex-1">
-                                <label className="block text-xs font-medium text-gray-500 mb-1">Date</label>
+                                <label className="block text-xs font-medium text-text-muted mb-1">Date</label>
                                 <input
                                     type="date"
                                     value={logDate}
                                     onChange={(e) => setLogDate(e.target.value)}
-                                    className="w-full text-sm border border-gray-300 rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none"
+                                    className="w-full text-sm border border-card-border bg-card-bg rounded px-2 py-1.5 focus:ring-1 focus:ring-blue-500 outline-none text-text-main"
                                 />
                             </div>
                         </div>
                         <div className="mb-2">
-                            <label className="block text-xs font-medium text-gray-500 mb-1">Work Description (Optional)</label>
+                            <label className="block text-xs font-medium text-text-muted mb-1">Work Description (Optional)</label>
                             <input
                                 type="text"
                                 value={logDescription}
                                 onChange={(e) => setLogDescription(e.target.value)}
                                 placeholder="What did you work on?"
-                                className="w-full text-sm border border-gray-300 rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none"
+                                className="w-full text-sm border border-card-border bg-card-bg rounded px-2 py-1.5 focus:ring-1 focus:ring-blue-500 outline-none text-text-main"
                             />
                         </div>
                         <button
@@ -502,15 +502,15 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
 
                     <div className="mt-3 space-y-2 max-h-40 overflow-y-auto custom-scrollbar">
                         {(!task.logs || task.logs.length === 0) ? (
-                            <p className="text-xs text-gray-400 italic text-center py-2">No time logged yet.</p>
+                            <p className="text-xs text-text-muted italic text-center py-2">No time logged yet.</p>
                         ) : (
                             task.logs.map(log => (
-                                <div key={log.id} className="flex justify-between items-center bg-white border border-gray-100 p-2 rounded text-xs">
+                                <div key={log.id} className="flex justify-between items-center bg-card-bg border border-card-border p-2 rounded text-xs shadow-sm">
                                     <div className="flex items-center gap-2">
-                                        <span className="text-gray-400 font-mono">{log.date}</span>
-                                        <span className="text-gray-700 font-medium">{log.description}</span>
+                                        <span className="text-text-muted font-mono">{log.date}</span>
+                                        <span className="text-text-main font-medium">{log.description}</span>
                                     </div>
-                                    <span className="font-bold text-blue-600">{log.durationMinutes}m</span>
+                                    <span className="font-bold text-blue-500">{log.durationMinutes}m</span>
                                 </div>
                             ))
                         )}
@@ -519,11 +519,11 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
 
                 {/* Priority Selection */}
                 <div className="mb-5">
-                    <h3 className="text-sm font-bold text-gray-900 mb-2">Priority</h3>
+                    <h3 className="text-sm font-bold text-text-main mb-2">Priority</h3>
                     <select
                         value={task.priority}
                         onChange={(e) => onUpdate(task.id, { priority: e.target.value as Priority })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 border border-card-border bg-card-bg rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 text-text-main"
                     >
                         <option value="Low">Low</option>
                         <option value="Medium">Medium</option>
@@ -533,7 +533,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
 
                 {/* Status Status */}
                 <div className="mb-5">
-                    <h3 className="text-sm font-bold text-gray-900 mb-2">Status</h3>
+                    <h3 className="text-sm font-bold text-text-main mb-2">Status</h3>
                     <div className="flex gap-2">
                         {[TaskStatus.TODO, TaskStatus.IN_PROGRESS, TaskStatus.DONE].map(status => (
                             <button
@@ -541,10 +541,10 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                 type="button"
                                 onClick={() => handleStatusChange(status)}
                                 disabled={status === TaskStatus.DONE && (task.acceptanceCriteria || []).some(ac => !ac.isCompleted)}
-                                className={`flex-1 py-2 text-xs font-medium rounded-md border ${task.status === status
-                                    ? 'bg-blue-600 text-white border-blue-600'
-                                    : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
-                                    } ${status === TaskStatus.DONE && (task.acceptanceCriteria || []).some(ac => !ac.isCompleted) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                className={`flex-1 py-2 text-xs font-bold rounded-md border transition-all ${task.status === status
+                                    ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/20'
+                                    : 'bg-card-bg/50 text-text-muted border-card-border hover:bg-white/10'
+                                    } ${status === TaskStatus.DONE && (task.acceptanceCriteria || []).some(ac => !ac.isCompleted) ? 'opacity-30 cursor-not-allowed' : ''}`}
                             >
                                 {status.replace('_', ' ')}
                             </button>
@@ -553,29 +553,29 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                 </div>
 
                 {/* Footer */}
-                <div className="border-t border-gray-100 pt-6">
-                    <div className="flex justify-between items-center text-xs text-gray-500">
+                <div className="border-t border-card-border pt-6">
+                    <div className="flex justify-between items-center text-xs text-text-muted">
                         <div className="flex items-center gap-2">
                             <div className="flex flex-col">
-                                <label className="text-[10px] font-bold text-gray-400 uppercase mb-0.5">Due Date</label>
-                                <div className="flex items-center gap-1.5 hover:bg-gray-50 p-1 rounded transition-colors group cursor-pointer">
-                                    <Clock size={14} className="text-gray-400 group-hover:text-blue-500" />
+                                <label className="text-[10px] font-bold text-text-muted uppercase mb-0.5">Due Date</label>
+                                <div className="flex items-center gap-1.5 hover:bg-white/5 p-1 rounded transition-colors group cursor-pointer">
+                                    <Clock size={14} className="text-text-muted group-hover:text-blue-500" />
                                     <input
                                         type="date"
                                         value={task.date}
                                         onChange={(e) => onUpdate(task.id, { date: e.target.value })}
-                                        className="bg-transparent border-none p-0 text-xs font-medium text-gray-600 focus:ring-0 cursor-pointer"
+                                        className="bg-transparent border-none p-0 text-xs font-medium text-text-main focus:ring-0 cursor-pointer"
                                     />
                                 </div>
                             </div>
                         </div>
                         {task.priority && (
                             <div className="flex items-center gap-2">
-                                <AlertCircle size={14} className={task.priority === 'High' ? 'text-red-500' : 'text-gray-400'} />
+                                <AlertCircle size={14} className={task.priority === 'High' ? 'text-red-500' : 'text-text-muted'} />
                                 <span>{task.priority} Priority</span>
                             </div>
                         )}
-                        <span className="text-xs text-gray-400 font-mono ml-4">#{task.id}</span>
+                        <span className="text-xs text-text-muted font-mono ml-4">#{task.id}</span>
                     </div>
                 </div>
 

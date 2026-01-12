@@ -89,7 +89,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden relative bg-white/50">
+    <div className="flex h-screen overflow-hidden relative">
       <BackgroundGradient />
 
       {/* Mobile Overlay */}

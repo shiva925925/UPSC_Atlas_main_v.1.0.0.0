@@ -38,83 +38,45 @@ export async function pullProgressOnly() {
 }
 
 /**
- * MANUAL SYNC: Imports task definitions from files (Data/Tasks - Excel/YAML).
+ * MANUAL/AUTO SYNC: Imports task definitions from the Server-Side Master Cache.
+ * This is now high-speed because the server has already done the heavy merging.
  */
 export async function fullLibrarySync() {
-    console.log('%c[Sync Service] Starting manual library sync...', 'color: blue; font-weight: bold;');
-    const errors: string[] = [];
+    console.log('%c[Sync Service] Starting high-speed library sync...', 'color: blue; font-weight: bold;');
 
-    // 1. Fetch Progress first so we have accurate state for new tasks
-    let serverProgress: { [taskId: string]: Partial<Task> } = {};
     try {
-        const response = await fetch(PROGRESS_API);
-        if (response.ok) serverProgress = await response.json();
-    } catch (e) {
-        console.warn('[Sync Service] Could not fetch progress for full sync.');
-    }
+        // 1. Fetch the Master Cache from server
+        const response = await fetch(`${TASKS_API}?t=${Date.now()}`);
+        if (!response.ok) throw new Error(`Failed to fetch tasks: ${response.statusText}`);
 
-    const activeFileTaskIds = new Set<string>();
+        const data = await response.json(); // { tasks, fullTaskIds, timestamp }
+        const { tasks, fullTaskIds } = data;
 
-    // 2. Sync from Data/Tasks folder (Modern Unified API)
-    try {
-        await syncFileTasks(serverProgress, activeFileTaskIds);
-    } catch (e: any) {
-        errors.push(`File Sync Error: ${e.message}`);
-    }
+        if (!tasks || !Array.isArray(tasks)) throw new Error("Invalid sync data received from server");
 
-    // 3. User Tasks Sync
-    try {
-        await syncUserTasks(serverProgress);
-    } catch (e: any) {
-        errors.push(`User Sync Error: ${e.message}`);
-    }
+        // 2. High-speed Bulk Update
+        // bulkPut is much faster than individual updates for thousands of items.
+        await db.tasks.bulkPut(tasks);
 
-    // 4. Orphan Cleanup
-    const allTasks = await db.tasks.toArray();
-    for (const task of allTasks) {
-        // Only cleanup tasks that come from files (have a sourceFile) 
-        // and are NOT in the list we just fetched.
-        if (task.sourceFile && !activeFileTaskIds.has(task.id)) {
-            console.log(`%c[Sync Service] Deleting orphan task '${task.title}' (ID: ${task.id})`, 'color: red;');
-            await db.tasks.delete(task.id);
+        // 3. Precise Orphan Cleanup
+        // If a task ID is NOT in the server's master list, it means it was deleted in Excel.
+        const allLocalTasks = await db.tasks.toArray();
+        const serverTaskIdSet = new Set(fullTaskIds);
+
+        const orphans = allLocalTasks.filter(t => !serverTaskIdSet.has(t.id));
+        if (orphans.length > 0) {
+            console.log(`%c[Sync Service] Cleaning up ${orphans.length} orphans...`, 'color: orange;');
+            await db.tasks.bulkDelete(orphans.map(t => t.id));
         }
-    }
 
-    if (errors.length > 0) throw new Error(errors.join('\n'));
-    console.log('%c[Sync Service] Manual sync complete.', 'color: blue; font-weight: bold;');
-}
-
-/**
- * Fetches tasks from /api/tasks (which scans Data/Tasks folder)
- */
-async function syncFileTasks(serverProgress: { [taskId: string]: Partial<Task> }, activeFileTaskIds: Set<string>) {
-    const response = await fetch(`${TASKS_API}?t=${Date.now()}`); // Cache-busting
-    if (!response.ok) throw new Error(`Failed to fetch tasks from server: ${response.statusText}`);
-
-    const fileTasks: any[] = await response.json();
-    const existingTasks = await db.tasks.toArray();
-    const existingTasksMap = new Map(existingTasks.map(t => [t.id, t]));
-
-    for (const task of fileTasks) {
-        if (!task.id) continue;
-
-        // Prepare standardized data from file
-        const fileTaskData = {
-            title: task.title,
-            date: task.date || new Date().toISOString().split('T')[0], // Default to Today
-            subject: task.subject,
-            description: task.description || '',
-            acceptanceCriteria: task.acceptanceCriteria || [],
-            sourceFile: task.sourceFile,
-            // These might be in the file, but we'll use them as defaults for NEW tasks only
-            priority: task.priority || 'Medium',
-            status: task.status || TaskStatus.TODO
-        };
-
-        await smartUpdate(task.id, fileTaskData, existingTasksMap, serverProgress);
-        activeFileTaskIds.add(task.id);
+        console.log(`%c[Sync Service] Sync complete. Processed ${tasks.length} tasks.`, 'color: green; font-weight: bold;');
+    } catch (error: any) {
+        console.error('[Sync Service] Sync failed:', error);
+        throw error;
     }
 }
+
+// Remove old syncFileTasks as it is now redundant
 
 /**
  * Handles the logic of what to update based on source of truth rules.

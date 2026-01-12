@@ -36,32 +36,32 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
         <div className={`relative ${className}`} ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-all border ${value || isOpen
-                        ? 'bg-blue-50 border-blue-200 text-blue-700 shadow-sm'
-                        : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300'
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all border shadow-sm ${value || isOpen
+                    ? 'bg-blue-600/10 border-blue-500/30 text-blue-500 shadow-blue-500/10'
+                    : 'bg-card-bg/50 border-card-border text-text-muted hover:bg-white/5 hover:border-card-border/80'
                     }`}
             >
-                {icon && <span className={value ? 'text-blue-500' : 'text-gray-400'}>{icon}</span>}
-                <span>{value || label}</span>
-                <ChevronDown size={14} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} ${value ? 'text-blue-500' : 'text-gray-400'}`} />
+                {icon && <span className={value ? 'text-blue-500' : 'text-text-muted'}>{icon}</span>}
+                <span className="tracking-tight">{value || label}</span>
+                <ChevronDown size={14} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} ${value ? 'text-blue-500' : 'text-text-muted'}`} />
             </button>
 
             {isOpen && (
-                <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-100 overflow-hidden">
-                    <div className="max-h-64 overflow-y-auto custom-scrollbar py-1">
+                <div className="absolute top-full left-0 mt-2 w-52 bg-card-bg/95 border border-card-border rounded-xl shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-200 overflow-hidden backdrop-blur-xl">
+                    <div className="max-h-64 overflow-y-auto custom-scrollbar py-1.5">
                         <button
                             onClick={() => { onChange(null); setIsOpen(false); }}
-                            className="w-full text-left px-4 py-2 text-xs text-gray-500 hover:bg-gray-50 hover:text-red-500 transition-colors border-b border-gray-50"
+                            className="w-full text-left px-4 py-2 text-[10px] font-black uppercase tracking-widest text-text-muted hover:bg-white/5 hover:text-red-500 transition-colors border-b border-card-border/30 mb-1"
                         >
-                            Clear Filter
+                            Reset Selection
                         </button>
                         {options.map((option) => (
                             <button
                                 key={option}
                                 onClick={() => { onChange(option); setIsOpen(false); }}
-                                className={`w-full text-left px-4 py-2 text-xs transition-colors ${value === option
-                                        ? 'bg-blue-50 text-blue-700 font-medium'
-                                        : 'text-gray-700 hover:bg-gray-50'
+                                className={`w-full text-left px-4 py-2 text-xs transition-all ${value === option
+                                    ? 'bg-blue-600/20 text-blue-500 font-bold'
+                                    : 'text-text-main hover:bg-white/5'
                                     }`}
                             >
                                 {option}

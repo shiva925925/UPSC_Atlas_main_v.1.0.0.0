@@ -22,8 +22,8 @@ const GlassCard: React.FC<GlassCardProps> = ({
 }) => {
 
     const variants = {
-        blur: "backdrop-blur-xl bg-white/10 border border-white/20 shadow-xl",
-        opaque: "bg-white/80 border border-white/40 shadow-sm backdrop-blur-[0px]" // Explicitly 0 blur for performance override
+        blur: "backdrop-blur-xl bg-card-bg/60 border border-card-border shadow-xl",
+        opaque: "bg-card-bg border border-card-border/50 shadow-sm backdrop-blur-[0px]"
     };
 
     return (

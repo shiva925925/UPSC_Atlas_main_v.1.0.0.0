@@ -31,10 +31,10 @@ const TaskItem: React.FC<TaskItemProps> = ({
 
     const getStatusColor = (status: TaskStatus) => {
         switch (status) {
-            case TaskStatus.TODO: return 'bg-gray-500/10 text-gray-600 border border-gray-500/20';
-            case TaskStatus.IN_PROGRESS: return 'bg-blue-500/10 text-blue-700 border border-blue-500/20';
-            case TaskStatus.DONE: return 'bg-green-500/10 text-green-700 border border-green-500/20';
-            default: return 'bg-gray-500/10 text-gray-600';
+            case TaskStatus.TODO: return 'bg-text-muted/10 text-text-muted border border-text-muted/20';
+            case TaskStatus.IN_PROGRESS: return 'bg-blue-500/10 text-blue-400 border border-blue-500/20';
+            case TaskStatus.DONE: return 'bg-green-500/10 text-green-400 border border-green-500/20';
+            default: return 'bg-text-muted/10 text-text-muted';
         }
     };
 
@@ -44,19 +44,19 @@ const TaskItem: React.FC<TaskItemProps> = ({
     return (
         <div
             onClick={() => onClick(task)}
-            className={`grid grid-cols-12 gap-4 px-6 py-2 border-b border-white/10 items-center hover:bg-white/10 cursor-pointer transition-colors group ${isSelected ? 'bg-blue-500/5' : ''}`}
+            className={`grid grid-cols-12 gap-4 px-6 py-2.5 border-b border-card-border/50 items-center hover:bg-text-main/5 cursor-pointer transition-all group ${isSelected ? 'bg-blue-500/10' : ''}`}
         >
             {/* Task Title & Progress */}
             <div className="col-span-4 flex items-center justify-between gap-4 pr-4">
-                <h4 className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors truncate" title={task.title}>{task.title}</h4>
+                <h4 className="text-sm font-bold text-text-main group-hover:text-blue-500 transition-colors truncate" title={task.title}>{task.title}</h4>
                 <div className="flex items-center gap-2 shrink-0">
-                    <div className="w-16 bg-gray-200/50 rounded-full h-1.5">
+                    <div className="w-16 bg-text-main/10 rounded-full h-1">
                         <div
-                            className="bg-blue-500 h-1.5 rounded-full"
+                            className="bg-blue-500 h-1 rounded-full shadow-[0_0_8px_rgba(37,99,235,0.3)]"
                             style={{ width: `${calculateProgress(task)}%` }}
                         ></div>
                     </div>
-                    <span className="text-[10px] text-gray-400 w-6 text-right">{calculateProgress(task)}%</span>
+                    <span className="text-[10px] font-mono text-text-muted w-6 text-right">{calculateProgress(task)}%</span>
                 </div>
             </div>
 
@@ -78,16 +78,16 @@ const TaskItem: React.FC<TaskItemProps> = ({
 
             {/* Priority */}
             <div className="col-span-2 flex items-center gap-2">
-                {task.priority === 'High' && <AlertCircle size={16} className="text-red-500" />}
-                <span className={`text-sm ${task.priority === 'High' ? 'text-red-600 font-medium' : 'text-gray-600'}`}>
+                {task.priority === 'High' && <AlertCircle size={14} className="text-red-500" />}
+                <span className={`text-[11px] font-bold uppercase tracking-wider ${task.priority === 'High' ? 'text-red-500' : 'text-text-muted'}`}>
                     {task.priority || 'Normal'}
                 </span>
             </div>
 
             {/* Due Date & Actions */}
             <div className="col-span-2 flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <Calendar size={14} />
+                <div className="flex items-center gap-2 text-[11px] font-mono text-text-muted">
+                    <Calendar size={12} />
                     <span>{task.date}</span>
                 </div>
 
@@ -95,28 +95,28 @@ const TaskItem: React.FC<TaskItemProps> = ({
                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
                         onClick={(e) => { e.stopPropagation(); onClick(task); }}
-                        className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded"
+                        className="p-1.5 text-text-muted hover:text-blue-500 hover:bg-white/10 rounded transition-all"
                         title="Edit Task"
                     >
-                        <Edit size={16} />
+                        <Edit size={14} />
                     </button>
                     {activeTab === 'ACTIVE' && (
                         <>
                             {task.status === TaskStatus.DONE && (
                                 <button
                                     onClick={(e) => { e.stopPropagation(); onArchive(task.id); }}
-                                    className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded"
+                                    className="p-1.5 text-text-muted hover:text-blue-500 hover:bg-white/10 rounded transition-all"
                                     title="Archive"
                                 >
-                                    <Archive size={16} />
+                                    <Archive size={14} />
                                 </button>
                             )}
                             <button
                                 onClick={(e) => { e.stopPropagation(); onDelete(task.id); }}
-                                className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded"
+                                className="p-1.5 text-text-muted hover:text-red-500 hover:bg-white/10 rounded transition-all"
                                 title="Move to Trash"
                             >
-                                <Trash2 size={16} />
+                                <Trash2 size={14} />
                             </button>
                         </>
                     )}
