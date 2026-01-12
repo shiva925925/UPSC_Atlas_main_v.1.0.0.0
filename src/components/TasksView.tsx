@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 import { Task, TaskStatus, Subject, SubjectCategory } from '../types';
-import { Plus, Filter, Calendar, List, BookOpen, X, Search } from 'lucide-react';
-import { syncAllTasks, saveTaskProgress, saveUserTask, updateTaskProgress } from '../services/taskSyncService';
+import { Plus, Filter, Calendar, List, BookOpen, X, Search, RefreshCw } from 'lucide-react';
+import { pullProgressOnly, fullLibrarySync, saveTaskProgress, saveUserTask, updateTaskProgress } from '../services/taskSyncService';
 import { SUBJECT_HIERARCHY } from '../constants';
 
 // Sub-components
@@ -48,6 +48,7 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
   const [filterSubject, setFilterSubject] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<string | null>(null);
   const [filterDate, setFilterDate] = useState<string | null>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
   const [filterTopic, setFilterTopic] = useState<string | null>(null);
 
   // Helper to get topics for a category
@@ -57,19 +58,33 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
       .map(([subject, _]) => subject);
   };
 
-  // Sync tasks from Server & Markdown files on initial load
+  // Sync progress on initial load
   useEffect(() => {
     const runSync = async () => {
-      console.log("Starting auto-sync...");
+      console.log("[TasksView] Running auto progress sync...");
       try {
-        await syncAllTasks();
-        console.log("Auto-sync finished.");
+        await pullProgressOnly();
       } catch (error) {
-        console.error("Auto-sync failed:", error);
+        console.error("[TasksView] Auto progress sync failed:", error);
       }
     };
     runSync();
   }, []); // Run once on mount
+
+  const handleFileSync = async () => {
+    if (window.confirm('Scan Data/Tasks for new Excel/YAML updates? This matches your planning files with the app while preserving your progress.')) {
+      setIsSyncing(true);
+      try {
+        await fullLibrarySync();
+        console.log("[TasksView] Library sync complete.");
+      } catch (error: any) {
+        console.error("[TasksView] Library sync failed:", error);
+        alert("Library sync failed: " + error.message);
+      } finally {
+        setIsSyncing(false);
+      }
+    }
+  };
 
   const handleCreateTask = async (taskData: Partial<Task>) => {
     const newTask: Task = {
@@ -215,6 +230,20 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
     return true;
   });
 
+  // Calculate Subject Stats (for Active tasks)
+  const activeTasks = tasks.filter(t => !t.isDeleted && !t.isArchived);
+  const subjectStats = Object.values(SubjectCategory).map(category => {
+    const categoryTasks = activeTasks.filter(t => (SUBJECT_HIERARCHY[t.subject] || SubjectCategory.GENERAL) === category);
+    const completed = categoryTasks.filter(t => t.status === TaskStatus.DONE).length;
+    const total = categoryTasks.length;
+    return {
+      category,
+      total,
+      completed,
+      percentage: total > 0 ? Math.round((completed / total) * 100) : 0
+    };
+  }).filter(stat => stat.total > 0 || stat.category === SubjectCategory.GENERAL);
+
   const clearAllFilters = () => {
     setFilterSubject(null);
     setFilterStatus(null);
@@ -226,179 +255,218 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
   const hasActiveFilters = filterSubject || filterStatus || filterDate || filterTopic || searchQuery;
 
   return (
-    <div className="flex h-full animate-fade-in gap-4 p-4">
-      {/* List Area */}
-      <GlassCard variant="blur" className={`flex-1 flex flex-col h-full overflow-hidden border-white/20 ${selectedTask ? 'max-w-[calc(100%-400px)]' : ''}`}>
-        <header className="p-6 border-b border-white/10 flex justify-between items-center bg-white/5 z-20">
-          <div className="flex items-center gap-4">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800">Tasks</h2>
-              <p className="text-gray-500">Manage your study goals and progress.</p>
-            </div>
-          </div>
-          <div className="flex gap-3 items-center">
-
-            {/* Search Bar */}
-            <div className="relative mr-2">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
-              <input
-                type="text"
-                placeholder="Search tasks..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 pr-8 py-1.5 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-64 transition-all shadow-sm hover:border-gray-300"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100"
-                >
-                  <X size={14} />
-                </button>
-              )}
-            </div>
-
-            {/* Filter Bar */}
-            <div className="flex items-center gap-2 mr-2">
-              <FilterDropdown
-                label="Subject"
-                value={filterSubject}
-                options={Object.values(SubjectCategory)}
-                onChange={(val) => { setFilterSubject(val); setFilterTopic(null); }}
-                icon={<BookOpen size={14} />}
-              />
-
-              {filterSubject && (
-                <FilterDropdown
-                  label="Topic"
-                  value={filterTopic}
-                  options={getSubjectTopics(filterSubject)}
-                  onChange={setFilterTopic}
-                  className="animate-fade-in"
+    <div className="flex flex-col h-full animate-fade-in gap-4 p-4 overflow-hidden">
+      {/* Dashboard Section - Subject Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {subjectStats.map((stat) => (
+          <GlassCard
+            key={stat.category}
+            variant="blur"
+            onClick={() => setFilterSubject(stat.category === filterSubject ? null : stat.category)}
+            className={`p-4 cursor-pointer transition-all hover:scale-[1.02] border-white/10 ${filterSubject === stat.category ? 'ring-2 ring-blue-500 bg-blue-50/10' : 'hover:bg-white/5'}`}
+          >
+            <div className="flex flex-col gap-2">
+              <div className="flex justify-between items-start">
+                <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">{stat.category}</span>
+                <span className="text-[10px] font-mono bg-white/10 px-1.5 py-0.5 rounded text-gray-600">
+                  {stat.completed}/{stat.total}
+                </span>
+              </div>
+              <div className="text-xl font-bold text-gray-800">{stat.percentage}%</div>
+              <div className="w-full bg-gray-200/50 h-1.5 rounded-full overflow-hidden">
+                <div
+                  className="bg-blue-600 h-full transition-all duration-1000"
+                  style={{ width: `${stat.percentage}%` }}
                 />
-              )}
-
-              <FilterDropdown
-                label="Status"
-                value={filterStatus ? filterStatus.replace('_', ' ') : null}
-                options={Object.values(TaskStatus).map(s => s.replace('_', ' '))}
-                onChange={(val) => setFilterStatus(val ? val.replace(' ', '_') : null)}
-                icon={<List size={14} />}
-              />
-
-              <FilterDropdown
-                label="Date"
-                value={filterDate}
-                options={['This Week', 'Next Week', 'Last Week', 'Next 2 Weeks', 'Overdue']}
-                onChange={setFilterDate}
-                icon={<Calendar size={14} />}
-              />
-
-              {hasActiveFilters && (
-                <button
-                  onClick={clearAllFilters}
-                  className="text-xs text-gray-500 hover:text-red-600 font-medium px-2 py-1 rounded hover:bg-red-50 transition-colors flex items-center gap-1"
-                >
-                  <X size={12} /> Clear
-                </button>
-              )}
+              </div>
             </div>
+          </GlassCard>
+        ))}
+      </div>
 
-            <div className="h-6 w-px bg-gray-300 mx-1"></div>
+      <div className="flex h-full gap-4 overflow-hidden">
+        {/* List Area */}
+        <GlassCard variant="blur" className={`flex-1 flex flex-col h-full overflow-hidden border-white/20 ${selectedTask ? 'max-w-[calc(100%-400px)]' : ''}`}>
+          <header className="p-6 border-b border-white/10 flex justify-between items-center bg-white/5 z-20">
+            <div className="flex items-center gap-4">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800">Tasks</h2>
+                <p className="text-gray-500">Manage your study goals and progress.</p>
+              </div>
+            </div>
+            <div className="flex gap-3 items-center">
 
+              {/* Search Bar */}
+              <div className="relative mr-2">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+                <input
+                  type="text"
+                  placeholder="Search tasks..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-9 pr-8 py-1.5 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-64 transition-all shadow-sm hover:border-gray-300"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100"
+                  >
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+
+              {/* Filter Bar */}
+              <div className="flex items-center gap-2 mr-2">
+                <FilterDropdown
+                  label="Subject"
+                  value={filterSubject}
+                  options={Object.values(SubjectCategory)}
+                  onChange={(val) => { setFilterSubject(val); setFilterTopic(null); }}
+                  icon={<BookOpen size={14} />}
+                />
+
+                {filterSubject && (
+                  <FilterDropdown
+                    label="Topic"
+                    value={filterTopic}
+                    options={getSubjectTopics(filterSubject)}
+                    onChange={setFilterTopic}
+                    className="animate-fade-in"
+                  />
+                )}
+
+                <FilterDropdown
+                  label="Status"
+                  value={filterStatus ? filterStatus.replace('_', ' ') : null}
+                  options={Object.values(TaskStatus).map(s => s.replace('_', ' '))}
+                  onChange={(val) => setFilterStatus(val ? val.replace(' ', '_') : null)}
+                  icon={<List size={14} />}
+                />
+
+                <FilterDropdown
+                  label="Date"
+                  value={filterDate}
+                  options={['This Week', 'Next Week', 'Last Week', 'Next 2 Weeks', 'Overdue']}
+                  onChange={setFilterDate}
+                  icon={<Calendar size={14} />}
+                />
+
+                {hasActiveFilters && (
+                  <button
+                    onClick={clearAllFilters}
+                    className="text-xs text-gray-500 hover:text-red-600 font-medium px-2 py-1 rounded hover:bg-red-50 transition-colors flex items-center gap-1"
+                  >
+                    <X size={12} /> Clear
+                  </button>
+                )}
+              </div>
+
+              <div className="h-6 w-px bg-gray-300 mx-1"></div>
+
+              <button
+                onClick={handleFileSync}
+                disabled={isSyncing}
+                title="Sync library files"
+                className={`p-2 rounded-md transition-all ${isSyncing ? 'bg-gray-100 text-gray-400 rotate-180' : 'bg-gray-50 text-gray-600 hover:bg-white hover:text-blue-600 hover:shadow-sm'}`}
+              >
+                <RefreshCw size={18} className={isSyncing ? 'animate-spin' : ''} />
+              </button>
+
+              <button
+                onClick={() => setIsCreating(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center gap-2 shadow-sm transition-all hover:shadow-md active:scale-95"
+              >
+                <Plus size={16} /> Create Task
+              </button>
+            </div>
+          </header>
+
+          {/* Tabs */}
+          <div className="flex border-b border-gray-200 px-6">
             <button
-              onClick={() => setIsCreating(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center gap-2 shadow-sm"
+              onClick={() => setActiveTab('ACTIVE')}
+              className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${activeTab === 'ACTIVE' ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
             >
-              <Plus size={16} /> Create Task
+              Active
+            </button>
+            <button
+              onClick={() => setActiveTab('ARCHIVED')}
+              className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${activeTab === 'ARCHIVED' ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+            >
+              Archived
+            </button>
+            <button
+              onClick={() => setActiveTab('TRASH')}
+              className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${activeTab === 'TRASH' ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+            >
+              Trash
             </button>
           </div>
-        </header>
 
-        {/* Tabs */}
-        <div className="flex border-b border-gray-200 px-6">
-          <button
-            onClick={() => setActiveTab('ACTIVE')}
-            className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${activeTab === 'ACTIVE' ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
-          >
-            Active
-          </button>
-          <button
-            onClick={() => setActiveTab('ARCHIVED')}
-            className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${activeTab === 'ARCHIVED' ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
-          >
-            Archived
-          </button>
-          <button
-            onClick={() => setActiveTab('TRASH')}
-            className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${activeTab === 'TRASH' ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
-          >
-            Trash
-          </button>
-        </div>
+          {/* Task List Header */}
+          <div className="grid grid-cols-12 gap-4 px-6 py-2 bg-white/5 border-b border-white/10 text-xs font-semibold text-gray-500 uppercase tracking-wider backdrop-blur-md z-10 sticky top-0">
+            <div className="col-span-4">Task</div>
+            <div className="col-span-2">Status</div>
+            <div className="col-span-2">Subject</div>
+            <div className="col-span-2">Priority</div>
+            <div className="col-span-2">Due Date</div>
+          </div>
 
-        {/* Task List Header */}
-        <div className="grid grid-cols-12 gap-4 px-6 py-2 bg-white/5 border-b border-white/10 text-xs font-semibold text-gray-500 uppercase tracking-wider backdrop-blur-md z-10 sticky top-0">
-          <div className="col-span-4">Task</div>
-          <div className="col-span-2">Status</div>
-          <div className="col-span-2">Subject</div>
-          <div className="col-span-2">Priority</div>
-          <div className="col-span-2">Due Date</div>
-        </div>
-
-        {/* Task List Body */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar">
-          {(!tasks || tasks.length === 0) && !filteredTasks.length ? (
-            <div className="p-4 space-y-4">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="flex gap-4 items-center">
-                  <Skeleton className="h-12 w-full" />
-                </div>
-              ))}
-            </div>
-          ) : filteredTasks.length === 0 ? (
-            <EmptyState
-              icon={CheckSquare}
-              title={activeTab === 'ACTIVE' ? "All Caught Up!" : "No Tasks Found"}
-              message={`No tasks found in ${activeTab.toLowerCase()}. ${activeTab === 'ACTIVE' ? "Enjoy your free time!" : ""}`}
-              actionLabel={activeTab === 'ACTIVE' ? "Create New Task" : undefined}
-              onAction={activeTab === 'ACTIVE' ? () => setIsCreating(true) : undefined}
-            />
-          ) : (
-            filteredTasks.map(task => (
-              <TaskItem
-                key={task.id}
-                task={task}
-                isSelected={selectedTask?.id === task.id}
-                activeTab={activeTab}
-                onClick={setSelectedTask}
-                onArchive={handleArchive}
-                onDelete={handleDelete}
-                onRestore={handleRestore}
-                onPermanentDelete={handlePermanentDelete}
+          {/* Task List Body */}
+          <div className="flex-1 overflow-y-auto custom-scrollbar">
+            {(!tasks || tasks.length === 0) && !filteredTasks.length ? (
+              <div className="p-4 space-y-4">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="flex gap-4 items-center">
+                    <Skeleton className="h-12 w-full" />
+                  </div>
+                ))}
+              </div>
+            ) : filteredTasks.length === 0 ? (
+              <EmptyState
+                icon={CheckSquare}
+                title={activeTab === 'ACTIVE' ? "All Caught Up!" : "No Tasks Found"}
+                message={`No tasks found in ${activeTab.toLowerCase()}. ${activeTab === 'ACTIVE' ? "Enjoy your free time!" : ""}`}
+                actionLabel={activeTab === 'ACTIVE' ? "Create New Task" : undefined}
+                onAction={activeTab === 'ACTIVE' ? () => setIsCreating(true) : undefined}
               />
-            ))
-          )}
-        </div>
-      </GlassCard>
+            ) : (
+              filteredTasks.map(task => (
+                <TaskItem
+                  key={task.id}
+                  task={task}
+                  isSelected={selectedTask?.id === task.id}
+                  activeTab={activeTab}
+                  onClick={setSelectedTask}
+                  onArchive={handleArchive}
+                  onDelete={handleDelete}
+                  onRestore={handleRestore}
+                  onPermanentDelete={handlePermanentDelete}
+                />
+              ))
+            )}
+          </div>
+        </GlassCard>
 
-      {/* Create Task Modal */}
-      <CreateTaskModal
-        isOpen={isCreating}
-        onClose={() => setIsCreating(false)}
-        onCreate={handleCreateTask}
-      />
+        {/* Create Task Modal */}
+        <CreateTaskModal
+          isOpen={isCreating}
+          onClose={() => setIsCreating(false)}
+          onCreate={handleCreateTask}
+        />
 
-      {/* Task Detail Sidebar */}
-      {
-        selectedTask && (
-          <TaskDetailPanel
-            task={selectedTask}
-            onClose={() => setSelectedTask(null)}
-            onUpdate={handleUpdateTask}
-          />
-        )
-      }
+        {/* Task Detail Sidebar */}
+        {
+          selectedTask && (
+            <TaskDetailPanel
+              task={selectedTask}
+              onClose={() => setSelectedTask(null)}
+              onUpdate={handleUpdateTask}
+            />
+          )
+        }
+      </div>
     </div>
   );
 };

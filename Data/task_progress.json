@@ -3654,7 +3654,8 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": true,
+    "deletedAt": "2026-01-12T07:57:30.326Z"
   },
   "task-001": {
     "status": "TODO",
@@ -3662,8 +3663,8 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false,
-    "deletedAt": "2025-11-27T00:09:06.325Z"
+    "isDeleted": true,
+    "deletedAt": "2026-01-12T07:57:16.639Z"
   },
   "task-003": {
     "status": "TODO",
@@ -3695,7 +3696,8 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": true,
+    "deletedAt": "2026-01-12T07:57:25.141Z"
   },
   "task_003": {
     "status": "TODO",
@@ -3720,5 +3722,17 @@
     "evidences": [],
     "isArchived": false,
     "isDeleted": false
+  },
+  "5qr8fphvi": {
+    "status": "IN_PROGRESS",
+    "isDeleted": true,
+    "deletedAt": "2026-01-04T12:16:00.746Z"
+  },
+  "5y9vzl3ao": {
+    "isDeleted": true,
+    "deletedAt": "2026-01-04T12:16:04.391Z"
+  },
+  "mho0nlof8": {
+    "status": "IN_PROGRESS"
   }
 }

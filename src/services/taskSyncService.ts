@@ -1,249 +1,114 @@
-import { load } from 'js-yaml';
 import { db } from '../db';
 import { Task, TaskStatus, Subject, Priority } from '../types';
-import { parseFrontMatter } from '../utils';
 
-const EXCEL_TASKS_API = '/api/tasks';
+const TASKS_API = '/api/tasks'; // Reads Data/Tasks (Excel/YAML)
 const PROGRESS_API = '/api/progress';
 const USER_TASKS_API = '/api/user-tasks';
 
-export async function syncAllTasks() {
-    console.log('%c[Sync Service] Starting full sync...', 'color: blue; font-weight: bold;');
+/**
+ * AUTOMATIC SYNC: Pulls only progress data from the server.
+ * Does not add or delete tasks. Only updates status/logs for existing tasks.
+ */
+export async function pullProgressOnly() {
+    console.log('%c[Sync Service] Starting automatic progress sync...', 'color: teal; font-weight: bold;');
+
+    try {
+        const response = await fetch(PROGRESS_API);
+        if (!response.ok) throw new Error(`Failed to fetch progress: ${response.statusText}`);
+
+        const serverProgress = await response.json();
+        const existingTasks = await db.tasks.toArray();
+        const existingTasksMap = new Map(existingTasks.map(t => [t.id, t]));
+
+        let updateCount = 0;
+        for (const [taskId, progress] of Object.entries(serverProgress)) {
+            const task = existingTasksMap.get(taskId);
+            if (task) {
+                const updates = getProgressUpdates(task, progress as Partial<Task>);
+                if (Object.keys(updates).length > 0) {
+                    await db.tasks.update(taskId, updates);
+                    updateCount++;
+                }
+            }
+        }
+        console.log(`%c[Sync Service] Progress sync complete. Updated ${updateCount} tasks.`, 'color: teal;');
+    } catch (e) {
+        console.warn('[Sync Service] Automatic progress sync skipped or failed:', e);
+    }
+}
+
+/**
+ * MANUAL SYNC: Imports task definitions from files (Data/Tasks - Excel/YAML).
+ */
+export async function fullLibrarySync() {
+    console.log('%c[Sync Service] Starting manual library sync...', 'color: blue; font-weight: bold;');
     const errors: string[] = [];
 
+    // 1. Fetch Progress first so we have accurate state for new tasks
     let serverProgress: { [taskId: string]: Partial<Task> } = {};
     try {
         const response = await fetch(PROGRESS_API);
-        if (!response.ok) {
-            throw new Error(`Failed to fetch task progress: ${response.statusText}`);
-        }
-        serverProgress = await response.json();
-        console.log(`%c[Sync Service] Fetched ${Object.keys(serverProgress).length} task progress entries from server.`, 'color: blue;');
-    } catch (e: any) {
-        console.error('[Sync Service] Failed to fetch server progress:', e);
-        errors.push(`Progress Fetch: ${e.message}`);
-        // Continue even if progress fetch fails, to sync basic task data
+        if (response.ok) serverProgress = await response.json();
+    } catch (e) {
+        console.warn('[Sync Service] Could not fetch progress for full sync.');
     }
 
     const activeFileTaskIds = new Set<string>();
 
+    // 2. Sync from Data/Tasks folder (Modern Unified API)
     try {
-        await syncMarkdownTasks(serverProgress, activeFileTaskIds);
+        await syncFileTasks(serverProgress, activeFileTaskIds);
     } catch (e: any) {
-        console.error('[Sync Service] Markdown sync failed:', e);
-        errors.push(`Markdown Sync: ${e.message}`);
+        errors.push(`File Sync Error: ${e.message}`);
     }
 
-    try {
-        await syncExcelTasks(serverProgress, activeFileTaskIds);
-    } catch (e: any) {
-        console.error('[Sync Service] Excel sync failed:', e);
-        errors.push(`Excel Sync: ${e.message}`);
-    }
-
+    // 3. User Tasks Sync
     try {
         await syncUserTasks(serverProgress);
     } catch (e: any) {
-        console.error('[Sync Service] User tasks sync failed:', e);
-        errors.push(`User Tasks Sync: ${e.message}`);
+        errors.push(`User Sync Error: ${e.message}`);
     }
 
-    // 4. Update tasks that exist locally (e.g. created in UI) but not in files
-    // AND Perform Cleanup of Orphans
+    // 4. Orphan Cleanup
     const allTasks = await db.tasks.toArray();
     for (const task of allTasks) {
-        // Cleanup Logic:
-        // If it has a sourceFile (meaning it came from a file) AND it's NOT in our active list...
+        // Only cleanup tasks that come from files (have a sourceFile) 
+        // and are NOT in the list we just fetched.
         if (task.sourceFile && !activeFileTaskIds.has(task.id)) {
-            console.log(`%c[Sync Service] Deleting orphan task '${task.title}' (ID: ${task.id}) because it was removed from ${task.sourceFile}`, 'color: red;');
+            console.log(`%c[Sync Service] Deleting orphan task '${task.title}' (ID: ${task.id})`, 'color: red;');
             await db.tasks.delete(task.id);
-            continue; // Skip the rest of the loop for this deleted task
-        }
-
-        const progress = serverProgress[task.id];
-        if (progress) {
-            const updates: Partial<Task> = {};
-            if (progress.status !== undefined && task.status !== progress.status) updates.status = progress.status;
-            if (progress.logs !== undefined && JSON.stringify(task.logs) !== JSON.stringify(progress.logs)) updates.logs = progress.logs;
-            if (progress.evidences !== undefined && JSON.stringify(task.evidences) !== JSON.stringify(progress.evidences)) updates.evidences = progress.evidences;
-            if (progress.isArchived !== undefined && task.isArchived !== progress.isArchived) updates.isArchived = progress.isArchived;
-            if (progress.isDeleted !== undefined && task.isDeleted !== progress.isDeleted) updates.isDeleted = progress.isDeleted;
-            if (progress.deletedAt !== undefined && task.deletedAt !== progress.deletedAt) updates.deletedAt = progress.deletedAt;
-
-            if (Object.keys(updates).length > 0) {
-                console.log(`%c[Sync Service] Updating local-only task '${task.id}' from server progress...`, 'color: orange;', updates);
-                await db.tasks.update(task.id, updates);
-            }
         }
     }
 
-    if (errors.length > 0) {
-        throw new Error(errors.join('\n'));
-    }
-    console.log('%c[Sync Service] Full sync complete.', 'color: blue; font-weight: bold;');
+    if (errors.length > 0) throw new Error(errors.join('\n'));
+    console.log('%c[Sync Service] Manual sync complete.', 'color: blue; font-weight: bold;');
 }
 
-async function syncUserTasks(serverProgress: { [taskId: string]: Partial<Task> }) {
-    console.log('%c[Sync Service] Starting User Tasks server sync...', 'color: blue;');
+/**
+ * Fetches tasks from /api/tasks (which scans Data/Tasks folder)
+ */
+async function syncFileTasks(serverProgress: { [taskId: string]: Partial<Task> }, activeFileTaskIds: Set<string>) {
+    const response = await fetch(`${TASKS_API}?t=${Date.now()}`); // Cache-busting
+    if (!response.ok) throw new Error(`Failed to fetch tasks from server: ${response.statusText}`);
 
-    let userTasks: Task[] = [];
-    try {
-        const response = await fetch(USER_TASKS_API);
-        if (!response.ok) {
-            throw new Error(`Failed to connect to User Tasks server: ${response.statusText}`);
-        }
-        userTasks = await response.json();
-    } catch (error) {
-        console.warn('[Sync Service] Could not fetch from User Tasks server.');
-        return;
-    }
-
-    console.log(`%c[Sync Service] Found ${userTasks.length} user tasks from server.`, 'color: blue;');
-
+    const fileTasks: any[] = await response.json();
     const existingTasks = await db.tasks.toArray();
     const existingTasksMap = new Map(existingTasks.map(t => [t.id, t]));
 
-    for (const task of userTasks) {
-        if (!task.id) continue;
-        // User tasks from server are the source of truth for their own content
-        await smartUpdate(task.id, task, existingTasksMap, serverProgress);
-    }
-}
-
-export async function saveUserTask(task: Task) {
-    console.log('%c[Sync Service] Saving new user task to server...', 'color: purple; font-weight: bold;');
-    try {
-        const response = await fetch(USER_TASKS_API, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(task),
-        });
-
-        if (!response.ok) {
-            throw new Error(`Failed to save user task: ${response.statusText}`);
-        }
-        console.log('%c[Sync Service] User task saved successfully.', 'color: purple; font-weight: bold;');
-    } catch (error) {
-        console.error('%c[Sync Service] Error saving user task:', 'color: red; font-weight: bold;', error);
-        throw error;
-    }
-}
-
-async function syncMarkdownTasks(serverProgress: { [taskId: string]: Partial<Task> }, activeFileTaskIds: Set<string>) {
-    console.log('%c[Sync Service] Starting Markdown/YAML sync...', 'color: blue;');
-
-    // 1. Fetch the list of task files
-    const response = await fetch(`/api/list-tasks?t=${Date.now()}`);
-    if (!response.ok) {
-        // If 404, maybe the plugin isn't running or folder is empty?
-        if (response.status === 404) {
-            console.warn('[Sync Service] /api/list-tasks endpoint not found. Skipping Markdown sync.');
-            return;
-        }
-        throw new Error(`Failed to fetch task list: ${response.statusText}`);
-    }
-    const taskFiles: string[] = await response.json();
-    console.log(`%c[Sync Service] Found ${taskFiles.length} Markdown/YAML files.`, 'color: blue;');
-
-    // 2. Get all existing tasks from the database and put them in a Map for quick lookup
-    const existingTasks = await db.tasks.toArray();
-    const existingTasksMap = new Map(existingTasks.map(t => [t.id, t]));
-
-    // 3. Process each file
-    for (const filename of taskFiles) {
-        const fileResponse = await fetch(`/library/tasks/${filename}?v=${Date.now()}`);
-        if (!fileResponse.ok) {
-            console.warn(`[Sync Service] Failed to fetch task file: ${filename}`);
-            continue;
-        }
-        const fileContent = await fileResponse.text();
-
-        let fileTaskData: any = {};
-        let taskId = '';
-
-        // 4. Parse based on file extension
-        if (filename.toLowerCase().endsWith('.yaml') || filename.toLowerCase().endsWith('.yml')) {
-            try {
-                const parsedYaml = load(fileContent) as any;
-                taskId = parsedYaml.id;
-                fileTaskData = {
-                    title: parsedYaml.title || 'Untitled Task',
-                    date: parsedYaml.date ? new Date(parsedYaml.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-                    subject: parsedYaml.subject as Subject || Subject.GENERAL,
-                    description: parsedYaml.description || '',
-                    priority: parsedYaml.priority as Priority || 'Medium',
-                    acceptanceCriteria: parsedYaml.acceptanceCriteria || [],
-                    sourceFile: filename
-                };
-            } catch (e) {
-                console.error(`[Sync Service] Failed to parse YAML file: ${filename}`, e);
-                continue;
-            }
-        } else if (filename.toLowerCase().endsWith('.md')) {
-            const { data, content } = parseFrontMatter(fileContent);
-            taskId = data.id;
-            fileTaskData = {
-                title: data.title || 'Untitled Task',
-                date: data.date ? new Date(data.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-                subject: data.subject as Subject || Subject.GENERAL,
-                description: content.trim() || '',
-                priority: data.priority as Priority || 'Medium',
-                sourceFile: filename
-            };
-        } else {
-            continue;
-        }
-
-        if (!taskId || typeof taskId !== 'string') {
-            console.warn(`[Sync Service] Task file ${filename} is missing a valid 'id'. Skipping.`);
-            continue;
-        }
-
-        await smartUpdate(taskId, fileTaskData, existingTasksMap, serverProgress);
-        activeFileTaskIds.add(taskId);
-    }
-}
-
-async function syncExcelTasks(serverProgress: { [taskId: string]: Partial<Task> }, activeFileTaskIds: Set<string>) {
-    console.log('%c[Sync Service] Starting Excel server sync...', 'color: blue;');
-
-    // 1. Fetch tasks from the server
-    let excelTasks: any[] = [];
-    try {
-        const response = await fetch(EXCEL_TASKS_API);
-        if (!response.ok) {
-            throw new Error(`Failed to connect to Excel server: ${response.statusText}`);
-        }
-        excelTasks = await response.json();
-    } catch (error) {
-        console.warn('[Sync Service] Could not fetch from Excel server. Is it running on port 3001?');
-        // We don't throw here to allow partial sync (e.g. only Markdown)
-        return;
-    }
-
-    console.log(`%c[Sync Service] Found ${excelTasks.length} tasks from Excel server.`, 'color: blue;');
-
-    // 2. Get all existing tasks
-    const existingTasks = await db.tasks.toArray();
-    const existingTasksMap = new Map(existingTasks.map(t => [t.id, t]));
-
-    // 3. Process each task
-    for (const task of excelTasks) {
+    for (const task of fileTasks) {
         if (!task.id) continue;
 
-        // Prepare the data from the file (server)
-        // We carefully select fields that should be controlled by the file
+        // Prepare standardized data from file
         const fileTaskData = {
             title: task.title,
-            date: task.date,
+            date: task.date || new Date().toISOString().split('T')[0], // Default to Today
             subject: task.subject,
-            priority: task.priority,
-            description: task.description,
-            acceptanceCriteria: task.acceptanceCriteria,
+            description: task.description || '',
+            acceptanceCriteria: task.acceptanceCriteria || [],
             sourceFile: task.sourceFile,
-            // We do NOT include status, logs, evidences here
+            // These might be in the file, but we'll use them as defaults for NEW tasks only
+            priority: task.priority || 'Medium',
+            status: task.status || TaskStatus.TODO
         };
 
         await smartUpdate(task.id, fileTaskData, existingTasksMap, serverProgress);
@@ -251,6 +116,9 @@ async function syncExcelTasks(serverProgress: { [taskId: string]: Partial<Task> 
     }
 }
 
+/**
+ * Handles the logic of what to update based on source of truth rules.
+ */
 async function smartUpdate(
     taskId: string,
     fileTaskData: any,
@@ -260,133 +128,116 @@ async function smartUpdate(
     const existingTask = existingTasksMap.get(taskId);
     const progressFromServer = serverProgress[taskId] || {};
 
-    // Helper: Normalize strings (trim, handle nulls) - strict case for normal fields
-    const stringsDiffer = (a: string | undefined, b: string | undefined) => {
-        return (a || '').trim() !== (b || '').trim();
-    };
-
-    // Helper: Case-insensitive Comparison for Enums (Subject, Priority)
-    const enumsDiffer = (a: string | undefined, b: string | undefined) => {
-        return (a || '').trim().toLowerCase() !== (b || '').trim().toLowerCase();
-    };
-
-    // Helper: Deep Comparison that ignores key order
-    const deepDiffer = (a: any, b: any) => {
-        return JSON.stringify(a) !== JSON.stringify(b);
-        // Note: Ideally use a real deepEqual, but for now we trust identical structure from server/file
-        // We will improve AC comparison below specifically.
-    };
-
     if (existingTask) {
         const updates: Partial<Task> = {};
 
-        // 1. Core Fields (File Overwrites DB if different)
-        if (stringsDiffer(existingTask.title, fileTaskData.title)) updates.title = fileTaskData.title;
-        if (stringsDiffer(existingTask.date, fileTaskData.date)) updates.date = fileTaskData.date;
-        if (stringsDiffer(existingTask.description, fileTaskData.description)) updates.description = fileTaskData.description;
-        if (stringsDiffer(existingTask.sourceFile, fileTaskData.sourceFile)) updates.sourceFile = fileTaskData.sourceFile;
+        // Helper: Strict string comparison
+        const strDiff = (a: any, b: any) => (a || '').toString().trim() !== (b || '').toString().trim();
 
-        // 2. Subject (Only update if truly different)
-        // Skip if exactly the same
-        if (existingTask.subject !== fileTaskData.subject) {
-            // They differ. Check if it's ONLY a case difference
-            const caseInsensitiveMatch = (existingTask.subject || '').trim().toLowerCase() ===
-                (fileTaskData.subject || '').trim().toLowerCase();
+        // CATEGORY 2: Content (File is Master)
+        if (strDiff(existingTask.title, fileTaskData.title)) updates.title = fileTaskData.title;
+        if (strDiff(existingTask.subject, fileTaskData.subject)) updates.subject = fileTaskData.subject;
+        if (strDiff(existingTask.date, fileTaskData.date)) updates.date = fileTaskData.date;
+        if (strDiff(existingTask.description, fileTaskData.description)) updates.description = fileTaskData.description;
+        if (strDiff(existingTask.sourceFile, fileTaskData.sourceFile)) updates.sourceFile = fileTaskData.sourceFile;
 
-            if (!caseInsensitiveMatch) {
-                // Truly different values - file wins
-                updates.subject = fileTaskData.subject;
-            }
-            // If caseInsensitiveMatch is true, they're the same except for case - don't update
-        }
-
-        // 3. Priority (Server Progress > File Data > Existing)
-        if (progressFromServer.priority) {
-            if (existingTask.priority !== progressFromServer.priority) updates.priority = progressFromServer.priority;
-        } else if (fileTaskData.priority && enumsDiffer(existingTask.priority, fileTaskData.priority)) {
-            updates.priority = fileTaskData.priority;
-        }
-
-        // 4. Acceptance Criteria (Complex)
-        // File data might vary (strings vs objects). Normalize to text content for comparison.
-        // DB has { id, text, isCompleted }. File might have strings or partial objects.
-        const dbCriteriaTexts = (existingTask.acceptanceCriteria || []).map(ac => ac.text.trim()).sort();
-        const fileCriteriaTexts = (fileTaskData.acceptanceCriteria || []).map((ac: any) =>
-            (typeof ac === 'string' ? ac : ac.text || '').trim()
-        ).sort();
-
-        if (JSON.stringify(dbCriteriaTexts) !== JSON.stringify(fileCriteriaTexts)) {
-            // Content changed! We must update.
-            // BUT we should try to preserve IDs/completion status of matching items if possible.
-            // For now, simpler approach: If changed, overwrite from file (resetting completion).
-            // A smarter merge is out of scope for "fixing loop", we just ensuring stability.
-            // If file has raw strings, convert to objects.
-            const newCriteria = (fileTaskData.acceptanceCriteria || []).map((ac: any) => {
+        // Acceptance Criteria (File is Master)
+        const dbAC = JSON.stringify((existingTask.acceptanceCriteria || []).map(ac => ac.text.trim()).sort());
+        const fileAC = JSON.stringify((fileTaskData.acceptanceCriteria || []).map((ac: any) => (typeof ac === 'string' ? ac : ac.text || '').trim()).sort());
+        if (dbAC !== fileAC) {
+            updates.acceptanceCriteria = (fileTaskData.acceptanceCriteria || []).map((ac: any) => {
                 if (typeof ac === 'string') return { id: Math.random().toString(36).substr(2, 9), text: ac, isCompleted: false };
-                return {
-                    id: ac.id || Math.random().toString(36).substr(2, 9),
-                    text: ac.text || '',
-                    isCompleted: !!ac.isCompleted
-                };
+                return { id: ac.id || Math.random().toString(36).substr(2, 9), text: ac.text || '', isCompleted: !!ac.isCompleted };
             });
-            updates.acceptanceCriteria = newCriteria;
         }
 
-        // 5. Server Progress Fields (Status, Logs, Evidences, Flags)
-        if (progressFromServer.status !== undefined && existingTask.status !== progressFromServer.status) {
-            updates.status = progressFromServer.status;
-        }
-        if (progressFromServer.logs !== undefined && deepDiffer(existingTask.logs, progressFromServer.logs)) {
-            updates.logs = progressFromServer.logs;
-        }
-        if (progressFromServer.evidences !== undefined && deepDiffer(existingTask.evidences, progressFromServer.evidences)) {
-            updates.evidences = progressFromServer.evidences;
-        }
-        if (progressFromServer.isArchived !== undefined && existingTask.isArchived !== progressFromServer.isArchived) {
-            updates.isArchived = progressFromServer.isArchived;
-        }
-        if (progressFromServer.isDeleted !== undefined && existingTask.isDeleted !== progressFromServer.isDeleted) {
-            updates.isDeleted = progressFromServer.isDeleted;
-        }
-        // deletedAt is part of isDeleted state, should be managed by the same source (server progress)
-        if (progressFromServer.deletedAt !== undefined && existingTask.deletedAt !== progressFromServer.deletedAt) {
-            updates.deletedAt = progressFromServer.deletedAt;
-        }
+        // CATEGORY 1: Status & Progress (App/Server is Master)
+        // We only pull status/priority from serverProgress if it exists. 
+        // We EXPLICITLY do NOT pull it from fileTaskData for existing tasks.
+        const progUpdates = getProgressUpdates(existingTask, progressFromServer);
+        Object.assign(updates, progUpdates);
 
         if (Object.keys(updates).length > 0) {
-            console.log(`%c[Sync Service] Updating '${taskId}' (${fileTaskData.title})...`, 'color: green;', updates);
+            console.log(`[Sync] Updating task ${taskId}...`, updates);
             await db.tasks.update(taskId, updates);
         }
     } else {
-        // New Task: Combine file data with server progress
-        console.log(`%c[Sync Service] Adding new task '${taskId}' (${fileTaskData.title})...`, 'color: green;');
+        // NEW TASK: Initialize with File Data + Server Progress (if any)
+        console.log(`[Sync] Adding NEW task ${taskId}`);
         const newTask: Task = {
             id: taskId,
             userId: 'Schamala',
-            // Default status, logs, evidences, archived, deleted flags
-            // These will be overridden by progressFromServer if present
-            status: TaskStatus.TODO,
+            status: fileTaskData.status || TaskStatus.TODO,
+            priority: fileTaskData.priority || 'Medium',
             acceptanceCriteria: [],
             logs: [],
             evidences: [],
             isArchived: false,
             isDeleted: false,
-            ...
-            fileTaskData,
-            ...progressFromServer, // Overrides defaults and fileTaskData for progress fields
+            ...fileTaskData,
+            ...progressFromServer, // Overrides with user progress if it somehow existed on server
         };
         await db.tasks.add(newTask);
     }
 }
 
-export async function saveTaskProgress(allTasks: Task[]) {
-    console.log('%c[Sync Service] Saving task progress to server...', 'color: purple; font-weight: bold;');
-    const progressToSave: { [taskId: string]: Partial<Task> } = {};
+/**
+ * Helper to identify only progress-related differences
+ */
+function getProgressUpdates(task: Task, progress: Partial<Task>): Partial<Task> {
+    const updates: Partial<Task> = {};
+    if (progress.status !== undefined && task.status !== progress.status) updates.status = progress.status;
+    if (progress.priority !== undefined && task.priority !== progress.priority) updates.priority = progress.priority;
 
+    const deepDiffer = (a: any, b: any) => JSON.stringify(a) !== JSON.stringify(b);
+    if (progress.logs !== undefined && deepDiffer(task.logs, progress.logs)) updates.logs = progress.logs;
+    if (progress.evidences !== undefined && deepDiffer(task.evidences, progress.evidences)) updates.evidences = progress.evidences;
+    if (progress.isArchived !== undefined && task.isArchived !== progress.isArchived) updates.isArchived = progress.isArchived;
+    if (progress.isDeleted !== undefined && task.isDeleted !== progress.isDeleted) updates.isDeleted = progress.isDeleted;
+    if (progress.deletedAt !== undefined && task.deletedAt !== progress.deletedAt) updates.deletedAt = progress.deletedAt;
+
+    return updates;
+}
+
+// Backward compatibility
+export const syncAllTasks = fullLibrarySync;
+
+async function syncUserTasks(serverProgress: { [taskId: string]: Partial<Task> }) {
+    let userTasks: Task[] = [];
+    try {
+        const response = await fetch(USER_TASKS_API);
+        if (response.ok) userTasks = await response.json();
+    } catch (error) { return; }
+
+    const existingTasks = await db.tasks.toArray();
+    const existingTasksMap = new Map(existingTasks.map(t => [t.id, t]));
+
+    for (const task of userTasks) {
+        if (!task.id) continue;
+        await smartUpdate(task.id, task, existingTasksMap, serverProgress);
+    }
+}
+
+export async function saveUserTask(task: Task) {
+    try {
+        const response = await fetch(USER_TASKS_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(task),
+        });
+        if (!response.ok) throw new Error(`Failed to save user task: ${response.statusText}`);
+    } catch (error) {
+        console.error('[Sync Service] Error saving user task:', error);
+        throw error;
+    }
+}
+
+export async function saveTaskProgress(allTasks: Task[]) {
+    const progressToSave: { [taskId: string]: Partial<Task> } = {};
     allTasks.forEach(task => {
         progressToSave[task.id] = {
             status: task.status,
-            priority: task.priority, // Save priority state
+            priority: task.priority,
             logs: task.logs,
             evidences: task.evidences,
             isArchived: task.isArchived,
@@ -398,55 +249,32 @@ export async function saveTaskProgress(allTasks: Task[]) {
     try {
         const response = await fetch(PROGRESS_API, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(progressToSave),
         });
-
-        if (!response.ok) {
-            throw new Error(`Failed to save task progress: ${response.statusText}`);
-        }
-        console.log('%c[Sync Service] Task progress saved successfully.', 'color: purple; font-weight: bold;');
+        if (!response.ok) throw new Error(`Failed to save progress: ${response.statusText}`);
     } catch (error) {
-        console.error('%c[Sync Service] Error saving task progress:', 'color: red; font-weight: bold;', error);
-        throw error; // Re-throw to allow calling components to handle it
+        console.error('[Sync Service] Error saving task progress:', error);
+        throw error;
     }
 }
 
 export async function updateTaskProgress(taskId: string, updates: Partial<Task>) {
-    console.log(`%c[Sync Service] Incrementally updating task '${taskId}'...`, 'color: purple; font-weight: bold;', updates);
-
-    // Filter updates to only include progress-related fields
     const progressUpdates: Partial<Task> = {};
-    if (updates.status !== undefined) progressUpdates.status = updates.status;
-    if (updates.priority !== undefined) progressUpdates.priority = updates.priority;
-    if (updates.logs !== undefined) progressUpdates.logs = updates.logs;
-    if (updates.evidences !== undefined) progressUpdates.evidences = updates.evidences;
-    if (updates.isArchived !== undefined) progressUpdates.isArchived = updates.isArchived;
-    if (updates.isDeleted !== undefined) progressUpdates.isDeleted = updates.isDeleted;
-    if (updates.deletedAt !== undefined) progressUpdates.deletedAt = updates.deletedAt;
+    const keys = ['status', 'priority', 'logs', 'evidences', 'isArchived', 'isDeleted', 'deletedAt'];
+    keys.forEach(k => { if ((updates as any)[k] !== undefined) (progressUpdates as any)[k] = (updates as any)[k]; });
 
-    if (Object.keys(progressUpdates).length === 0) {
-        console.log('[Sync Service] No progress fields to update. Skipping server sync.');
-        return;
-    }
+    if (Object.keys(progressUpdates).length === 0) return;
 
     try {
         const response = await fetch(`${PROGRESS_API}/${encodeURIComponent(taskId)}`, {
             method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(progressUpdates),
         });
-
-        if (!response.ok) {
-            throw new Error(`Failed to update task progress: ${response.statusText}`);
-        }
-        console.log(`%c[Sync Service] Task '${taskId}' updated successfully.`, 'color: purple; font-weight: bold;');
+        if (!response.ok) throw new Error(`Failed to update progress: ${response.statusText}`);
     } catch (error) {
-        console.error(`%c[Sync Service] Error updating task '${taskId}':`, 'color: red; font-weight: bold;', error);
+        console.error(`[Sync Service] Error updating task '${taskId}':`, error);
         throw error;
     }
 }
