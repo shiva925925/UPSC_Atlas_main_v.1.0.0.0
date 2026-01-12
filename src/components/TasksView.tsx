@@ -255,15 +255,18 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
   const hasActiveFilters = filterSubject || filterStatus || filterDate || filterTopic || searchQuery;
 
   return (
-    <div className="flex flex-col h-full animate-fade-in gap-4 p-4 overflow-hidden">
+    <div className="flex flex-col h-full animate-fade-in gap-4 p-4 overflow-y-auto custom-scrollbar">
       {/* Dashboard Section - Subject Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="flex-shrink-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 overflow-x-auto pb-2">
         {subjectStats.map((stat) => (
           <GlassCard
             key={stat.category}
             variant="blur"
-            onClick={() => setFilterSubject(stat.category === filterSubject ? null : stat.category)}
-            className={`p-4 cursor-pointer transition-all hover:scale-[1.02] border-white/10 ${filterSubject === stat.category ? 'ring-2 ring-blue-500 bg-blue-50/10' : 'hover:bg-white/5'}`}
+            onClick={() => {
+              setFilterSubject(stat.category === filterSubject ? null : stat.category);
+              setFilterTopic(null);
+            }}
+            className={`p-4 cursor-pointer transition-all hover:scale-[1.02] border-white/10 min-w-[140px] ${filterSubject === stat.category ? 'ring-2 ring-blue-500 bg-blue-50/10' : 'hover:bg-white/5'}`}
           >
             <div className="flex flex-col gap-2">
               <div className="flex justify-between items-start">
@@ -284,9 +287,9 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
         ))}
       </div>
 
-      <div className="flex h-full gap-4 overflow-hidden">
+      <div className="flex flex-1 gap-4">
         {/* List Area */}
-        <GlassCard variant="blur" className={`flex-1 flex flex-col h-full overflow-hidden border-white/20 ${selectedTask ? 'max-w-[calc(100%-400px)]' : ''}`}>
+        <GlassCard variant="blur" className={`flex-1 flex flex-col border-white/20 ${selectedTask ? 'max-w-[calc(100%-400px)]' : ''}`}>
           <header className="p-6 border-b border-white/10 flex justify-between items-center bg-white/5 z-20">
             <div className="flex items-center gap-4">
               <div>
@@ -414,7 +417,7 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
           </div>
 
           {/* Task List Body */}
-          <div className="flex-1 overflow-y-auto custom-scrollbar">
+          <div className="flex-1">
             {(!tasks || tasks.length === 0) && !filteredTasks.length ? (
               <div className="p-4 space-y-4">
                 {[1, 2, 3].map(i => (
