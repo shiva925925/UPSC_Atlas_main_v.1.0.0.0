@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../constants';
 import { Resource, ResourceType, Subject, SubjectCategory } from '../types';
@@ -17,8 +16,8 @@ interface ResourcesViewProps {
 }
 
 const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
-  const dbResources = useLiveQuery(() => db.resources.toArray()) || [];
-  const [libraryResources, setLibraryResources] = useState<Resource[]>([]);
+  const [allResources, setAllResources] = useState<Resource[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filterSubject, setFilterSubject] = useState<SubjectCategory | 'ALL'>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [isAdding, setIsAdding] = useState(false);
@@ -35,23 +34,45 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const fetchResources = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`/api/resources?t=${Date.now()}`);
+      const data = await res.json();
+      setAllResources(data.resources || []);
+    } catch (err) {
+      console.error("Failed to load resources:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetch(`/api/library?t=${Date.now()}`)
-      .then(res => res.json())
-      .then(data => {
-        const mapped: Resource[] = data.map((item: any) => ({
-          id: item.id,
-          userId: 'Schamala',
-          title: item.title,
-          type: ResourceType.PDF,
-          subject: item.subject as Subject || Subject.UPSC_SYLLABUS,
-          url: item.url, // Use the url field from the plugin
-          description: item.description,
-          path: item.path
-        }));
-        setLibraryResources(mapped);
-      })
-      .catch(err => console.error("Failed to load library:", err));
+    const initAndMigrate = async () => {
+      try {
+        // 1. Check for local IndexedDB resources (Legacy)
+        const localResources = await db.resources.toArray();
+        if (localResources.length > 0) {
+          console.log(`[Sync] Migrating ${localResources.length} local resources to server...`);
+          for (const res of localResources) {
+            await fetch('/api/resources', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(res)
+            });
+          }
+          await db.resources.clear();
+          console.log("[Sync] Migration complete.");
+        }
+      } catch (e) {
+        console.warn("Migration check failed:", e);
+      }
+
+      // 2. Fetch from Master Cache
+      fetchResources();
+    };
+
+    initAndMigrate();
   }, []);
 
   const handleSelectResource = (resource: Resource) => {
@@ -64,7 +85,7 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
 
 
 
-  const filteredUserResources = dbResources.filter(r => {
+  const filteredResources = allResources.filter(r => {
     const subjectCategory = SUBJECT_HIERARCHY[r.subject] || SubjectCategory.GENERAL;
     const matchesSubject = filterSubject === 'ALL' || subjectCategory === filterSubject;
     const matchesSearch = r.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -73,11 +94,11 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
   });
 
   const groupedResources = useMemo(() => {
-    return filteredUserResources.reduce((acc, resource) => {
+    return filteredResources.filter(r => !r.isAuto).reduce((acc, resource) => {
       (acc[resource.subject] = acc[resource.subject] || []).push(resource);
       return acc;
     }, {} as Record<Subject, Resource[]>);
-  }, [filteredUserResources]);
+  }, [filteredResources]);
 
 
   const resetForm = () => {
@@ -121,18 +142,21 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
         subject: newSubject,
         url: resourceUrl,
         date: newDate || new Date().toISOString().split('T')[0],
-        description: newDescription
+        description: newDescription,
+        isAuto: false
       };
 
-      if (editingId) {
-        await db.resources.update(editingId, newResource);
-        alert('✅ Resource updated successfully!');
-      } else {
-        await db.resources.add(newResource);
-        alert('✅ Resource added successfully!');
-      }
+      const res = await fetch('/api/resources', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newResource)
+      });
 
+      if (!res.ok) throw new Error('Failed to save to server');
+
+      alert(`✅ Resource ${editingId ? 'updated' : 'added'} successfully!`);
       resetForm();
+      fetchResources();
     } catch (error) {
       console.error("Failed to add resource:", error);
       alert(`❌ Failed to ${editingId ? 'update' : 'add'} resource. ${error instanceof Error ? error.message : 'Please try again.'}`);
@@ -156,7 +180,13 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this resource?')) {
-      await db.resources.delete(id);
+      try {
+        const res = await fetch(`/api/resources/${id}`, { method: 'DELETE' });
+        if (!res.ok) throw new Error('Delete failed');
+        fetchResources();
+      } catch (e) {
+        alert("Failed to delete resource");
+      }
     }
   };
 
@@ -178,7 +208,10 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
     }
   };
 
-  const allSyllabusResources = libraryResources.filter(r => r.path);
+  const allSyllabusResources = allResources.filter(r => r.isAuto);
+  const userResources = allResources.filter(r => !r.isAuto);
+
+  const filteredUserResources = filteredResources.filter(r => !r.isAuto);
 
   return (
     <div className="p-4 md:p-8 h-full flex flex-col animate-fade-in gap-6 bg-app-bg transition-colors duration-300">

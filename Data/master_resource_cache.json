@@ -1,0 +1,93 @@
+{
+  "resources": [
+    {
+      "id": "lib_auto_1",
+      "userId": "Schamala",
+      "title": "UPSC CSE Mains Syllabus",
+      "type": "PDF",
+      "subject": "Essay",
+      "url": "/library/Essay/UPSC_CSE_Mains_Syllabus.pdf",
+      "path": "Essay/UPSC_CSE_Mains_Syllabus.pdf",
+      "description": "Auto-detected PDF",
+      "isAuto": true
+    },
+    {
+      "id": "lib_auto_2",
+      "userId": "Schamala",
+      "title": "india map with all states  239",
+      "type": "PDF",
+      "subject": "GS1",
+      "url": "/library/GS1/india-map-with-all-states--239.pdf",
+      "path": "GS1/india-map-with-all-states--239.pdf",
+      "description": "Auto-detected PDF",
+      "isAuto": true
+    },
+    {
+      "id": "lib_auto_3",
+      "userId": "Schamala",
+      "title": "October 2025 Monthly Current Affairs Magazine",
+      "type": "PDF",
+      "subject": "GS1",
+      "url": "/library/GS1/New folder/October 2025 Monthly Current Affairs Magazine.pdf",
+      "path": "GS1/New folder/October 2025 Monthly Current Affairs Magazine.pdf",
+      "description": "Auto-detected PDF",
+      "isAuto": true
+    },
+    {
+      "id": "lib_auto_4",
+      "userId": "Schamala",
+      "title": "DallasTek CoC",
+      "type": "PDF",
+      "subject": "GS1",
+      "url": "/library/GS1/New folder (2)/2/ha/DallasTek_CoC.pdf",
+      "path": "GS1/New folder (2)/2/ha/DallasTek_CoC.pdf",
+      "description": "Auto-detected PDF",
+      "isAuto": true
+    },
+    {
+      "id": "lib_auto_5",
+      "userId": "Schamala",
+      "title": "UPSC CSE Mains Syllabus 1",
+      "type": "PDF",
+      "subject": "GS1",
+      "url": "/library/GS1/UPSC_CSE_Mains_Syllabus-1.pdf",
+      "path": "GS1/UPSC_CSE_Mains_Syllabus-1.pdf",
+      "description": "Auto-detected PDF",
+      "isAuto": true
+    },
+    {
+      "id": "lib_auto_6",
+      "userId": "Schamala",
+      "title": "DallasTek CoC 111",
+      "type": "PDF",
+      "subject": "GS3",
+      "url": "/library/GS3/DallasTek_CoC 111.pdf",
+      "path": "GS3/DallasTek_CoC 111.pdf",
+      "description": "Auto-detected PDF",
+      "isAuto": true
+    },
+    {
+      "id": "lib_auto_7",
+      "userId": "Schamala",
+      "title": "Mains PYQs GS IV (2013 2025)",
+      "type": "PDF",
+      "subject": "GS4",
+      "url": "/library/GS4/h1/h4/Mains PYQs GS IV (2013-2025).pdf",
+      "path": "GS4/h1/h4/Mains PYQs GS IV (2013-2025).pdf",
+      "description": "Auto-detected PDF",
+      "isAuto": true
+    },
+    {
+      "id": "zk51yyq0a",
+      "userId": "Schamala",
+      "title": "October 2025 Monthly Current Affairs Magazine",
+      "type": "PDF",
+      "subject": "Current Affairs",
+      "url": "/uploads/file-1768316323198-312098118.pdf",
+      "date": "2026-01-13",
+      "description": "",
+      "isAuto": false
+    }
+  ],
+  "timestamp": 1768322852256
+}

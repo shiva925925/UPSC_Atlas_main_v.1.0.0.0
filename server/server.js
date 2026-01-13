@@ -4,7 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { load } from 'js-yaml'; // Import js-yaml for YAML parsing
+import { load, dump } from 'js-yaml'; // Import js-yaml for YAML parsing/dumping
 import multer from 'multer'; // Import multer for file uploads
 
 const __filename = fileURLToPath(import.meta.url);
@@ -23,7 +23,11 @@ const PROGRESS_FILE = path.join(__dirname, '..', 'Data', 'task_progress.json');
 const USER_TASKS_FILE = path.join(__dirname, '..', 'Data', 'user_tasks.json');
 const MASTER_CACHE_FILE = path.join(__dirname, '..', 'Data', 'master_task_cache.json');
 const DELETED_TASKS_FILE = path.join(__dirname, '..', 'Data', 'deleted_tasks.json'); // NEW: Tombstone Registry
+const USER_RESOURCES_YAML = path.join(__dirname, '..', 'Data', 'user_resources.yaml');
+const DELETED_RESOURCES_FILE = path.join(__dirname, '..', 'Data', 'deleted_resources.json');
+const MASTER_RESOURCE_CACHE_FILE = path.join(__dirname, '..', 'Data', 'master_resource_cache.json');
 const UPLOADS_FOLDER = path.join(__dirname, '..', 'public', 'uploads');
+const LIBRARY_FOLDER = path.join(__dirname, '..', 'public', 'library');
 
 // Ensure directories and files exist
 if (!fs.existsSync(TASKS_FOLDER)) fs.mkdirSync(TASKS_FOLDER, { recursive: true });
@@ -36,6 +40,8 @@ async function initFile(filePath, defaultContent) {
     }
 }
 initFile(DELETED_TASKS_FILE, []);
+initFile(DELETED_RESOURCES_FILE, []);
+if (!fs.existsSync(USER_RESOURCES_YAML)) fs.writeFileSync(USER_RESOURCES_YAML, '', 'utf8');
 
 // --- Task Cacher Logic ---
 let isRebuilding = false;
@@ -148,6 +154,100 @@ async function rebuildTaskCache() {
     }
 }
 
+// --- Resource Cacher Logic ---
+let isResourceRebuilding = false;
+
+async function rebuildResourceCache() {
+    if (isResourceRebuilding) return;
+    isResourceRebuilding = true;
+    console.log('[Server] Rebuilding master resource cache...');
+
+    try {
+        const allResources = [];
+        let deletedIds = new Set();
+
+        // 1. Load Tombstones
+        if (fs.existsSync(DELETED_RESOURCES_FILE)) {
+            const d = await fs.promises.readFile(DELETED_RESOURCES_FILE, 'utf8');
+            deletedIds = new Set(JSON.parse(d));
+        }
+
+        // 2. Scan Library Folder (PDFs)
+        if (fs.existsSync(LIBRARY_FOLDER)) {
+            const getFiles = async (dir) => {
+                const dirents = await fs.promises.readdir(dir, { withFileTypes: true });
+                const files = await Promise.all(dirents.map((dirent) => {
+                    const resPath = path.join(dir, dirent.name);
+                    return dirent.isDirectory() ? getFiles(resPath) : resPath;
+                }));
+                return Array.prototype.concat(...files);
+            };
+
+            const files = await getFiles(LIBRARY_FOLDER);
+            const pdfFiles = files.filter(f => f.toLowerCase().endsWith('.pdf'));
+
+            pdfFiles.forEach((absPath, index) => {
+                const relPath = path.relative(LIBRARY_FOLDER, absPath);
+                const filename = path.basename(relPath);
+                const id = `lib_auto_${index + 1}`;
+
+                if (deletedIds.has(id)) return;
+
+                const pathParts = relPath.split(path.sep);
+                let subject = 'UPSC Syllabus';
+                if (pathParts.length > 1) {
+                    const top = pathParts[0].toLowerCase();
+                    if (top.includes('ethics')) subject = 'Ethics';
+                    else if (top.includes('history')) subject = 'History';
+                    else if (top.includes('polity')) subject = 'Polity';
+                    else if (top.includes('economics')) subject = 'Economics';
+                    else if (top.includes('geography')) subject = 'Geography';
+                    else if (top.includes('csat')) subject = 'CSAT';
+                    else if (top.includes('current')) subject = 'Current Affairs';
+                    else subject = pathParts[0];
+                }
+
+                allResources.push({
+                    id,
+                    userId: 'Schamala',
+                    title: filename.replace('.pdf', '').replace(/_/g, ' ').replace(/-/g, ' ').trim(),
+                    type: 'PDF',
+                    subject,
+                    url: `/library/${relPath.split(path.sep).join('/')}`,
+                    path: relPath.split(path.sep).join('/'),
+                    description: `Auto-detected PDF`,
+                    isAuto: true
+                });
+            });
+        }
+
+        // 3. Load User Resources (YAML)
+        if (fs.existsSync(USER_RESOURCES_YAML)) {
+            const content = await fs.promises.readFile(USER_RESOURCES_YAML, 'utf8');
+            const data = load(content);
+            if (Array.isArray(data)) {
+                data.forEach(res => {
+                    if (res.id && !deletedIds.has(res.id)) {
+                        allResources.push({ ...res, isAuto: false });
+                    }
+                });
+            }
+        }
+
+        const payload = {
+            resources: allResources,
+            timestamp: Date.now()
+        };
+
+        await fs.promises.writeFile(MASTER_RESOURCE_CACHE_FILE, JSON.stringify(payload, null, 2), 'utf8');
+        console.log(`[Server] Resource cache rebuilt (${allResources.length} items).`);
+    } catch (error) {
+        console.error('Failed to rebuild resource cache:', error);
+    } finally {
+        isResourceRebuilding = false;
+    }
+}
+
 // NOTE: Auto-watchers REMOVED as per 'Manual Rescan' requirement.
 
 // App Endpoints
@@ -175,7 +275,7 @@ app.get('/api/tasks', async (req, res) => {
 app.post('/api/rescan', async (req, res) => {
     console.log('[API] Manual Rescan Requested');
     try {
-        await rebuildTaskCache();
+        await Promise.all([rebuildTaskCache(), rebuildResourceCache()]);
         res.json({ message: 'Rescan complete' });
     } catch (e) {
         res.status(500).json({ error: e.message });
@@ -318,25 +418,68 @@ app.get('/api/user-tasks', async (req, res) => {
     }
 });
 
-// POST endpoint for creating a new user task
-app.post('/api/user-tasks', async (req, res) => {
-    try {
-        const newTask = req.body;
-        let existingTasks = [];
+// --- Resource Endpoints ---
 
-        if (fs.existsSync(USER_TASKS_FILE)) {
-            const fileContent = await fs.promises.readFile(USER_TASKS_FILE, 'utf8');
-            if (fileContent.trim()) {
-                existingTasks = JSON.parse(fileContent);
-            }
+app.get('/api/resources', async (req, res) => {
+    try {
+        if (!fs.existsSync(MASTER_RESOURCE_CACHE_FILE)) {
+            await rebuildResourceCache();
         }
-        existingTasks.push(newTask);
-        await fs.promises.writeFile(USER_TASKS_FILE, JSON.stringify(existingTasks, null, 2), 'utf8');
-        await rebuildTaskCache();
-        res.status(200).json({ message: 'User task created successfully' });
+        const data = await fs.promises.readFile(MASTER_RESOURCE_CACHE_FILE, 'utf8');
+        res.json(JSON.parse(data));
     } catch (error) {
-        console.error('Error writing user tasks file:', error);
-        res.status(500).json({ message: 'Failed to create user task', error: error.message });
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.post('/api/resources', async (req, res) => {
+    try {
+        const newRes = req.body;
+        let resources = [];
+        if (fs.existsSync(USER_RESOURCES_YAML)) {
+            const content = await fs.promises.readFile(USER_RESOURCES_YAML, 'utf8');
+            resources = load(content) || [];
+        }
+
+        const idx = resources.findIndex(r => r.id === newRes.id);
+        if (idx > -1) resources[idx] = newRes;
+        else resources.push(newRes);
+
+        await fs.promises.writeFile(USER_RESOURCES_YAML, dump(resources), 'utf8');
+        await rebuildResourceCache();
+        res.json({ message: 'Resource saved' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/api/resources/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // 1. Add to Tombstone
+        let tombstones = [];
+        if (fs.existsSync(DELETED_RESOURCES_FILE)) {
+            const d = await fs.promises.readFile(DELETED_RESOURCES_FILE, 'utf8');
+            tombstones = JSON.parse(d);
+        }
+        if (!tombstones.includes(id)) {
+            tombstones.push(id);
+            await fs.promises.writeFile(DELETED_RESOURCES_FILE, JSON.stringify(tombstones, null, 2));
+        }
+
+        // 2. Remove from YAML if present
+        if (fs.existsSync(USER_RESOURCES_YAML)) {
+            const content = await fs.promises.readFile(USER_RESOURCES_YAML, 'utf8');
+            let resources = load(content) || [];
+            resources = resources.filter(r => r.id !== id);
+            await fs.promises.writeFile(USER_RESOURCES_YAML, dump(resources), 'utf8');
+        }
+
+        await rebuildResourceCache();
+        res.json({ message: 'Resource deleted' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
 

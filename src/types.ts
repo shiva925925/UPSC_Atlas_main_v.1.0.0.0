@@ -157,6 +157,7 @@ export interface Resource {
   description?: string;
   content?: Blob;
   path?: string;
+  isAuto?: boolean;
 }
 
 export interface CustomLink {
