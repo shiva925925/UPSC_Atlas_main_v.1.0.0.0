@@ -124,32 +124,6 @@
     "isDeleted": false
   },
   {
-    "id": "5qr8fphvi",
-    "userId": "Schamala",
-    "title": "xvbgcn",
-    "subject": "Governance",
-    "priority": "Medium",
-    "date": "2026-01-04",
-    "status": "TODO",
-    "description": "bcnv",
-    "acceptanceCriteria": [
-      {
-        "id": "1ln1uvw3f",
-        "text": "cb nv",
-        "isCompleted": false
-      },
-      {
-        "id": "6x9y93v0e",
-        "text": "nchvm",
-        "isCompleted": false
-      }
-    ],
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
-  },
-  {
     "id": "k9pn9s3yf",
     "userId": "Schamala",
     "title": "sdfghf",
@@ -275,15 +249,26 @@
     "isDeleted": false
   },
   {
-    "id": "013sfhmw6",
+    "id": "zezf7fr09",
     "userId": "Schamala",
-    "title": "sdfg",
-    "subject": "General",
-    "priority": "Low",
-    "date": "2026-01-12",
+    "title": "hubinj",
+    "subject": "Post-Independence India",
+    "priority": "High",
+    "date": "2026-01-15",
     "status": "TODO",
-    "description": "",
-    "acceptanceCriteria": [],
+    "description": "ibhugvy",
+    "acceptanceCriteria": [
+      {
+        "id": "n14pkvms9",
+        "text": "jhbgv",
+        "isCompleted": false
+      },
+      {
+        "id": "z3v6vx6vq",
+        "text": "kjnhbg",
+        "isCompleted": false
+      }
+    ],
     "logs": [],
     "evidences": [],
     "isArchived": false,

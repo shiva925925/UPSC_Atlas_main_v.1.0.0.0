@@ -4,6 +4,7 @@ import { Task, TaskStatus, Subject, Priority } from '../types';
 const TASKS_API = '/api/tasks'; // Reads Data/Tasks (Excel/YAML)
 const PROGRESS_API = '/api/progress';
 const USER_TASKS_API = '/api/user-tasks';
+const RESCAN_API = '/api/rescan'; // New Endpoint
 
 /**
  * AUTOMATIC SYNC: Pulls only progress data from the server.
@@ -35,6 +36,31 @@ export async function pullProgressOnly() {
     } catch (e) {
         console.warn('[Sync Service] Automatic progress sync skipped or failed:', e);
     }
+}
+
+/**
+ * MANUAL RESCAN: Triggers server to rebuild cache from YAMLs
+ */
+export async function triggerManualRescan() {
+    console.log('[Sync Service] Triggering Manual Rescan...');
+    const response = await fetch(RESCAN_API, { method: 'POST' });
+    if (!response.ok) throw new Error('Rescan failed');
+    // After rescan, do a full sync to get new data
+    await fullLibrarySync();
+}
+
+/**
+ * PERMANENT DELETE: Tells server to Tombstone the task
+ */
+export async function deleteTaskPermanently(taskId: string) {
+    console.log(`[Sync Service] Deleting task ${taskId} permanently...`);
+
+    // 1. Optimistic UI Update (Local Delete)
+    await db.tasks.delete(taskId);
+
+    // 2. Server Tombstone
+    const response = await fetch(`${TASKS_API}/${taskId}`, { method: 'DELETE' });
+    if (!response.ok) throw new Error('Failed to delete on server');
 }
 
 /**

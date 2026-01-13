@@ -5,7 +5,8 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": true,
+    "deletedAt": "2026-01-13T04:54:31.657Z"
   },
   "9fthd3c3r": {
     "status": "TODO",
@@ -14,7 +15,7 @@
     "evidences": [],
     "isArchived": false,
     "isDeleted": true,
-    "deletedAt": "2025-12-18T14:51:00.760Z"
+    "deletedAt": "2026-01-13T04:54:36.498Z"
   },
   "9xh3tg9on": {
     "status": "IN_PROGRESS",
@@ -23,10 +24,10 @@
     "evidences": [],
     "isArchived": false,
     "isDeleted": true,
-    "deletedAt": "2025-12-18T14:51:03.943Z"
+    "deletedAt": "2026-01-13T04:53:46.303Z"
   },
   "AC001": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -34,7 +35,7 @@
     "isDeleted": false
   },
   "AC002": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -50,7 +51,7 @@
     "isDeleted": false
   },
   "AC004": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -3723,16 +3724,25 @@
     "isArchived": false,
     "isDeleted": false
   },
-  "5qr8fphvi": {
-    "status": "IN_PROGRESS",
-    "isDeleted": true,
-    "deletedAt": "2026-01-04T12:16:00.746Z"
-  },
   "5y9vzl3ao": {
     "isDeleted": true,
-    "deletedAt": "2026-01-04T12:16:04.391Z"
+    "deletedAt": "2026-01-13T04:54:26.567Z"
   },
   "mho0nlof8": {
     "status": "IN_PROGRESS"
+  },
+  "zezf7fr09": {
+    "status": "IN_PROGRESS",
+    "logs": [
+      {
+        "id": "klmnkmr06",
+        "date": "2026-01-13",
+        "durationMinutes": 60,
+        "subject": "Post-Independence India",
+        "description": "jnifvhbsd"
+      }
+    ],
+    "isDeleted": true,
+    "deletedAt": "2026-01-13T04:37:57.153Z"
   }
 }

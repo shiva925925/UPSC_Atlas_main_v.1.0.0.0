@@ -22,17 +22,20 @@ const TASKS_FOLDER = path.join(__dirname, '..', 'Data', 'Tasks');
 const PROGRESS_FILE = path.join(__dirname, '..', 'Data', 'task_progress.json');
 const USER_TASKS_FILE = path.join(__dirname, '..', 'Data', 'user_tasks.json');
 const MASTER_CACHE_FILE = path.join(__dirname, '..', 'Data', 'master_task_cache.json');
+const DELETED_TASKS_FILE = path.join(__dirname, '..', 'Data', 'deleted_tasks.json'); // NEW: Tombstone Registry
 const UPLOADS_FOLDER = path.join(__dirname, '..', 'public', 'uploads');
 
-// Ensure directories exist
-if (!fs.existsSync(TASKS_FOLDER)) {
-    fs.mkdirSync(TASKS_FOLDER, { recursive: true });
-    console.log(`Created tasks folder: ${TASKS_FOLDER}`);
+// Ensure directories and files exist
+if (!fs.existsSync(TASKS_FOLDER)) fs.mkdirSync(TASKS_FOLDER, { recursive: true });
+if (!fs.existsSync(UPLOADS_FOLDER)) fs.mkdirSync(UPLOADS_FOLDER, { recursive: true });
+
+// Helper to init files
+async function initFile(filePath, defaultContent) {
+    if (!fs.existsSync(filePath)) {
+        await fs.promises.writeFile(filePath, JSON.stringify(defaultContent, null, 2), 'utf8');
+    }
 }
-if (!fs.existsSync(UPLOADS_FOLDER)) {
-    fs.mkdirSync(UPLOADS_FOLDER, { recursive: true });
-    console.log(`Created uploads folder: ${UPLOADS_FOLDER}`);
-}
+initFile(DELETED_TASKS_FILE, []);
 
 // --- Task Cacher Logic ---
 let isRebuilding = false;
@@ -46,20 +49,32 @@ async function rebuildTaskCache() {
         const allTasks = [];
         const fullTaskIds = [];
 
-        // 1. Load Progress and User Tasks for merging
+        // 1. Load Tombstones (The Blacklist)
+        let deletedTaskIds = new Set();
+        try {
+            if (fs.existsSync(DELETED_TASKS_FILE)) {
+                const deletedData = await fs.promises.readFile(DELETED_TASKS_FILE, 'utf8');
+                deletedTaskIds = new Set(JSON.parse(deletedData));
+            }
+        } catch (e) {
+            console.warn('Could not read deleted_tasks.json', e);
+        }
+
+        // 2. Load Progress
         let progressData = {};
         if (fs.existsSync(PROGRESS_FILE)) {
             const data = await fs.promises.readFile(PROGRESS_FILE, 'utf8');
             if (data.trim()) progressData = JSON.parse(data);
         }
 
+        // 3. Load User Tasks
         let userTasks = [];
         if (fs.existsSync(USER_TASKS_FILE)) {
             const data = await fs.promises.readFile(USER_TASKS_FILE, 'utf8');
             if (data.trim()) userTasks = JSON.parse(data);
         }
 
-        // 2. Scan YAML Files
+        // 4. Scan YAML Files (Immutable Source)
         const files = fs.readdirSync(TASKS_FOLDER);
         const yamlFiles = files.filter(file => file.endsWith('.yaml') || file.endsWith('.yml'));
 
@@ -79,18 +94,23 @@ async function rebuildTaskCache() {
                 for (const task of tasksInThisFile) {
                     if (!task.id) continue;
 
+                    // --- TOMBSTONE CHECK ---
+                    if (deletedTaskIds.has(task.id)) {
+                        continue; // SKIP RESURRECTION
+                    }
+
                     // Merge with progress
                     const progress = progressData[task.id] || {};
                     const mergedTask = {
                         ...task,
-                        date: task.date || new Date().toISOString().split('T')[0], // Default to Today
+                        date: task.date || new Date().toISOString().split('T')[0],
                         status: progress.status || task.status || 'TODO',
                         priority: progress.priority || task.priority || 'Medium',
                         logs: progress.logs || [],
                         evidences: progress.evidences || [],
                         isArchived: progress.isArchived || false,
-                        isDeleted: progress.isDeleted || false,
-                        deletedAt: progress.deletedAt || null,
+                        isDeleted: false, // Always alive if not in tombstone
+                        deletedAt: null,
                         acceptanceCriteria: task.acceptanceCriteria || []
                     };
 
@@ -102,9 +122,13 @@ async function rebuildTaskCache() {
             }
         }
 
-        // 3. Add User Tasks
+        // 5. Add User Tasks (Mutable Source)
         for (const task of userTasks) {
             if (!task.id) continue;
+            // User tasks are usually deleted directly from user_tasks.json, 
+            // but we check tombstone just in case
+            if (deletedTaskIds.has(task.id)) continue;
+
             allTasks.push(task);
             fullTaskIds.push(task.id);
         }
@@ -124,17 +148,14 @@ async function rebuildTaskCache() {
     }
 }
 
-// Watch for file changes in Data/Tasks
-let watchTimeout = null;
-fs.watch(TASKS_FOLDER, (eventType, filename) => {
-    if (filename && (filename.endsWith('.yaml') || filename.endsWith('.yml'))) {
-        console.log(`[Watcher] Detect change in ${filename}. Scheduling rebuild...`);
-        if (watchTimeout) clearTimeout(watchTimeout);
-        watchTimeout = setTimeout(rebuildTaskCache, 1000); // 1s debounce
-    }
-});
+// NOTE: Auto-watchers REMOVED as per 'Manual Rescan' requirement.
 
 // App Endpoints
+
+/**
+ * GET Master Cache
+ * Returns the pre-computed JSON file. Fast.
+ */
 app.get('/api/tasks', async (req, res) => {
     try {
         if (!fs.existsSync(MASTER_CACHE_FILE)) {
@@ -146,6 +167,77 @@ app.get('/api/tasks', async (req, res) => {
         res.status(500).json({ message: 'Failed to serve master cache', error: error.message });
     }
 });
+
+/**
+ * MANUAL RESCAN Trigger
+ * User clicks "Sync" -> Calls this -> Rebuidls from YAMLs
+ */
+app.post('/api/rescan', async (req, res) => {
+    console.log('[API] Manual Rescan Requested');
+    try {
+        await rebuildTaskCache();
+        res.json({ message: 'Rescan complete' });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
+/**
+ * DELETE Task (Permanent / Tombstone)
+ * The Critical Fix for the "Resurrection" bug.
+ */
+app.delete('/api/tasks/:taskId', async (req, res) => {
+    const { taskId } = req.params;
+    console.log(`[API] Deleting task: ${taskId}`);
+
+    try {
+        // 1. Add to Tombstone (Deleted Tasks List)
+        let deletedIds = [];
+        try {
+            if (fs.existsSync(DELETED_TASKS_FILE)) {
+                const d = await fs.promises.readFile(DELETED_TASKS_FILE, 'utf8');
+                deletedIds = JSON.parse(d);
+            }
+        } catch (e) { }
+
+        if (!deletedIds.includes(taskId)) {
+            deletedIds.push(taskId);
+            await fs.promises.writeFile(DELETED_TASKS_FILE, JSON.stringify(deletedIds, null, 2));
+        }
+
+        // 2. Remove from User Tasks (if applicable)
+        let userTasks = [];
+        if (fs.existsSync(USER_TASKS_FILE)) {
+            const d = await fs.promises.readFile(USER_TASKS_FILE, 'utf8');
+            userTasks = JSON.parse(d);
+            const initialLen = userTasks.length;
+            userTasks = userTasks.filter(t => t.id !== taskId);
+            if (userTasks.length !== initialLen) {
+                await fs.promises.writeFile(USER_TASKS_FILE, JSON.stringify(userTasks, null, 2));
+            }
+        }
+
+        // 3. Remove from Progress (Cleanup)
+        let progress = {};
+        if (fs.existsSync(PROGRESS_FILE)) {
+            const d = await fs.promises.readFile(PROGRESS_FILE, 'utf8');
+            progress = JSON.parse(d);
+            if (progress[taskId]) {
+                delete progress[taskId];
+                await fs.promises.writeFile(PROGRESS_FILE, JSON.stringify(progress, null, 2));
+            }
+        }
+
+        // 4. Force Rebuild Cache immediately
+        await rebuildTaskCache();
+
+        res.json({ message: 'Task deleted and tombstoned' });
+    } catch (error) {
+        console.error('Delete failed:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 // GET endpoint for task progress
 app.get('/api/progress', async (req, res) => {
@@ -177,8 +269,6 @@ app.post('/api/progress', async (req, res) => {
 
 // PATCH endpoint for updating a single task's progress (Incremental Sync)
 app.patch('/api/progress/:taskId', async (req, res) => {
-    console.log(`[DEBUG] PATCH request received for URL: ${req.url}`);
-    console.log(`[DEBUG] Params:`, req.params);
     try {
         const { taskId } = req.params;
         const updates = req.body;
@@ -199,8 +289,7 @@ app.patch('/api/progress/:taskId', async (req, res) => {
 
         await fs.promises.writeFile(PROGRESS_FILE, JSON.stringify(progressData, null, 2), 'utf8');
 
-        // Trigger cache rebuild (async, but we don't necessarily need to wait for it to return 200, 
-        // though for safety we'll await it or let it run in background)
+        // Trigger cache rebuild
         rebuildTaskCache();
 
         res.status(200).json({ message: `Task ${taskId} progress updated successfully` });
@@ -215,14 +304,13 @@ app.get('/api/user-tasks', async (req, res) => {
     try {
         if (fs.existsSync(USER_TASKS_FILE)) {
             const userTasksData = await fs.promises.readFile(USER_TASKS_FILE, 'utf8');
-            // Handle case where file might be empty string
             if (!userTasksData.trim()) {
                 res.json([]);
                 return;
             }
             res.json(JSON.parse(userTasksData));
         } else {
-            res.json([]); // Return empty array if file doesn't exist yet
+            res.json([]);
         }
     } catch (error) {
         console.error('Error reading user tasks file:', error);
@@ -242,11 +330,9 @@ app.post('/api/user-tasks', async (req, res) => {
                 existingTasks = JSON.parse(fileContent);
             }
         }
-
-        // Append new task
         existingTasks.push(newTask);
-
         await fs.promises.writeFile(USER_TASKS_FILE, JSON.stringify(existingTasks, null, 2), 'utf8');
+        await rebuildTaskCache();
         res.status(200).json({ message: 'User task created successfully' });
     } catch (error) {
         console.error('Error writing user tasks file:', error);
@@ -304,13 +390,7 @@ app.get('/api/diary', async (req, res) => {
 // POST Diary Entry
 app.post('/api/diary', async (req, res) => {
     try {
-        const newEntry = req.body; // Expecting single entry or array? Let's handling single entry append usually, but syncing might send all.
-        // For simplicity with the sync service we'll build next, let's assume we append new entries. 
-        // OR better: The UI might send a single entry to add.
-
-        // Actually, for a robust sync, sometimes it is easier to overwrite the whole file or append. 
-        // Let's implement append logic for now to allow adding one by one.
-
+        const newEntry = req.body;
         let entries = [];
         if (fs.existsSync(DIARY_ENTRIES_FILE)) {
             const data = await fs.promises.readFile(DIARY_ENTRIES_FILE, 'utf8');
@@ -331,7 +411,7 @@ app.post('/api/diary', async (req, res) => {
 // DELETE Diary Entry
 app.delete('/api/diary/:id', async (req, res) => {
     try {
-        const idToDelete = parseInt(req.params.id); // Assuming ID is number timestamp
+        const idToDelete = parseInt(req.params.id);
         if (fs.existsSync(DIARY_ENTRIES_FILE)) {
             const data = await fs.promises.readFile(DIARY_ENTRIES_FILE, 'utf8');
             let entries = JSON.parse(data);
@@ -351,8 +431,5 @@ app.delete('/api/diary/:id', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
     console.log(`Serving tasks from: ${TASKS_FOLDER}`);
-    console.log(`Managing task progress in: ${PROGRESS_FILE}`);
-    console.log(`Managing user tasks in: ${USER_TASKS_FILE}`);
-    console.log(`Managing profile in: ${USER_PROFILE_FILE}`);
-    console.log(`Managing diary in: ${DIARY_ENTRIES_FILE}`);
+    console.log(`Tombstones active: ${DELETED_TASKS_FILE}`);
 });

@@ -3,7 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 import { Task, TaskStatus, Subject, SubjectCategory } from '../types';
 import { Plus, List, Calendar, BookOpen, X, Search, RefreshCw, CheckSquare, Moon, Sun } from 'lucide-react';
-import { pullProgressOnly, fullLibrarySync, saveTaskProgress, saveUserTask, updateTaskProgress } from '../services/taskSyncService';
+import { pullProgressOnly, fullLibrarySync, saveUserTask, updateTaskProgress, deleteTaskPermanently, triggerManualRescan } from '../services/taskSyncService';
 import { SUBJECT_HIERARCHY } from '../constants';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -16,7 +16,7 @@ import Skeleton from './ui/Skeleton';
 import EmptyState from './ui/EmptyState';
 import FilterDropdown from './ui/FilterDropdown';
 
-type TabType = 'ACTIVE' | 'ARCHIVED' | 'TRASH';
+type TabType = 'ACTIVE' | 'ARCHIVED';
 
 interface TasksViewProps {
   initialSelectedTaskId?: string | null;
@@ -27,12 +27,13 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
   const { theme, toggleTheme } = useTheme();
 
   // Fetch live data from IndexedDB
-  const tasks = useLiveQuery(() => db.tasks.toArray()) || [];
+  const tasks = useLiveQuery(() => db.tasks.toArray());
+  const isLoading = tasks === undefined; // Data hasn't arrived from DB yet
 
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   useEffect(() => {
-    if (initialSelectedTaskId && tasks.length > 0) {
+    if (initialSelectedTaskId && tasks && tasks.length > 0) {
       const task = tasks.find(t => t.id === initialSelectedTaskId);
       if (task) {
         setSelectedTask(task);
@@ -66,6 +67,7 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
     const runSync = async () => {
       try {
         await fullLibrarySync();
+        await pullProgressOnly();
       } catch (error) {
         console.error("[TasksView] Auto sync failed:", error);
       }
@@ -73,17 +75,18 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
     runSync();
   }, []);
 
-  const handleFileSync = async () => {
-    if (window.confirm('Scan Data/Tasks for new updates?')) {
-      setIsSyncing(true);
-      try {
-        await fullLibrarySync();
-      } catch (error: any) {
-        console.error("[TasksView] Library sync failed:", error);
-        alert("Library sync failed: " + error.message);
-      } finally {
-        setIsSyncing(false);
-      }
+  // MANUAL RESCAN Button
+  const handleManualRescan = async () => {
+    if (isSyncing) return;
+    setIsSyncing(true);
+    try {
+      await triggerManualRescan();
+      alert("System synchronized with Master Content.");
+    } catch (error: any) {
+      console.error("[TasksView] Manual rescan failed:", error);
+      alert("Sync failed: " + error.message);
+    } finally {
+      setIsSyncing(false);
     }
   };
 
@@ -119,11 +122,13 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
   };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm('Move to trash?')) {
-      const updates = { isDeleted: true, deletedAt: new Date().toISOString() };
-      await db.tasks.update(id, updates);
-      await updateTaskProgress(id, updates);
-      if (selectedTask?.id === id) setSelectedTask(null);
+    if (window.confirm('Delete this task permanently? This cannot be undone.')) {
+      try {
+        await deleteTaskPermanently(id);
+        if (selectedTask?.id === id) setSelectedTask(null);
+      } catch (e) {
+        alert('Failed to delete task');
+      }
     }
   };
 
@@ -135,18 +140,10 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
   };
 
   const handleRestore = async (id: string) => {
-    const updates = { isArchived: false, isDeleted: false, deletedAt: undefined };
+    const updates = { isArchived: false };
     await db.tasks.update(id, updates);
     await updateTaskProgress(id, updates);
     if (selectedTask?.id === id) setSelectedTask(null);
-  };
-
-  const handlePermanentDelete = async (id: string) => {
-    if (window.confirm('Delete forever?')) {
-      await db.tasks.delete(id);
-      await saveTaskProgress(await db.tasks.toArray());
-      if (selectedTask?.id === id) setSelectedTask(null);
-    }
   };
 
   const getWeekRange = (offsetWeeks: number = 0) => {
@@ -160,10 +157,10 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
     return { start, end };
   };
 
-  const filteredTasks = tasks.filter(t => {
-    if (activeTab === 'TRASH') { if (!t.isDeleted) return false; }
-    else if (activeTab === 'ARCHIVED') { if (!t.isArchived || t.isDeleted) return false; }
-    else { if (t.isArchived || t.isDeleted) return false; }
+  const tasksList = tasks || [];
+  const filteredTasks = tasksList.filter(t => {
+    if (activeTab === 'ARCHIVED') { if (!t.isArchived) return false; }
+    else { if (t.isArchived) return false; }
 
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
@@ -200,7 +197,7 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
     return true;
   });
 
-  const activeTasks = tasks.filter(t => !t.isDeleted && !t.isArchived);
+  const activeTasks = tasksList.filter(t => !t.isArchived);
   const subjectStats = Object.values(SubjectCategory).map(category => {
     const categoryTasks = activeTasks.filter(t => (SUBJECT_HIERARCHY[t.subject] || SubjectCategory.GENERAL) === category);
     const completed = categoryTasks.filter(t => t.status === TaskStatus.DONE).length;
@@ -278,8 +275,9 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
 
           <div className="flex items-center gap-2">
             <button
-              onClick={handleFileSync}
+              onClick={handleManualRescan}
               disabled={isSyncing}
+              title="Manual Rescan: Checks for new YAML file updates"
               className={`p-1.5 rounded-lg transition-all ${isSyncing ? 'text-blue-500 animate-spin' : 'text-text-muted hover:bg-white/10 hover:text-blue-500'}`}
             >
               <RefreshCw size={15} />
@@ -305,31 +303,37 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
       <div className="flex-1 flex flex-col gap-4 p-4 overflow-y-auto custom-scrollbar">
         {/* Subject Cards - Slimmer */}
         <div className="flex-shrink-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          {subjectStats.map((stat) => (
-            <GlassCard
-              key={stat.category}
-              variant="blur"
-              onClick={() => {
-                setFilterSubject(stat.category === filterSubject ? null : stat.category);
-                setFilterTopic(null);
-              }}
-              className={`p-3 cursor-pointer transition-all hover:translate-y-[-2px] border-card-border min-w-[120px] ${filterSubject === stat.category ? 'ring-2 ring-blue-500 bg-blue-500/10' : 'hover:bg-card-bg/20'}`}
-            >
-              <div className="flex flex-col gap-1">
-                <div className="flex justify-between items-start">
-                  <span className="text-[9px] font-black text-text-muted uppercase tracking-tighter truncate">{stat.category}</span>
-                  <span className="text-[9px] font-mono bg-white/10 px-1 rounded text-text-muted">{stat.completed}/{stat.total}</span>
+          {isLoading ? (
+            Array(6).fill(0).map((_, i) => (
+              <Skeleton key={i} className="h-24 w-full rounded-lg" />
+            ))
+          ) : (
+            subjectStats.map((stat) => (
+              <GlassCard
+                key={stat.category}
+                variant="blur"
+                onClick={() => {
+                  setFilterSubject(stat.category === filterSubject ? null : stat.category);
+                  setFilterTopic(null);
+                }}
+                className={`p-3 cursor-pointer transition-all hover:translate-y-[-2px] border-card-border min-w-[120px] ${filterSubject === stat.category ? 'ring-2 ring-blue-500 bg-blue-500/10' : 'hover:bg-card-bg/20'}`}
+              >
+                <div className="flex flex-col gap-1">
+                  <div className="flex justify-between items-start">
+                    <span className="text-[9px] font-black text-text-muted uppercase tracking-tighter truncate">{stat.category}</span>
+                    <span className="text-[9px] font-mono bg-white/10 px-1 rounded text-text-muted">{stat.completed}/{stat.total}</span>
+                  </div>
+                  <div className="text-lg font-bold text-text-main leading-none py-1">{stat.percentage}%</div>
+                  <div className="w-full bg-gray-200/10 h-1 rounded-full overflow-hidden">
+                    <div
+                      className="bg-blue-600 h-full transition-all duration-700"
+                      style={{ width: `${stat.percentage}%` }}
+                    />
+                  </div>
                 </div>
-                <div className="text-lg font-bold text-text-main leading-none py-1">{stat.percentage}%</div>
-                <div className="w-full bg-gray-200/10 h-1 rounded-full overflow-hidden">
-                  <div
-                    className="bg-blue-600 h-full transition-all duration-700"
-                    style={{ width: `${stat.percentage}%` }}
-                  />
-                </div>
-              </div>
-            </GlassCard>
-          ))}
+              </GlassCard>
+            ))
+          )}
         </div>
 
         <div className="flex flex-1 gap-4 overflow-hidden relative">
@@ -337,13 +341,13 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
           <GlassCard variant="blur" className={`flex-1 flex flex-col border-card-border overflow-hidden transition-all duration-300 ${selectedTask ? 'mr-[340px]' : ''}`}>
             {/* Tabs */}
             <div className="flex border-b border-card-border px-4 bg-card-bg/40 backdrop-blur-sm z-30">
-              {['ACTIVE', 'ARCHIVED', 'TRASH'].map(tab => (
+              {['ACTIVE', 'ARCHIVED'].map(tab => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab as TabType)}
                   className={`py-3 px-5 text-[11px] font-black uppercase tracking-widest border-b-2 transition-all ${activeTab === tab ? 'border-blue-600 text-blue-600' : 'border-transparent text-text-muted hover:text-text-main'}`}
                 >
-                  {tab === 'ACTIVE' ? 'Primary' : tab}
+                  {tab === 'ACTIVE' ? 'Tasks' : tab}
                 </button>
               ))}
             </div>
@@ -359,7 +363,18 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
               </div>
 
               <div className="divide-y divide-card-border/50">
-                {filteredTasks.length === 0 ? (
+                {isLoading ? (
+                  // Skeleton Loading Rows - Matches TaskItem Grid
+                  Array(6).fill(0).map((_, i) => (
+                    <div key={i} className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-card-border/50 items-center">
+                      <div className="col-span-4"><Skeleton className="h-4 w-3/4 rounded" /></div>
+                      <div className="col-span-2"><Skeleton className="h-2 w-full rounded-full" /></div>
+                      <div className="col-span-2"><Skeleton className="h-5 w-20 rounded-full" /></div>
+                      <div className="col-span-2"><Skeleton className="h-3 w-12 rounded" /></div>
+                      <div className="col-span-2"><Skeleton className="h-3 w-16 rounded" /></div>
+                    </div>
+                  ))
+                ) : filteredTasks.length === 0 ? (
                   <EmptyState
                     icon={CheckSquare}
                     title="Clear Horizon"
@@ -373,12 +388,12 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
                       key={task.id}
                       task={task}
                       isSelected={selectedTask?.id === task.id}
-                      activeTab={activeTab}
+                      activeTab={activeTab === 'ARCHIVED' ? 'ARCHIVED' : 'ACTIVE'}
                       onClick={setSelectedTask}
                       onArchive={handleArchive}
                       onDelete={handleDelete}
                       onRestore={handleRestore}
-                      onPermanentDelete={handlePermanentDelete}
+                      onPermanentDelete={handleDelete}
                     />
                   ))
                 )}
