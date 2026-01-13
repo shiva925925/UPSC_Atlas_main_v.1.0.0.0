@@ -427,9 +427,47 @@ app.delete('/api/diary/:id', async (req, res) => {
     }
 });
 
+// --- Multer Configuration for File Uploads ---
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, UPLOADS_FOLDER);
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+    }
+});
+const upload = multer({ storage: storage });
+
+// Serve static files from the uploads directory
+app.use('/uploads', express.static(UPLOADS_FOLDER));
+
+// --- API Endpoints ---
+
+/**
+ * POST /api/upload
+ * Handles file uploads and returns the URL.
+ */
+app.post('/api/upload', upload.single('file'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    // Return the URL that can be used to access the file
+    // Note: Since server is on 3001, we return absolute URL or relative if handled by proxy
+    const fileUrl = `/uploads/${req.file.filename}`;
+    res.json({
+        url: fileUrl,
+        filename: req.file.filename,
+        originalName: req.file.originalname
+    });
+});
+
 // --- Start Server ---
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
     console.log(`Serving tasks from: ${TASKS_FOLDER}`);
     console.log(`Tombstones active: ${DELETED_TASKS_FILE}`);
+    console.log(`Uploads served at: http://localhost:${PORT}/uploads`);
 });

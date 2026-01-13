@@ -8,8 +8,23 @@
       "sourceFile": "Ancient,Medieval.yaml",
       "date": "2026-01-13",
       "status": "IN_PROGRESS",
-      "logs": [],
-      "evidences": [],
+      "logs": [
+        {
+          "id": "v4ui4v013",
+          "date": "2026-01-13",
+          "durationMinutes": 30,
+          "subject": "Art and Culture",
+          "description": "Task work log"
+        }
+      ],
+      "evidences": [
+        {
+          "id": "td7l817co",
+          "type": "LINK",
+          "content": "/uploads/file-1768316391897-122168547.pdf",
+          "timestamp": "8:29:51 PM"
+        }
+      ],
       "isArchived": false,
       "isDeleted": false,
       "deletedAt": null,
@@ -21505,5 +21520,5 @@
     "mho0nlof8",
     "zezf7fr09"
   ],
-  "timestamp": 1768314807215
+  "timestamp": 1768316407609
 }

@@ -2,8 +2,23 @@
   "AC001": {
     "status": "IN_PROGRESS",
     "priority": "Medium",
-    "logs": [],
-    "evidences": [],
+    "logs": [
+      {
+        "id": "v4ui4v013",
+        "date": "2026-01-13",
+        "durationMinutes": 30,
+        "subject": "Art and Culture",
+        "description": "Task work log"
+      }
+    ],
+    "evidences": [
+      {
+        "id": "td7l817co",
+        "type": "LINK",
+        "content": "/uploads/file-1768316391897-122168547.pdf",
+        "timestamp": "8:29:51 PM"
+      }
+    ],
     "isArchived": false,
     "isDeleted": false
   },
