@@ -181,16 +181,15 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
   const allSyllabusResources = libraryResources.filter(r => r.path);
 
   return (
-    <div className="p-4 md:p-8 h-full flex flex-col animate-fade-in gap-6">
+    <div className="p-4 md:p-8 h-full flex flex-col animate-fade-in gap-6 bg-app-bg transition-colors duration-300">
       {/* Header */}
-      <header className="flex-shrink-0 flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4 bg-white/30 backdrop-blur-xl p-4 rounded-lg shadow-sm border border-white/20">
+      <header className="flex-shrink-0 flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4 bg-card-bg/40 backdrop-blur-xl p-4 rounded-xl shadow-sm border border-card-border transition-colors">
         <div>
-          <h2 className="text-2xl font-bold text-gray-800">Study Library</h2>
-          <p className="text-gray-500">Explore the syllabus tree and manage your custom resources.</p>
+          <h2 className="text-2xl font-black text-text-main tracking-tight">Study Library</h2>
         </div>
         <button
           onClick={() => { resetForm(); setIsAdding(true); }}
-          className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors w-full md:w-auto justify-center shadow-md"
+          className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl font-bold transition-all w-full md:w-auto justify-center shadow-lg shadow-blue-500/20 active:scale-95"
         >
           <Plus size={18} />
           <span>Add Resource</span>
@@ -200,32 +199,32 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
       {/* Filters */}
       <div className="flex-shrink-0 flex flex-col md:flex-row gap-4 mb-6">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
+          <Search className="absolute left-3 top-2.5 text-text-muted" size={18} />
           <input
             type="text"
             placeholder="Search syllabus tree and resources..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border bg-white/10 backdrop-blur-md border-white/20 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-800 placeholder-gray-500 shadow-sm"
+            className="w-full pl-10 pr-4 py-2 border bg-card-bg/30 border-card-border rounded-xl focus:ring-1 focus:ring-blue-500 outline-none text-text-main placeholder-text-muted transition-all"
           />
         </div>
-        <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-2 rounded-xl shadow-sm">
-          <Filter size={18} className="text-gray-500" />
+        <div className="flex items-center space-x-2 bg-card-bg/30 border border-card-border px-3 py-2 rounded-xl">
+          <Filter size={18} className="text-text-muted" />
           <select
             value={filterSubject}
             onChange={(e) => setFilterSubject(e.target.value as SubjectCategory | 'ALL')}
-            className="bg-transparent outline-none text-sm text-gray-700 font-medium cursor-pointer w-full md:w-auto"
+            className="bg-transparent outline-none text-sm text-text-main font-bold cursor-pointer w-full md:w-auto"
           >
-            <option value="ALL">All Subjects</option>
-            {Object.values(SubjectCategory).map(cat => <option key={cat} value={cat}>{cat}</option>)}
+            <option value="ALL" className="bg-app-bg">All Subjects</option>
+            {Object.values(SubjectCategory).map(cat => <option key={cat} value={cat} className="bg-app-bg">{cat}</option>)}
           </select>
         </div>
       </div>
 
-      <div className="flex-1 flex gap-6 min-h-0">{/* Changed from grid to flex */}
+      <div className="flex-1 flex gap-6 min-h-0">
         {/* Left Column: Syllabus Tree */}
-        <GlassCard variant="opaque" className="w-1/3 p-3 overflow-y-auto custom-scrollbar border-white/20">{/* Changed from lg:col-span-1 to w-1/3 */}
-          <h3 className="text-lg font-semibold text-gray-800 mb-3 px-2">Syllabus Explorer</h3>
+        <GlassCard variant="opaque" className="w-1/3 p-4 overflow-y-auto custom-scrollbar border-card-border">
+          <h3 className="text-lg font-bold text-text-main mb-3 px-2">Syllabus Explorer</h3>
           <LibraryTree
             resources={allSyllabusResources}
             searchQuery={searchQuery}
@@ -245,13 +244,13 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
               onNavigateToTask={onNavigateToTask}
             />
           ) : (
-            <GlassCard variant="blur" className="h-full flex flex-col border-white/20">
-              <div className="p-4 border-b border-white/10">
-                <h3 className="text-lg font-semibold text-gray-800">My Resources</h3>
+            <GlassCard variant="blur" className="h-full flex flex-col border-card-border shadow-xl">
+              <div className="p-4 border-b border-card-border/50 bg-white/5">
+                <h3 className="text-lg font-bold text-text-main">My Resources</h3>
               </div>
 
               {/* List Header */}
-              <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-white/5 border-b border-white/10 text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-white/5 border-b border-card-border text-[10px] font-black text-text-muted uppercase tracking-widest">
                 <div className="col-span-5">Resource</div>
                 <div className="col-span-2">Type</div>
                 <div className="col-span-2">Subject</div>
@@ -276,19 +275,19 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
                     return (
                       <div
                         key={resource.id}
-                        className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-white/10 items-center hover:bg-white/10 transition-colors group cursor-pointer"
+                        className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-card-border/50 items-center hover:bg-white/5 transition-all group cursor-pointer"
                         onClick={() => handleSelectResource(resource)}
                       >
                         {/* Resource Title */}
                         <div className="col-span-5">
-                          <h4 className="text-sm font-medium text-gray-800 group-hover:text-blue-700 transition-colors">{resource.title}</h4>
-                          <p className="text-xs text-gray-500 line-clamp-1">{resource.description || 'No description'}</p>
+                          <h4 className="text-sm font-bold text-text-main group-hover:text-blue-500 transition-colors leading-tight">{resource.title}</h4>
+                          <p className="text-xs text-text-muted line-clamp-1 mt-1 font-medium">{resource.description || 'No description'}</p>
                         </div>
 
                         {/* Type */}
-                        <div className="col-span-2 flex items-center gap-1">
+                        <div className="col-span-2 flex items-center gap-2">
                           {getIcon(resource.type)}
-                          <span className="text-xs font-medium text-gray-600">{resource.type}</span>
+                          <span className="text-[11px] font-bold text-text-muted uppercase tracking-wider">{resource.type}</span>
                         </div>
 
                         {/* Subject */}
@@ -301,10 +300,10 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
                         </div>
 
                         {/* Date */}
-                        <div className="col-span-2 text-sm text-gray-500">
+                        <div className="col-span-2 text-xs text-text-muted font-mono">
                           {resource.date && (
-                            <div className="flex items-center gap-1">
-                              <CalendarIcon size={14} />
+                            <div className="flex items-center gap-2">
+                              <CalendarIcon size={14} className="opacity-50" />
                               <span>{resource.date}</span>
                             </div>
                           )}
@@ -329,62 +328,62 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
 
       {/* Modal for Adding/Editing Resource */}
       {isAdding && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold text-gray-800">{editingId ? 'Edit Resource' : 'Add New Resource'}</h3>
-              <button onClick={resetForm} className="text-gray-500 hover:text-gray-700"><X size={20} /></button>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4 animate-in fade-in duration-300">
+          <div className="bg-card-bg border border-card-border rounded-2xl shadow-2xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-black text-text-main tracking-tight">{editingId ? 'Edit Resource' : 'Add New Resource'}</h3>
+              <button onClick={resetForm} className="text-text-muted hover:text-text-main transition-colors p-1 hover:bg-white/5 rounded-full"><X size={20} /></button>
             </div>
 
             <form onSubmit={handleAddResource} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <label className="block text-xs font-bold text-text-muted uppercase tracking-widest mb-2">Title</label>
                 <input
                   required
                   type="text"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                  placeholder="Resource Title"
+                  className="w-full px-4 py-3 border border-card-border bg-app-bg text-text-main rounded-xl focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                  placeholder="e.g., General Studies - I Notes"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                  <label className="block text-xs font-bold text-text-muted uppercase tracking-widest mb-2">Type</label>
                   <select
                     value={newType}
                     onChange={(e) => setNewType(e.target.value as ResourceType)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full px-4 py-3 border border-card-border bg-app-bg text-text-main rounded-xl focus:ring-1 focus:ring-blue-500 outline-none cursor-pointer transition-all"
                   >
                     {Object.values(ResourceType).map(t => (
-                      <option key={t} value={t}>{t}</option>
+                      <option key={t} value={t} className="bg-card-bg">{t}</option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                  <label className="block text-xs font-bold text-text-muted uppercase tracking-widest mb-2">Subject</label>
                   <select
                     value={newSubject}
                     onChange={(e) => setNewSubject(e.target.value as Subject)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full px-4 py-3 border border-card-border bg-app-bg text-text-main rounded-xl focus:ring-1 focus:ring-blue-500 outline-none cursor-pointer transition-all"
                   >
                     {Object.values(Subject).map(s => (
-                      <option key={s} value={s}>{s}</option>
+                      <option key={s} value={s} className="bg-card-bg">{s}</option>
                     ))}
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {newType === ResourceType.PDF || newType === ResourceType.IMAGE ? 'File' : 'URL'}
+                <label className="block text-xs font-bold text-text-muted uppercase tracking-widest mb-2">
+                  {newType === ResourceType.PDF || newType === ResourceType.IMAGE ? 'File Upload' : 'URL Link'}
                 </label>
                 {newType === ResourceType.PDF || newType === ResourceType.IMAGE ? (
                   <div className="flex items-center gap-2">
                     <label className="flex-1 cursor-pointer">
-                      <div className="w-full px-3 py-2 border border-dashed border-gray-300 rounded-md hover:bg-gray-50 flex items-center justify-center text-sm text-gray-500">
-                        {selectedFile ? selectedFile.name : 'Choose a file...'}
+                      <div className="w-full px-4 py-3 border border-dashed border-card-border bg-app-bg text-text-muted rounded-xl hover:bg-white/5 flex items-center justify-center text-sm transition-all">
+                        {selectedFile ? selectedFile.name : 'Click to browse files...'}
                       </div>
                       <input type="file" className="hidden" onChange={handleFileChange} accept={newType === ResourceType.PDF ? ".pdf" : "image/*"} />
                     </label>
@@ -395,45 +394,45 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
                     type="url"
                     value={newUrl}
                     onChange={(e) => setNewUrl(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full px-4 py-3 border border-card-border bg-app-bg text-text-main rounded-xl focus:ring-1 focus:ring-blue-500 outline-none transition-all"
                     placeholder="https://..."
                   />
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                <label className="block text-xs font-bold text-text-muted uppercase tracking-widest mb-2">Publish Date</label>
                 <input
                   type="date"
                   value={newDate}
                   onChange={(e) => setNewDate(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full px-4 py-3 border border-card-border bg-app-bg text-text-main rounded-xl focus:ring-1 focus:ring-blue-500 outline-none transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <label className="block text-xs font-bold text-text-muted uppercase tracking-widest mb-2">Description</label>
                 <textarea
                   value={newDescription}
                   onChange={(e) => setNewDescription(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none h-24 resize-none"
-                  placeholder="Add details..."
+                  className="w-full px-4 py-3 border border-card-border bg-app-bg text-text-main rounded-xl focus:ring-1 focus:ring-blue-500 outline-none h-24 resize-none transition-all"
+                  placeholder="Add notes or resource context..."
                 />
               </div>
 
-              <div className="flex justify-end gap-3 pt-4">
+              <div className="flex justify-end gap-3 pt-6">
                 <button
                   type="button"
                   onClick={resetForm}
                   disabled={isSubmitting}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-2.5 border border-card-border text-text-muted rounded-xl hover:bg-white/5 font-bold transition-all disabled:opacity-50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-6 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 font-bold transition-all disabled:opacity-50 shadow-lg shadow-blue-500/20 flex items-center gap-2 active:scale-95"
                 >
                   {isSubmitting ? (
                     <>
@@ -441,10 +440,10 @@ const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTask }) => {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
-                      {editingId ? 'Saving...' : 'Adding...'}
+                      <span>Processing...</span>
                     </>
                   ) : (
-                    editingId ? 'Save Changes' : 'Add Resource'
+                    editingId ? 'Save Changes' : 'Create Resource'
                   )}
                 </button>
               </div>

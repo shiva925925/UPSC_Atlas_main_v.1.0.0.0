@@ -96,11 +96,11 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, level, expandedFolders, toggl
     const baseStyle = "flex items-center mx-1 my-0.5 rounded-r-md cursor-pointer transition-all duration-200 border-l-2";
 
     // Selection & Hover States
-    let stateStyle = "border-transparent text-gray-700 hover:bg-white/10"; // Default
+    let stateStyle = "border-transparent text-text-main hover:bg-white/5"; // Default
     if (isSelected) {
-        stateStyle = "bg-blue-500/10 border-blue-500 text-blue-700 shadow-sm";
+        stateStyle = "bg-blue-500/20 border-blue-500 text-blue-400 shadow-sm shadow-blue-500/10";
     } else if (searchHighlight) {
-        stateStyle = "bg-yellow-100/50 border-yellow-400 text-yellow-900";
+        stateStyle = "bg-yellow-500/20 border-yellow-500 text-yellow-200";
     }
 
     return (

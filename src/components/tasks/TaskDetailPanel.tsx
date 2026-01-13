@@ -175,7 +175,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                         <div className="flex gap-2 flex-1 min-w-0">
                             <div className="min-w-0 flex-1">
-                                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Subject</label>
+                                <label className="block text-[10px] font-bold text-text-muted uppercase mb-1">Subject</label>
                                 <select
                                     value={subjectCategory}
                                     onChange={(e) => {
@@ -184,24 +184,24 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                             .find(([_, cat]) => cat === newCategory)?.[0] as Subject;
                                         if (firstTopic) onUpdate(task.id, { subject: firstTopic });
                                     }}
-                                    className="w-full text-xs font-bold px-2 py-1.5 rounded border border-gray-300 bg-white text-gray-700 hover:border-blue-400 focus:border-blue-500 focus:outline-none cursor-pointer truncate"
+                                    className="w-full text-xs font-bold px-2 py-1.5 rounded border border-card-border bg-card-bg text-text-main hover:border-blue-500/50 focus:border-blue-500 focus:outline-none cursor-pointer truncate transition-all duration-200"
                                 >
                                     {Object.values(SubjectCategory).map(category => (
-                                        <option key={category} value={category}>{category}</option>
+                                        <option key={category} value={category} className="bg-app-bg">{category}</option>
                                     ))}
                                 </select>
                             </div>
                             <div className="min-w-0 flex-1">
-                                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Topic</label>
+                                <label className="block text-[10px] font-bold text-text-muted uppercase mb-1">Topic</label>
                                 <select
                                     value={task.subject}
                                     onChange={(e) => onUpdate(task.id, { subject: e.target.value as Subject })}
-                                    className="w-full text-xs font-bold px-2 py-1.5 rounded border border-gray-300 bg-white text-gray-700 hover:border-blue-400 focus:border-blue-500 focus:outline-none cursor-pointer truncate"
+                                    className="w-full text-xs font-bold px-2 py-1.5 rounded border border-card-border bg-card-bg text-text-main hover:border-blue-500/50 focus:border-blue-500 focus:outline-none cursor-pointer truncate transition-all duration-200"
                                 >
                                     {Object.entries(SUBJECT_HIERARCHY)
                                         .filter(([_, cat]) => cat === subjectCategory)
                                         .map(([subject, _]) => (
-                                            <option key={subject} value={subject}>{subject}</option>
+                                            <option key={subject} value={subject} className="bg-app-bg">{subject}</option>
                                         ))}
                                 </select>
                             </div>
@@ -243,7 +243,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             <textarea
                                 value={editedDescription}
                                 onChange={(e) => setEditedDescription(e.target.value)}
-                                className="w-full text-sm border border-gray-300 rounded-md p-3 min-h-[120px] focus:ring-2 focus:ring-blue-500 outline-none resize-y"
+                                className="w-full text-sm border border-card-border bg-card-bg text-text-main rounded-md p-3 min-h-[120px] focus:ring-1 focus:ring-blue-500 outline-none resize-y"
                                 placeholder="Enter task description..."
                             />
                             <div className="flex justify-end gap-2">
@@ -284,7 +284,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             task.acceptanceCriteria.map(ac => (
                                 <div
                                     key={ac.id}
-                                    className={`group flex items-start gap-3 p-2 rounded-md border transition-all ${ac.isCompleted ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200 hover:border-blue-300'}`}
+                                    className={`group flex items-start gap-3 p-2 rounded-md border transition-all ${ac.isCompleted ? 'bg-green-500/10 border-green-500/30' : 'bg-white/5 border-card-border hover:border-blue-500/50'}`}
                                 >
                                     <div
                                         className="flex items-start gap-3 flex-1 cursor-pointer"
@@ -460,7 +460,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                         </span>
                     </div>
 
-                    <div className="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                    <div className="bg-card-bg/30 p-3 rounded-lg border border-card-border">
                         <div className="flex gap-2 mb-2">
                             <div className="flex-1">
                                 <label className="block text-xs font-medium text-text-muted mb-1">Duration (min)</label>

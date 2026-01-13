@@ -131,27 +131,6 @@
     "isDeleted": false
   },
   {
-    "id": "5y9vzl3ao",
-    "userId": "Schamala",
-    "title": "qwersfdghng",
-    "subject": "General",
-    "priority": "Medium",
-    "date": "2026-01-04",
-    "status": "TODO",
-    "description": "asdfg",
-    "acceptanceCriteria": [
-      {
-        "id": "lba4p2vba",
-        "text": "xcv",
-        "isCompleted": false
-      }
-    ],
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
-  },
-  {
     "id": "ypjzdrkhf",
     "userId": "Schamala",
     "title": "lkjhgfd",

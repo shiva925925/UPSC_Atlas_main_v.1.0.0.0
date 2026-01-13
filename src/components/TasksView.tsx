@@ -5,7 +5,7 @@ import { Task, TaskStatus, Subject, SubjectCategory } from '../types';
 import { Plus, List, Calendar, BookOpen, X, Search, RefreshCw, CheckSquare, Moon, Sun } from 'lucide-react';
 import { pullProgressOnly, fullLibrarySync, saveUserTask, updateTaskProgress, deleteTaskPermanently, triggerManualRescan } from '../services/taskSyncService';
 import { SUBJECT_HIERARCHY } from '../constants';
-import { useTheme } from '../contexts/ThemeContext';
+
 
 // Sub-components
 import TaskItem from './tasks/TaskItem';
@@ -24,8 +24,6 @@ interface TasksViewProps {
 }
 
 const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSelected }) => {
-  const { theme, toggleTheme } = useTheme();
-
   // Fetch live data from IndexedDB
   const tasks = useLiveQuery(() => db.tasks.toArray());
   const isLoading = tasks === undefined; // Data hasn't arrived from DB yet
@@ -281,13 +279,6 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
               className={`p-1.5 rounded-lg transition-all ${isSyncing ? 'text-blue-500 animate-spin' : 'text-text-muted hover:bg-white/10 hover:text-blue-500'}`}
             >
               <RefreshCw size={15} />
-            </button>
-
-            <button
-              onClick={toggleTheme}
-              className="p-1.5 rounded-lg text-text-muted hover:bg-white/10 hover:text-blue-500 transition-all"
-            >
-              {theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}
             </button>
 
             <button

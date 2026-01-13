@@ -56,7 +56,6 @@ const CalendarView: React.FC = () => {
       const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
 
       // FIX: Use local time components to construct YYYY-MM-DD
-      // This prevents timezone shifts caused by toISOString() (which uses UTC)
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const day = String(date.getDate()).padStart(2, '0');
@@ -74,14 +73,14 @@ const CalendarView: React.FC = () => {
         <div
           key={i}
           onClick={() => setSelectedDate(dateString)}
-          className={`border-b border-r border-white/10 p-2 cursor-pointer transition-colors hover:bg-white/20 relative ${selectedDate === dateString ? 'bg-blue-50/50' : ''}`}
+          className={`border-b border-r border-card-border p-2 cursor-pointer transition-colors hover:bg-white/5 relative ${selectedDate === dateString ? 'bg-blue-500/10' : ''}`}
         >
           <div className="flex flex-col items-start w-full gap-1">
-            <span className={`text-sm font-medium w-6 h-6 flex items-center justify-center rounded-full ${dateString === todayString ? 'bg-blue-600 text-white' : 'text-gray-700'}`}>
+            <span className={`text-sm font-medium w-6 h-6 flex items-center justify-center rounded-full ${dateString === todayString ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/40' : 'text-text-main'}`}>
               {i}
             </span>
             {dayMeta?.heading && (
-              <p className="text-xs font-medium text-blue-900 w-full break-words leading-tight mt-0.5">
+              <p className="text-[10px] font-bold text-blue-500 dark:text-blue-400 w-full break-words leading-tight mt-0.5">
                 {dayMeta.heading}
               </p>
             )}
@@ -89,25 +88,25 @@ const CalendarView: React.FC = () => {
 
           <div className="mt-1 flex flex-wrap gap-1 min-h-[1.5rem]">
             {dayTasks.slice(0, 3).map(task => (
-              <div key={task.id} className="w-2 h-2 rounded-full" style={{ backgroundColor: CATEGORY_COLORS[SUBJECT_HIERARCHY[task.subject] || SubjectCategory.GENERAL].hex }} title={task.title}></div>
+              <div key={task.id} className="w-2 h-2 rounded-full shadow-sm" style={{ backgroundColor: CATEGORY_COLORS[SUBJECT_HIERARCHY[task.subject] || SubjectCategory.GENERAL].hex }} title={task.title}></div>
             ))}
-            {dayTasks.length > 3 && <span className="text-[10px] text-gray-400">+{dayTasks.length - 3}</span>}
-            {dayLogs.length > 0 && <div className="w-2 h-2 rounded-full bg-gray-400" title={`${dayLogs.length} logs`}></div>}
+            {dayTasks.length > 3 && <span className="text-[9px] text-text-muted">+{dayTasks.length - 3}</span>}
+            {dayLogs.length > 0 && <div className="w-2 h-2 rounded-full bg-text-muted/40" title={`${dayLogs.length} logs`}></div>}
           </div>
         </div>
       );
     }
 
     return (
-      <div className="grid grid-cols-7 auto-rows-fr border-l border-t border-white/10">
-        {emptyDays.map((_, i) => <div key={`empty-${i}`} className="min-h-[50px] bg-white/5 border-b border-r border-white/10"></div>)}
+      <div className="grid grid-cols-7 auto-rows-fr border-l border-t border-card-border">
+        {emptyDays.map((_, i) => <div key={`empty-${i}`} className="min-h-[50px] bg-text-main/5 border-b border-r border-card-border"></div>)}
         {days}
       </div>
     );
   };
 
   const renderSelectedDateDetails = () => {
-    if (!selectedDate) return <p className="text-gray-500 text-center mt-10">Select a date to view details.</p>;
+    if (!selectedDate) return <p className="text-text-muted text-center mt-10">Select a date to view details.</p>;
 
     const dateTasks = tasks.filter(t => t.date === selectedDate);
     const dateLogs = allLogs.filter(l => l.date === selectedDate);
@@ -115,20 +114,20 @@ const CalendarView: React.FC = () => {
 
     return (
       <div className="space-y-6">
-        <div className="border-b border-gray-200 pb-4">
-          <h3 className="text-lg font-bold text-gray-800 mb-2">
+        <div className="border-b border-card-border pb-4">
+          <h3 className="text-lg font-bold text-text-main mb-2">
             {new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
           </h3>
 
           {/* Day Heading Input */}
           <div>
-            <label className="text-xs font-bold text-gray-500 uppercase">Day Focus / Heading</label>
+            <label className="text-[10px] font-bold text-text-muted uppercase">Day Focus / Heading</label>
             <input
               type="text"
               placeholder="e.g. History Revision..."
               value={dayMeta?.heading || ''}
               onChange={(e) => handleUpdateHeading(selectedDate, e.target.value)}
-              className="w-full mt-1 px-2 py-1.5 text-sm font-semibold text-blue-800 bg-blue-50/50 border border-blue-100 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-blue-300"
+              className="w-full mt-1 px-3 py-2 text-sm font-semibold text-blue-600 dark:text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 placeholder-blue-300/50"
             />
           </div>
         </div>
@@ -136,19 +135,19 @@ const CalendarView: React.FC = () => {
         {/* Tasks */}
         {(filter === CalendarFilter.ALL || filter === CalendarFilter.TASKS) && (
           <div>
-            <h4 className="text-sm font-bold text-gray-600 mb-2 uppercase tracking-wider">Tasks</h4>
-            {dateTasks.length === 0 ? <p className="text-xs text-gray-400 italic">No tasks for this day.</p> : (
+            <h4 className="text-xs font-bold text-text-muted mb-2 uppercase tracking-wider">Tasks</h4>
+            {dateTasks.length === 0 ? <p className="text-xs text-text-muted italic">No tasks for this day.</p> : (
               <div className="space-y-2">
                 {dateTasks.map(task => {
                   const subjectCategory = SUBJECT_HIERARCHY[task.subject] || SubjectCategory.GENERAL;
                   const colors = CATEGORY_COLORS[subjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];
                   return (
-                    <div key={task.id} className="bg-white border border-gray-200 p-3 rounded-md shadow-sm">
-                      <div className="flex justify-between items-start">
-                        <h5 className="text-sm font-medium text-gray-800">{task.title}</h5>
-                        <span className={`text-[10px] px-2 py-0.5 rounded ${colors.background} ${colors.text}`}>{task.subject}</span>
+                    <div key={task.id} className="bg-card-bg/30 border border-card-border p-3 rounded-md shadow-sm">
+                      <div className="flex justify-between items-start gap-2">
+                        <h5 className="text-sm font-medium text-text-main leading-tight">{task.title}</h5>
+                        <span className={`text-[10px] px-2 py-0.5 rounded-full shrink-0 ${colors.background} ${colors.text}`}>{task.subject}</span>
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">{task.status.replace('_', ' ')}</p>
+                      <p className="text-xs text-text-muted mt-2 capitalize">{task.status.replace('_', ' ')}</p>
                     </div>
                   );
                 })}
@@ -160,13 +159,13 @@ const CalendarView: React.FC = () => {
         {/* Time Logs */}
         {(filter === CalendarFilter.ALL || filter === CalendarFilter.TIME_LOGS) && (
           <div>
-            <h4 className="text-sm font-bold text-gray-600 mb-2 uppercase tracking-wider">Time Logs</h4>
-            {dateLogs.length === 0 ? <p className="text-xs text-gray-400 italic">No time logged.</p> : (
+            <h4 className="text-xs font-bold text-text-muted mb-2 uppercase tracking-wider">Time Logs</h4>
+            {dateLogs.length === 0 ? <p className="text-xs text-text-muted italic">No time logged.</p> : (
               <div className="space-y-2">
                 {dateLogs.map(log => (
-                  <div key={log.id} className="flex items-center justify-between text-sm bg-gray-50 p-2 rounded">
-                    <span className="text-gray-700">{log.description}</span>
-                    <span className="font-bold text-blue-600">{log.durationMinutes}m</span>
+                  <div key={log.id} className="flex items-center justify-between text-sm bg-text-main/5 p-2 px-3 rounded border border-card-border/30">
+                    <span className="text-text-main">{log.description}</span>
+                    <span className="font-bold text-blue-600 dark:text-blue-400">{log.durationMinutes}m</span>
                   </div>
                 ))}
               </div>
@@ -188,48 +187,46 @@ const CalendarView: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full animate-fade-in gap-6 p-4 md:p-8 overflow-y-auto">
-      {/* Calendar Grid - Takes remaining space (~60%) but fits content vertically */}
-      <GlassCard variant="blur" className="flex-1 h-fit flex flex-col border-white/20">
+    <div className="flex h-full animate-fade-in gap-6 p-4 md:p-8 overflow-y-auto bg-app-bg transition-colors duration-300">
+      {/* Calendar Grid */}
+      <GlassCard variant="blur" className="flex-1 h-fit flex flex-col border-card-border">
         <div className="flex justify-between items-center mb-4 p-4 pb-0">
           <div className="flex items-center gap-2">
-            {/* Month Select */}
             <select
               value={currentDate.getMonth()}
               onChange={handleJumpToMonth}
-              className="bg-transparent text-xl font-bold text-gray-800 outline-none cursor-pointer hover:bg-black/5 rounded px-1 transition-colors appearance-none"
+              className="bg-transparent text-xl font-bold text-text-main outline-none cursor-pointer hover:bg-white/5 rounded px-1 transition-colors appearance-none"
             >
               {Array.from({ length: 12 }, (_, i) => (
-                <option key={i} value={i}>
+                <option key={i} value={i} className="dark:bg-[#121212]">
                   {new Date(0, i).toLocaleString('default', { month: 'long' })}
                 </option>
               ))}
             </select>
 
-            {/* Year Select (Range: Current - 5 to Current + 5) */}
             <select
               value={currentDate.getFullYear()}
               onChange={handleJumpToYear}
-              className="bg-transparent text-xl font-bold text-gray-800 outline-none cursor-pointer hover:bg-black/5 rounded px-1 transition-colors appearance-none"
+              className="bg-transparent text-xl font-bold text-text-main outline-none cursor-pointer hover:bg-white/5 rounded px-1 transition-colors appearance-none"
             >
               {Array.from({ length: 11 }, (_, i) => {
                 const year = new Date().getFullYear() - 5 + i;
                 return (
-                  <option key={year} value={year}>{year}</option>
+                  <option key={year} value={year} className="dark:bg-[#121212]">{year}</option>
                 );
               })}
             </select>
           </div>
 
           <div className="flex gap-2">
-            <button onClick={handlePrevMonth} className="p-1.5 hover:bg-white/20 rounded-full transition-colors"><ChevronLeft size={18} /></button>
-            <button onClick={handleNextMonth} className="p-1.5 hover:bg-white/20 rounded-full transition-colors"><ChevronRight size={18} /></button>
+            <button onClick={handlePrevMonth} className="p-1.5 hover:bg-white/10 text-text-main rounded-full transition-colors"><ChevronLeft size={18} /></button>
+            <button onClick={handleNextMonth} className="p-1.5 hover:bg-white/10 text-text-main rounded-full transition-colors"><ChevronRight size={18} /></button>
           </div>
         </div>
 
-        <div className="grid grid-cols-7 bg-white/5 border-b border-white/10">
+        <div className="grid grid-cols-7 bg-text-main/5 border-b border-card-border">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <div key={day} className="p-2 text-center text-xs font-bold text-gray-600 uppercase">
+            <div key={day} className="p-2 text-center text-[10px] font-black text-text-muted uppercase tracking-widest">
               {day}
             </div>
           ))}
@@ -239,16 +236,16 @@ const CalendarView: React.FC = () => {
         </div>
       </GlassCard>
 
-      {/* Sidebar Details - Increased width to ~40% */}
-      <GlassCard variant="opaque" className="w-[40%] border-l border-white/20 p-6 overflow-y-auto">
+      {/* Sidebar Details */}
+      <GlassCard variant="opaque" className="w-[40%] border-card-border p-6 overflow-y-auto">
         <div className="mb-6">
-          <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Filter View</label>
+          <label className="block text-[10px] font-bold text-text-muted uppercase tracking-wider mb-2">Filter View</label>
           <div className="flex flex-wrap gap-2">
             {Object.values(CalendarFilter).map(f => (
               <button
                 key={f}
                 onClick={() => setFilter(f)}
-                className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${filter === f ? 'bg-blue-600 text-white border-blue-600' : 'bg-white/10 text-gray-600 border-white/20 hover:bg-white/30'}`}
+                className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full border transition-all ${filter === f ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/30' : 'bg-white/5 text-text-muted border-card-border hover:bg-white/10 hover:text-text-main'}`}
               >
                 {f}
               </button>
