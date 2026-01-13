@@ -1,33 +1,6 @@
 {
-  "81xv1qgrx": {
-    "status": "TODO",
-    "priority": "High",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": true,
-    "deletedAt": "2026-01-13T04:54:31.657Z"
-  },
-  "9fthd3c3r": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": true,
-    "deletedAt": "2026-01-13T04:54:36.498Z"
-  },
-  "9xh3tg9on": {
-    "status": "IN_PROGRESS",
-    "priority": "High",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": true,
-    "deletedAt": "2026-01-13T04:53:46.303Z"
-  },
   "AC001": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -35,7 +8,7 @@
     "isDeleted": false
   },
   "AC002": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -43,7 +16,7 @@
     "isDeleted": false
   },
   "AC003": {
-    "status": "TODO",
+    "status": "IN_PROGRESS",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -3726,7 +3699,8 @@
   },
   "5y9vzl3ao": {
     "isDeleted": true,
-    "deletedAt": "2026-01-13T04:54:26.567Z"
+    "deletedAt": "2026-01-13T04:54:26.567Z",
+    "isArchived": true
   },
   "mho0nlof8": {
     "status": "IN_PROGRESS"

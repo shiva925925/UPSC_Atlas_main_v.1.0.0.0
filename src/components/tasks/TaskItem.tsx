@@ -102,19 +102,17 @@ const TaskItem: React.FC<TaskItemProps> = ({
                     </button>
                     {activeTab === 'ACTIVE' && (
                         <>
-                            {task.status === TaskStatus.DONE && (
-                                <button
-                                    onClick={(e) => { e.stopPropagation(); onArchive(task.id); }}
-                                    className="p-1.5 text-text-muted hover:text-blue-500 hover:bg-white/10 rounded transition-all"
-                                    title="Archive"
-                                >
-                                    <Archive size={14} />
-                                </button>
-                            )}
+                            <button
+                                onClick={(e) => { e.stopPropagation(); onArchive(task.id); }}
+                                className="p-1.5 text-text-muted hover:text-blue-500 hover:bg-white/10 rounded transition-all"
+                                title="Archive"
+                            >
+                                <Archive size={14} />
+                            </button>
                             <button
                                 onClick={(e) => { e.stopPropagation(); onDelete(task.id); }}
                                 className="p-1.5 text-text-muted hover:text-red-500 hover:bg-white/10 rounded transition-all"
-                                title="Move to Trash"
+                                title="Delete Permanently"
                             >
                                 <Trash2 size={14} />
                             </button>

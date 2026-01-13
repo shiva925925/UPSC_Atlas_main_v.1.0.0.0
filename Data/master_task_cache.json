@@ -7,7 +7,7 @@
       "priority": "Medium",
       "sourceFile": "Ancient,Medieval.yaml",
       "date": "2026-01-13",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "logs": [],
       "evidences": [],
       "isArchived": false,
@@ -22,7 +22,7 @@
       "priority": "Medium",
       "sourceFile": "Ancient,Medieval.yaml",
       "date": "2026-01-13",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "logs": [],
       "evidences": [],
       "isArchived": false,
@@ -37,7 +37,7 @@
       "priority": "Medium",
       "sourceFile": "Ancient,Medieval.yaml",
       "date": "2026-01-13",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "logs": [],
       "evidences": [],
       "isArchived": false,
@@ -19987,21 +19987,6 @@
       "isDeleted": false
     },
     {
-      "id": "9fthd3c3r",
-      "userId": "Schamala",
-      "title": "789978",
-      "subject": "Polity",
-      "priority": "Medium",
-      "date": "2025-11-27",
-      "status": "TODO",
-      "description": "",
-      "acceptanceCriteria": [],
-      "logs": [],
-      "evidences": [],
-      "isArchived": false,
-      "isDeleted": false
-    },
-    {
       "id": "xl3r155b8",
       "userId": "Schamala",
       "title": "DM Examples in India",
@@ -20014,32 +19999,6 @@
         {
           "id": "csieijjeg",
           "text": "Maintain the data in a map",
-          "isCompleted": false
-        }
-      ],
-      "logs": [],
-      "evidences": [],
-      "isArchived": false,
-      "isDeleted": false
-    },
-    {
-      "id": "9xh3tg9on",
-      "userId": "Schamala",
-      "title": "srgdhjg",
-      "subject": "Social Justice",
-      "priority": "High",
-      "date": "2025-12-11",
-      "status": "TODO",
-      "description": "ghfmd",
-      "acceptanceCriteria": [
-        {
-          "id": "smnusz2up",
-          "text": "gbnhm",
-          "isCompleted": false
-        },
-        {
-          "id": "w0qd4n9dy",
-          "text": "fhjmg",
           "isCompleted": false
         }
       ],
@@ -20069,21 +20028,6 @@
           "isCompleted": false
         }
       ],
-      "logs": [],
-      "evidences": [],
-      "isArchived": false,
-      "isDeleted": false
-    },
-    {
-      "id": "81xv1qgrx",
-      "userId": "Schamala",
-      "title": "Test 1",
-      "subject": "Disaster Management",
-      "priority": "High",
-      "date": "2025-12-20",
-      "status": "TODO",
-      "description": "",
-      "acceptanceCriteria": [],
       "logs": [],
       "evidences": [],
       "isArchived": false,
@@ -21573,11 +21517,8 @@
     "GS-4-059",
     "GS-4-060",
     "es8u2k56t",
-    "9fthd3c3r",
     "xl3r155b8",
-    "9xh3tg9on",
     "bip46u33h",
-    "81xv1qgrx",
     "k9pn9s3yf",
     "ezs8g066w",
     "jt7tfn0l6",
@@ -21586,5 +21527,5 @@
     "mho0nlof8",
     "zezf7fr09"
   ],
-  "timestamp": 1768280719301
+  "timestamp": 1768281878573
 }

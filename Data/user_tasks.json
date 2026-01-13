@@ -21,21 +21,6 @@
     "isDeleted": false
   },
   {
-    "id": "9fthd3c3r",
-    "userId": "Schamala",
-    "title": "789978",
-    "subject": "Polity",
-    "priority": "Medium",
-    "date": "2025-11-27",
-    "status": "TODO",
-    "description": "",
-    "acceptanceCriteria": [],
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
-  },
-  {
     "id": "xl3r155b8",
     "userId": "Schamala",
     "title": "DM Examples in India",
@@ -48,32 +33,6 @@
       {
         "id": "csieijjeg",
         "text": "Maintain the data in a map",
-        "isCompleted": false
-      }
-    ],
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
-  },
-  {
-    "id": "9xh3tg9on",
-    "userId": "Schamala",
-    "title": "srgdhjg",
-    "subject": "Social Justice",
-    "priority": "High",
-    "date": "2025-12-11",
-    "status": "TODO",
-    "description": "ghfmd",
-    "acceptanceCriteria": [
-      {
-        "id": "smnusz2up",
-        "text": "gbnhm",
-        "isCompleted": false
-      },
-      {
-        "id": "w0qd4n9dy",
-        "text": "fhjmg",
         "isCompleted": false
       }
     ],
@@ -103,21 +62,6 @@
         "isCompleted": false
       }
     ],
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
-  },
-  {
-    "id": "81xv1qgrx",
-    "userId": "Schamala",
-    "title": "Test 1",
-    "subject": "Disaster Management",
-    "priority": "High",
-    "date": "2025-12-20",
-    "status": "TODO",
-    "description": "",
-    "acceptanceCriteria": [],
     "logs": [],
     "evidences": [],
     "isArchived": false,
