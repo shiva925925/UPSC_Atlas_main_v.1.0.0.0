@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 import { Task, TaskStatus, Subject, SubjectCategory } from '../types';
-import { Plus, List, Calendar, BookOpen, X, Search, RefreshCw, CheckSquare, Moon, Sun } from 'lucide-react';
+import { Plus, List, Calendar, BookOpen, X, Search, RefreshCw, CheckSquare, Moon, Sun, ChevronUp, ChevronDown } from 'lucide-react';
 import { pullProgressOnly, fullLibrarySync, saveUserTask, updateTaskProgress, deleteTaskPermanently, triggerManualRescan } from '../services/taskSyncService';
 import { SUBJECT_HIERARCHY } from '../constants';
+import { getSearchSnippet, SearchMatch } from '../utils/searchHelper';
 
 
 // Sub-components
@@ -28,15 +29,13 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
   const tasks = useLiveQuery(() => db.tasks.toArray());
   const isLoading = tasks === undefined; // Data hasn't arrived from DB yet
 
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+  const selectedTask = selectedTaskId ? (tasks || []).find(t => t.id === selectedTaskId) || null : null;
 
   useEffect(() => {
     if (initialSelectedTaskId && tasks && tasks.length > 0) {
-      const task = tasks.find(t => t.id === initialSelectedTaskId);
-      if (task) {
-        setSelectedTask(task);
-        if (onTaskSelected) onTaskSelected();
-      }
+      setSelectedTaskId(initialSelectedTaskId);
+      if (onTaskSelected) onTaskSelected();
     }
   }, [initialSelectedTaskId, tasks, onTaskSelected]);
 
@@ -48,10 +47,11 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
 
   // Multi-Filter State
   const [filterSubject, setFilterSubject] = useState<string | null>(null);
-  const [filterStatus, setFilterStatus] = useState<string | null>(null);
+  const [filterStatus, setFilterStatus] = useState<string | null>(TaskStatus.IN_PROGRESS);
   const [filterDate, setFilterDate] = useState<string | null>(null);
   const [isSyncing, setIsSyncing] = useState(false);
   const [filterTopic, setFilterTopic] = useState<string | null>(null);
+  const [isSubjectsCollapsed, setIsSubjectsCollapsed] = useState(true);
 
   // Helper to get topics for a category
   const getSubjectTopics = (category: string) => {
@@ -64,8 +64,8 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
   useEffect(() => {
     const runSync = async () => {
       try {
+        // fullLibrarySync now handles library + progress in one go
         await fullLibrarySync();
-        await pullProgressOnly();
       } catch (error) {
         console.error("[TasksView] Auto sync failed:", error);
       }
@@ -112,9 +112,6 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
   };
 
   const handleUpdateTask = async (taskId: string, updates: Partial<Task>) => {
-    if (selectedTask?.id === taskId) {
-      setSelectedTask(prev => prev ? { ...prev, ...updates } : null);
-    }
     await db.tasks.update(taskId, updates);
     await updateTaskProgress(taskId, updates);
   };
@@ -123,7 +120,7 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
     if (window.confirm('Delete this task permanently? This cannot be undone.')) {
       try {
         await deleteTaskPermanently(id);
-        if (selectedTask?.id === id) setSelectedTask(null);
+        if (selectedTaskId === id) setSelectedTaskId(null);
       } catch (e) {
         alert('Failed to delete task');
       }
@@ -134,14 +131,14 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
     const updates = { isArchived: true };
     await db.tasks.update(id, updates);
     await updateTaskProgress(id, updates);
-    if (selectedTask?.id === id) setSelectedTask(null);
+    if (selectedTaskId === id) setSelectedTaskId(null);
   };
 
   const handleRestore = async (id: string) => {
     const updates = { isArchived: false };
     await db.tasks.update(id, updates);
     await updateTaskProgress(id, updates);
-    if (selectedTask?.id === id) setSelectedTask(null);
+    if (selectedTaskId === id) setSelectedTaskId(null);
   };
 
   const getWeekRange = (offsetWeeks: number = 0) => {
@@ -156,44 +153,67 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
   };
 
   const tasksList = tasks || [];
-  const filteredTasks = tasksList.filter(t => {
-    if (activeTab === 'ARCHIVED') { if (!t.isArchived) return false; }
-    else { if (t.isArchived) return false; }
 
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      if (!t.title.toLowerCase().includes(query) && !t.description?.toLowerCase().includes(query)) return false;
-    }
+  // 1. Filter and Score
+  const scoredTasks = tasksList.map(t => {
+    // Basic Tab & Filter check
+    if (activeTab === 'ARCHIVED') { if (!t.isArchived) return null; }
+    else { if (t.isArchived) return null; }
 
-    if (filterSubject) {
-      if ((SUBJECT_HIERARCHY[t.subject] || SubjectCategory.GENERAL) !== filterSubject) return false;
-    }
-    if (filterTopic && t.subject !== filterTopic) return false;
-    if (filterStatus && t.status !== filterStatus) return false;
+    if (filterSubject && (SUBJECT_HIERARCHY[t.subject] || SubjectCategory.GENERAL) !== filterSubject) return null;
+    if (filterTopic && t.subject !== filterTopic) return null;
+    if (filterStatus && t.status !== filterStatus) return null;
 
     if (filterDate) {
       const taskDate = new Date(t.date);
-      if (filterDate === 'This Week') {
-        const { start, end } = getWeekRange(0);
-        if (!(taskDate >= start && taskDate <= end)) return false;
-      } else if (filterDate === 'Next Week') {
-        const { start, end } = getWeekRange(1);
-        if (!(taskDate >= start && taskDate <= end)) return false;
-      } else if (filterDate === 'Last Week') {
-        const { start, end } = getWeekRange(-1);
-        if (!(taskDate >= start && taskDate <= end)) return false;
-      } else if (filterDate === 'Next 2 Weeks') {
-        const { start } = getWeekRange(0);
-        const { end } = getWeekRange(1);
-        if (!(taskDate >= start && taskDate <= end)) return false;
-      } else if (filterDate === 'Overdue') {
+      const { start: twS, end: twE } = getWeekRange(0);
+      const { start: nwS, end: nwE } = getWeekRange(1);
+      const { start: lwS, end: lwE } = getWeekRange(-1);
+
+      if (filterDate === 'This Week' && !(taskDate >= twS && taskDate <= twE)) return null;
+      if (filterDate === 'Next Week' && !(taskDate >= nwS && taskDate <= nwE)) return null;
+      if (filterDate === 'Last Week' && !(taskDate >= lwS && taskDate <= lwE)) return null;
+      if (filterDate === 'Next 2 Weeks' && !(taskDate >= twS && taskDate <= nwE)) return null;
+      if (filterDate === 'Overdue') {
         const now = new Date();
         now.setHours(0, 0, 0, 0);
-        if (!(taskDate < now && t.status !== TaskStatus.DONE)) return false;
+        if (!(taskDate < now && t.status !== TaskStatus.DONE)) return null;
       }
     }
-    return true;
-  });
+
+    // 2. Deep Search Logic
+    if (!searchQuery) return { task: t, score: 0, match: null };
+
+    const query = searchQuery.toLowerCase();
+    let score = 0;
+    let match: SearchMatch | null = null;
+
+    // Title Match (Highest Priority)
+    if (t.title.toLowerCase() === query) score = 100;
+    else if (t.title.toLowerCase().includes(query)) score = 80;
+
+    // Criteria Match (Medium Priority)
+    if (score < 80) {
+      const criteriaMatch = (t.acceptanceCriteria || []).find(ac => ac.text.toLowerCase().includes(query));
+      if (criteriaMatch) {
+        score = 60;
+        match = { field: 'criteria', keyword: query, snippet: getSearchSnippet(criteriaMatch.text, query) || criteriaMatch.text };
+      }
+    }
+
+    // Description Match (Lowest Priority)
+    if (score < 60 && t.description?.toLowerCase().includes(query)) {
+      score = 40;
+      match = { field: 'description', keyword: query, snippet: getSearchSnippet(t.description, query) || t.description };
+    }
+
+    if (score === 0) return null;
+    return { task: t, score, match };
+  }).filter((res): res is { task: Task; score: number; match: SearchMatch | null } => res !== null);
+
+  // 3. Final Sort
+  const filteredTasks = scoredTasks
+    .sort((a, b) => b.score - a.score);
 
   const activeTasks = tasksList.filter(t => !t.isArchived);
   const subjectStats = Object.values(SubjectCategory).map(category => {
@@ -291,45 +311,59 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
         </div>
       </header>
 
-      <div className="flex-1 flex flex-col gap-4 p-4 overflow-y-auto custom-scrollbar">
-        {/* Subject Cards - Slimmer */}
-        <div className="flex-shrink-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          {isLoading ? (
-            Array(6).fill(0).map((_, i) => (
-              <Skeleton key={i} className="h-24 w-full rounded-lg" />
-            ))
-          ) : (
-            subjectStats.map((stat) => (
-              <GlassCard
-                key={stat.category}
-                variant="blur"
-                onClick={() => {
-                  setFilterSubject(stat.category === filterSubject ? null : stat.category);
-                  setFilterTopic(null);
-                }}
-                className={`p-3 cursor-pointer transition-all hover:translate-y-[-2px] border-card-border min-w-[120px] ${filterSubject === stat.category ? 'ring-2 ring-blue-500 bg-blue-500/10' : 'hover:bg-card-bg/20'}`}
-              >
-                <div className="flex flex-col gap-1">
-                  <div className="flex justify-between items-start">
-                    <span className="text-[9px] font-black text-text-muted uppercase tracking-tighter truncate">{stat.category}</span>
-                    <span className="text-[9px] font-mono bg-white/10 px-1 rounded text-text-muted">{stat.completed}/{stat.total}</span>
-                  </div>
-                  <div className="text-lg font-bold text-text-main leading-none py-1">{stat.percentage}%</div>
-                  <div className="w-full bg-gray-200/10 h-1 rounded-full overflow-hidden">
-                    <div
-                      className="bg-blue-600 h-full transition-all duration-700"
-                      style={{ width: `${stat.percentage}%` }}
-                    />
-                  </div>
-                </div>
-              </GlassCard>
-            ))
-          )}
+      <div className="flex-1 flex flex-col gap-4 p-4 overflow-y-auto custom-scrollbar relative">
+        {/* Subject Area Toggle */}
+        <div className="flex justify-between items-center bg-card-bg/30 px-3 py-1 rounded-lg border border-card-border/50">
+          <div className="text-[10px] font-bold text-text-muted uppercase tracking-widest">Syllabus Overview</div>
+          <button
+            onClick={() => setIsSubjectsCollapsed(!isSubjectsCollapsed)}
+            className="text-text-muted hover:text-blue-500 transition-colors p-1"
+            title={isSubjectsCollapsed ? "Show Overview" : "Collapse Overview"}
+          >
+            {isSubjectsCollapsed ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
+          </button>
         </div>
+
+        {/* Subject Cards - Slimmer */}
+        {!isSubjectsCollapsed && (
+          <div className="flex-shrink-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+            {isLoading ? (
+              Array(6).fill(0).map((_, i) => (
+                <Skeleton key={i} className="h-24 w-full rounded-lg" />
+              ))
+            ) : (
+              subjectStats.map((stat) => (
+                <GlassCard
+                  key={stat.category}
+                  variant="blur"
+                  onClick={() => {
+                    setFilterSubject(stat.category === filterSubject ? null : stat.category);
+                    setFilterTopic(null);
+                  }}
+                  className={`p-3 cursor-pointer transition-all hover:translate-y-[-2px] border-card-border min-w-[120px] ${filterSubject === stat.category ? 'ring-2 ring-blue-500 bg-blue-500/10' : 'hover:bg-card-bg/20'}`}
+                >
+                  <div className="flex flex-col gap-1">
+                    <div className="flex justify-between items-start">
+                      <span className="text-[9px] font-black text-text-muted uppercase tracking-tighter truncate">{stat.category}</span>
+                      <span className="text-[9px] font-mono bg-white/10 px-1 rounded text-text-muted">{stat.completed}/{stat.total}</span>
+                    </div>
+                    <div className="text-lg font-bold text-text-main leading-none py-1">{stat.percentage}%</div>
+                    <div className="w-full bg-gray-200/10 h-1 rounded-full overflow-hidden">
+                      <div
+                        className="bg-blue-600 h-full transition-all duration-700"
+                        style={{ width: `${stat.percentage}%` }}
+                      />
+                    </div>
+                  </div>
+                </GlassCard>
+              ))
+            )}
+          </div>
+        )}
 
         <div className="flex flex-1 gap-4 overflow-hidden relative">
           {/* Main Task List */}
-          <GlassCard variant="blur" className={`flex-1 flex flex-col border-card-border overflow-hidden transition-all duration-300 ${selectedTask ? 'mr-[340px]' : ''}`}>
+          <GlassCard variant="blur" className="flex-1 flex flex-col border-card-border overflow-hidden transition-all duration-300">
             {/* Tabs */}
             <div className="flex border-b border-card-border px-4 bg-card-bg/40 backdrop-blur-sm z-30">
               {['ACTIVE', 'ARCHIVED'].map(tab => (
@@ -374,17 +408,18 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
                     actionLabel="Initialize Task"
                   />
                 ) : (
-                  filteredTasks.map(task => (
+                  filteredTasks.map(({ task, match }) => (
                     <TaskItem
                       key={task.id}
                       task={task}
-                      isSelected={selectedTask?.id === task.id}
+                      isSelected={selectedTaskId === task.id}
                       activeTab={activeTab === 'ARCHIVED' ? 'ARCHIVED' : 'ACTIVE'}
-                      onClick={setSelectedTask}
+                      onClick={(t) => setSelectedTaskId(t.id)}
                       onArchive={handleArchive}
                       onDelete={handleDelete}
                       onRestore={handleRestore}
                       onPermanentDelete={handleDelete}
+                      searchMatch={match || undefined}
                     />
                   ))
                 )}
@@ -392,16 +427,24 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
             </div>
           </GlassCard>
 
-          {/* Right Floating Detail Panel */}
+          {/* Right Floating Detail Panel Overlay (Zen Mode Drawer) */}
           {selectedTask && (
-            <div className="fixed right-4 bottom-4 top-[7.5rem] w-[320px] z-30 animate-in slide-in-from-right duration-300">
-              <TaskDetailPanel
-                task={selectedTask}
-                onClose={() => setSelectedTask(null)}
-                onUpdate={handleUpdateTask}
-                className="h-full shadow-2xl rounded-2xl border-card-border"
+            <>
+              {/* Backdrop */}
+              <div
+                className="absolute inset-0 z-40 bg-black/5 backdrop-blur-[2px] animate-in fade-in duration-300"
+                onClick={() => setSelectedTaskId(null)}
               />
-            </div>
+              <div className="absolute right-0 bottom-0 top-0 w-[400px] z-50 animate-in slide-in-from-right duration-300 shadow-[-20px_0_50px_rgba(0,0,0,0.1)] dark:shadow-[-20px_0_50px_rgba(0,0,0,0.5)]">
+                <TaskDetailPanel
+                  task={selectedTask}
+                  onClose={() => setSelectedTaskId(null)}
+                  onUpdate={handleUpdateTask}
+                  onSelectTask={(id) => setSelectedTaskId(id)}
+                  className="h-full rounded-none md:rounded-l-2xl border-l border-card-border bg-card-bg"
+                />
+              </div>
+            </>
           )}
         </div>
       </div>

@@ -105,6 +105,7 @@ export interface Task {
   isDeleted?: boolean;
   deletedAt?: string; // ISO Date
   sourceFile?: string; // The name of the file from which this task was imported
+  linkedTaskIds?: string[]; // IDs of tasks related to this one (Graph)
 }
 
 export interface TimeLog {

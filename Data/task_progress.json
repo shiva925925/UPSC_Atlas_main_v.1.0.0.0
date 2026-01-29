@@ -1,6 +1,6 @@
 {
   "AC001": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [
       {
@@ -20,10 +20,14 @@
       }
     ],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": false,
+    "linkedTaskIds": [
+      "task_icorwtipl"
+    ],
+    "date": "2026-02-09"
   },
   "AC002": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -31,12 +35,20 @@
     "isDeleted": false
   },
   "AC003": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": false,
+    "linkedTaskIds": [],
+    "acceptanceCriteria": [
+      {
+        "id": "p10y34dgj",
+        "text": "shiva prasad",
+        "isCompleted": false
+      }
+    ]
   },
   "AC004": {
     "status": "TODO",
@@ -52,7 +64,13 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": false,
+    "linkedTaskIds": [
+      "task_icorwtipl",
+      "GS-1.1-202",
+      "GS-1.1-108",
+      "GS-3.1-043"
+    ]
   },
   "AC006": {
     "status": "TODO",
@@ -92,7 +110,8 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": false,
+    "description": "chamala"
   },
   "AC011": {
     "status": "TODO",
@@ -492,7 +511,8 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": false,
+    "linkedTaskIds": []
   },
   "AC087": {
     "status": "TODO",
@@ -668,7 +688,8 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": false,
+    "linkedTaskIds": []
   },
   "AC109": {
     "status": "TODO",
@@ -1862,7 +1883,7 @@
     "isDeleted": false
   },
   "GS-1.1-094": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Medium",
     "logs": [],
     "evidences": [],
@@ -1979,7 +2000,10 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": false,
+    "linkedTaskIds": [
+      "AC005"
+    ]
   },
   "GS-1.1-109": {
     "status": "TODO",
@@ -2731,7 +2755,10 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
+    "isDeleted": false,
+    "linkedTaskIds": [
+      "AC005"
+    ]
   },
   "GS-1.1-203": {
     "status": "TODO",
@@ -3705,28 +3732,38 @@
     "isDeleted": false
   },
   "xl3r155b8": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "Low",
     "logs": [],
     "evidences": [],
     "isArchived": false,
     "isDeleted": false
   },
-  "mho0nlof8": {
-    "status": "IN_PROGRESS"
-  },
-  "zezf7fr09": {
+  "GS-3-075": {
     "status": "IN_PROGRESS",
-    "logs": [
+    "priority": "High",
+    "linkedTaskIds": [
+      "AC001",
+      "AC108"
+    ]
+  },
+  "GS-3.1-043": {
+    "linkedTaskIds": [
+      "AC005"
+    ]
+  },
+  "task_5oy7sklf4": {
+    "status": "TODO",
+    "date": ""
+  },
+  "ezs8g066w": {
+    "acceptanceCriteria": [
       {
-        "id": "klmnkmr06",
-        "date": "2026-01-13",
-        "durationMinutes": 60,
-        "subject": "Post-Independence India",
-        "description": "jnifvhbsd"
+        "id": "utyx1hf7m",
+        "text": "Ask Sravan bava about training videos",
+        "isCompleted": true
       }
     ],
-    "isDeleted": true,
-    "deletedAt": "2026-01-13T04:37:57.153Z"
+    "status": "DONE"
   }
 }

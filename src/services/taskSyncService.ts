@@ -1,10 +1,11 @@
 import { db } from '../db';
 import { Task, TaskStatus, Subject, Priority } from '../types';
 
-const TASKS_API = '/api/tasks'; // Reads Data/Tasks (Excel/YAML)
+const LIBRARY_API = '/api/library';
 const PROGRESS_API = '/api/progress';
 const USER_TASKS_API = '/api/user-tasks';
-const RESCAN_API = '/api/rescan'; // New Endpoint
+const RESCAN_API = '/api/rescan';
+const LEGACY_TASKS_API = '/api/tasks';
 
 /**
  * AUTOMATIC SYNC: Pulls only progress data from the server.
@@ -54,48 +55,70 @@ export async function triggerManualRescan() {
  */
 export async function deleteTaskPermanently(taskId: string) {
     console.log(`[Sync Service] Deleting task ${taskId} permanently...`);
-
-    // 1. Optimistic UI Update (Local Delete)
     await db.tasks.delete(taskId);
-
-    // 2. Server Tombstone
-    const response = await fetch(`${TASKS_API}/${taskId}`, { method: 'DELETE' });
+    const response = await fetch(`${LEGACY_TASKS_API}/${taskId}`, { method: 'DELETE' });
     if (!response.ok) throw new Error('Failed to delete on server');
 }
 
 /**
- * MANUAL/AUTO SYNC: Imports task definitions from the Server-Side Master Cache.
- * This is now high-speed because the server has already done the heavy merging.
+ * RECONCILIATION SYNC: The Core Fix.
+ * Fetches Static Library and Dynamic Progress separately and merges them in the browser.
  */
 export async function fullLibrarySync() {
-    console.log('%c[Sync Service] Starting high-speed library sync...', 'color: blue; font-weight: bold;');
+    console.log('%c[Sync Service] Starting de-coupled library sync...', 'color: blue; font-weight: bold;');
 
     try {
-        // 1. Fetch the Master Cache from server
-        const response = await fetch(`${TASKS_API}?t=${Date.now()}`);
-        if (!response.ok) throw new Error(`Failed to fetch tasks: ${response.statusText}`);
+        // 1. Fetch all streams concurrently
+        const [libRes, progRes, userRes] = await Promise.all([
+            fetch(LIBRARY_API),
+            fetch(PROGRESS_API),
+            fetch(USER_TASKS_API)
+        ]);
 
-        const data = await response.json(); // { tasks, fullTaskIds, timestamp }
-        const { tasks, fullTaskIds } = data;
+        if (!libRes.ok || !progRes.ok || !userRes.ok) throw new Error("Sync network failure");
 
-        if (!tasks || !Array.isArray(tasks)) throw new Error("Invalid sync data received from server");
+        const libraryData = await libRes.json(); // { tasks, fullTaskIds }
+        const progressData = await progRes.json(); // { taskId: { progress } }
+        const userTasksData = await userRes.json(); // Task[]
 
-        // 2. High-speed Bulk Update
-        // bulkPut is much faster than individual updates for thousands of items.
-        await db.tasks.bulkPut(tasks);
+        const staticTasks: Task[] = libraryData.tasks || [];
+        const userTasks: Task[] = userTasksData || [];
 
-        // 3. Precise Orphan Cleanup
-        // If a task ID is NOT in the server's master list, it means it was deleted in Excel.
-        const allLocalTasks = await db.tasks.toArray();
-        const serverTaskIdSet = new Set(fullTaskIds);
+        // 2. Perform the Merge (Client is now the engine of truth)
+        const mergedTasks: Task[] = [
+            ...staticTasks.map(task => {
+                const prog = progressData[task.id] || {};
+                return {
+                    ...task,
+                    date: prog.date || task.date || new Date().toISOString().split('T')[0],
+                    status: prog.status || task.status || 'TODO',
+                    priority: prog.priority || task.priority || 'Medium',
+                    description: prog.description || task.description || '',
+                    acceptanceCriteria: prog.acceptanceCriteria || task.acceptanceCriteria || [],
+                    logs: prog.logs || [],
+                    evidences: prog.evidences || [],
+                    isArchived: prog.isArchived || false,
+                    isDeleted: false,
+                    deletedAt: null
+                };
+            }),
+            ...userTasks
+        ];
 
-        const orphans = allLocalTasks.filter(t => !serverTaskIdSet.has(t.id));
+        // 3. Selective local update
+        // Still using bulkPut for speed, but the DATA we are putting is now pre-merged
+        // so it cannot be "stale" from a server rebuild race.
+        await db.tasks.bulkPut(mergedTasks);
+
+        // 4. Orphan Cleanup (If a task exists in DB but not in our merged list)
+        const allIdsInSync = new Set(mergedTasks.map(t => t.id));
+        const localTasks = await db.tasks.toArray();
+        const orphans = localTasks.filter(t => !allIdsInSync.has(t.id));
         if (orphans.length > 0) {
-            console.log(`%c[Sync Service] Cleaning up ${orphans.length} orphans...`, 'color: orange;');
             await db.tasks.bulkDelete(orphans.map(t => t.id));
         }
 
-        console.log(`%c[Sync Service] Sync complete. Processed ${tasks.length} tasks.`, 'color: green; font-weight: bold;');
+        console.log(`%c[Sync Service] Sync complete. Merged ${mergedTasks.length} tasks.`, 'color: green; font-weight: bold;');
     } catch (error: any) {
         console.error('[Sync Service] Sync failed:', error);
         throw error;
@@ -176,8 +199,15 @@ function getProgressUpdates(task: Task, progress: Partial<Task>): Partial<Task> 
     const updates: Partial<Task> = {};
     if (progress.status !== undefined && task.status !== progress.status) updates.status = progress.status;
     if (progress.priority !== undefined && task.priority !== progress.priority) updates.priority = progress.priority;
+    if (progress.description !== undefined && task.description !== progress.description) updates.description = progress.description;
+    if (progress.date !== undefined && task.date !== progress.date) updates.date = progress.date;
+    if (progress.linkedTaskIds !== undefined) updates.linkedTaskIds = progress.linkedTaskIds;
 
     const deepDiffer = (a: any, b: any) => JSON.stringify(a) !== JSON.stringify(b);
+
+    if (progress.acceptanceCriteria !== undefined && deepDiffer(task.acceptanceCriteria, progress.acceptanceCriteria)) {
+        updates.acceptanceCriteria = progress.acceptanceCriteria;
+    }
     if (progress.logs !== undefined && deepDiffer(task.logs, progress.logs)) updates.logs = progress.logs;
     if (progress.evidences !== undefined && deepDiffer(task.evidences, progress.evidences)) updates.evidences = progress.evidences;
     if (progress.isArchived !== undefined && task.isArchived !== progress.isArchived) updates.isArchived = progress.isArchived;
@@ -249,7 +279,7 @@ export async function saveTaskProgress(allTasks: Task[]) {
 
 export async function updateTaskProgress(taskId: string, updates: Partial<Task>) {
     const progressUpdates: Partial<Task> = {};
-    const keys = ['status', 'priority', 'logs', 'evidences', 'isArchived', 'isDeleted', 'deletedAt'];
+    const keys = ['status', 'priority', 'logs', 'evidences', 'isArchived', 'isDeleted', 'deletedAt', 'description', 'acceptanceCriteria', 'date', 'linkedTaskIds'];
     keys.forEach(k => { if ((updates as any)[k] !== undefined) (progressUpdates as any)[k] = (updates as any)[k]; });
 
     if (Object.keys(progressUpdates).length === 0) return;
@@ -265,4 +295,96 @@ export async function updateTaskProgress(taskId: string, updates: Partial<Task>)
         console.error(`[Sync Service] Error updating task '${taskId}':`, error);
         throw error;
     }
+}
+
+/**
+ * BI-DIRECTIONAL LINKING: Ensures both tasks reference each other.
+ */
+export async function linkTasks(taskAId: string, taskBId: string) {
+    console.log(`[Sync Service] Linking ${taskAId} <-> ${taskBId}`);
+
+    const taskA = await db.tasks.get(taskAId);
+    const taskB = await db.tasks.get(taskBId);
+
+    if (!taskA || !taskB) return;
+
+    const updatedAIds = [...new Set([...(taskA.linkedTaskIds || []), taskBId])];
+    const updatedBIds = [...new Set([...(taskB.linkedTaskIds || []), taskAId])];
+
+    await Promise.all([
+        db.tasks.update(taskAId, { linkedTaskIds: updatedAIds }),
+        db.tasks.update(taskBId, { linkedTaskIds: updatedBIds }),
+        updateTaskProgress(taskAId, { linkedTaskIds: updatedAIds }),
+        updateTaskProgress(taskBId, { linkedTaskIds: updatedBIds })
+    ]);
+}
+
+/**
+ * BI-DIRECTIONAL UNLINKING: Removes references from both tasks.
+ */
+export async function unlinkTasks(taskAId: string, taskBId: string) {
+    console.log(`[Sync Service] Unlinking ${taskAId} <-> ${taskBId}`);
+
+    const taskA = await db.tasks.get(taskAId);
+    const taskB = await db.tasks.get(taskBId);
+
+    if (!taskA || !taskB) return;
+
+    const updatedAIds = (taskA.linkedTaskIds || []).filter(id => id !== taskBId);
+    const updatedBIds = (taskB.linkedTaskIds || []).filter(id => id !== taskAId);
+
+    await Promise.all([
+        db.tasks.update(taskAId, { linkedTaskIds: updatedAIds }),
+        db.tasks.update(taskBId, { linkedTaskIds: updatedBIds }),
+        updateTaskProgress(taskAId, { linkedTaskIds: updatedAIds }),
+        updateTaskProgress(taskBId, { linkedTaskIds: updatedBIds })
+    ]);
+}
+
+/**
+ * TASK PROMOTION: Creates a new task from an acceptance criterion.
+ */
+export async function promoteCriterionToTask(parentTaskId: string, criterionText: string) {
+    const parent = await db.tasks.get(parentTaskId);
+    if (!parent) return;
+
+    const newTaskId = `task_${Math.random().toString(36).substr(2, 9)}`;
+    const newTask: Task = {
+        id: newTaskId,
+        userId: parent.userId,
+        title: criterionText,
+        subject: parent.subject,
+        priority: parent.priority || 'Medium',
+        date: new Date().toISOString().split('T')[0],
+        status: TaskStatus.TODO,
+        description: `Created from parent task: ${parent.title}`,
+        acceptanceCriteria: [],
+        logs: [],
+        evidences: [],
+        isArchived: false,
+        isDeleted: false,
+        linkedTaskIds: [parentTaskId] // Link back to parent
+    };
+
+    // 1. Create New Task
+    await db.tasks.add(newTask);
+    await saveUserTask(newTask);
+
+    // 2. Update Parent (Link to child + mark criterion as moved)
+    const updatedLinkedIds = [...new Set([...(parent.linkedTaskIds || []), newTaskId])];
+    const updatedAC = (parent.acceptanceCriteria || []).map(ac =>
+        ac.text === criterionText ? { ...ac, text: `${ac.text} (PROMOTED → ${newTaskId})`, isCompleted: true } : ac
+    );
+
+    await db.tasks.update(parentTaskId, {
+        linkedTaskIds: updatedLinkedIds,
+        acceptanceCriteria: updatedAC
+    });
+
+    await updateTaskProgress(parentTaskId, {
+        linkedTaskIds: updatedLinkedIds,
+        acceptanceCriteria: updatedAC
+    });
+
+    return newTask;
 }

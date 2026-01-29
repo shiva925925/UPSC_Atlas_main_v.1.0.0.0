@@ -144,57 +144,5 @@
     "evidences": [],
     "isArchived": false,
     "isDeleted": false
-  },
-  {
-    "id": "mho0nlof8",
-    "userId": "Schamala",
-    "title": "h chgd",
-    "subject": "General",
-    "priority": "Low",
-    "date": "2026-01-12",
-    "status": "TODO",
-    "description": "kj s",
-    "acceptanceCriteria": [
-      {
-        "id": "o39thfoky",
-        "text": "kj cs",
-        "isCompleted": false
-      },
-      {
-        "id": "i6rxurgrm",
-        "text": "s s",
-        "isCompleted": false
-      }
-    ],
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
-  },
-  {
-    "id": "zezf7fr09",
-    "userId": "Schamala",
-    "title": "hubinj",
-    "subject": "Post-Independence India",
-    "priority": "High",
-    "date": "2026-01-15",
-    "status": "TODO",
-    "description": "ibhugvy",
-    "acceptanceCriteria": [
-      {
-        "id": "n14pkvms9",
-        "text": "jhbgv",
-        "isCompleted": false
-      },
-      {
-        "id": "z3v6vx6vq",
-        "text": "kjnhbg",
-        "isCompleted": false
-      }
-    ],
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
   }
 ]

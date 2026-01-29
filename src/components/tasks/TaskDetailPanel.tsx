@@ -1,10 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { Task, TaskStatus, Subject, EvidenceType, TimeLog, Evidence, SubjectCategory, Priority } from '../../types';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../../constants';
-import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit, Upload, ExternalLink } from 'lucide-react';
+import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit, Upload, ExternalLink, Share2, ArrowUpCircle, Search, Calendar } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import { uploadFile } from '../../services/uploadService';
 import { ensureProtocol } from '../../utils/urlHelper';
+import { linkTasks, promoteCriterionToTask, unlinkTasks } from '../../services/taskSyncService';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { db } from '../../db';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -12,10 +15,11 @@ interface TaskDetailPanelProps {
     task: Task;
     onClose: () => void;
     onUpdate: (taskId: string, updates: Partial<Task>) => Promise<void>;
+    onSelectTask?: (taskId: string) => void;
     className?: string;
 }
 
-const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpdate, className }) => {
+const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpdate, onSelectTask, className }) => {
     // Time Logging Form State
     const [logDuration, setLogDuration] = useState<string>('30');
     const [logDate, setLogDate] = useState<string>(new Date().toISOString().split('T')[0]);
@@ -35,6 +39,13 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
     const [newCriterion, setNewCriterion] = useState('');
     const [editingCriterionId, setEditingCriterionId] = useState<string | null>(null);
     const [editedCriterionText, setEditedCriterionText] = useState('');
+
+    // Linking State
+    const [linkingQuery, setLinkingQuery] = useState('');
+    const [isSearchingTasks, setIsSearchingTasks] = useState(false);
+
+    // Fetch all tasks for linking search
+    const allTasks = useLiveQuery(() => db.tasks.toArray()) || [];
 
     const calculateProgress = (task: Task) => {
         if (!task.acceptanceCriteria || task.acceptanceCriteria.length === 0) return 0;
@@ -164,6 +175,32 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
         setEditingCriterionId(null);
     };
 
+    const handlePromoteToTask = async (criterionText: string) => {
+        if (window.confirm(`Create a new task for "${criterionText}"?`)) {
+            await promoteCriterionToTask(task.id, criterionText);
+            // The onUpdate in promoteCriterionToTask will handle parent state refresh
+        }
+    };
+
+    const handleAddLink = async (targetTaskId: string) => {
+        if (targetTaskId === task.id) return;
+        await linkTasks(task.id, targetTaskId);
+        // Refresh local UI state (redundant but safe with the new TasksView refactor)
+        setLinkingQuery('');
+        setIsSearchingTasks(false);
+    };
+
+    const handleRemoveLink = async (targetTaskId: string) => {
+        await unlinkTasks(task.id, targetTaskId);
+    };
+
+    const filteredLinkingTasks = allTasks
+        .filter(t => t.id !== task.id && !(task.linkedTaskIds || []).includes(t.id))
+        .filter(t => t.title.toLowerCase().includes(linkingQuery.toLowerCase()))
+        .slice(0, 5);
+
+    const linkedTasks = allTasks.filter(t => (task.linkedTaskIds || []).includes(t.id));
+
     const subjectCategory = SUBJECT_HIERARCHY[task.subject] || SubjectCategory.GENERAL;
     // Safe access in case category is missing from colors map
     const colors = CATEGORY_COLORS[subjectCategory] || CATEGORY_COLORS[SubjectCategory.GENERAL];
@@ -269,6 +306,80 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                     )}
                 </div>
 
+                {/* Linked Tasks Section */}
+                <div className="mb-5">
+                    <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
+                            <Share2 size={16} className="text-blue-500" /> Linked Topics
+                        </h3>
+                        <button
+                            onClick={() => setIsSearchingTasks(!isSearchingTasks)}
+                            className="text-[10px] font-bold text-blue-500 hover:text-blue-600 uppercase"
+                        >
+                            {isSearchingTasks ? 'Cancel' : '+ Add Link'}
+                        </button>
+                    </div>
+
+                    {isSearchingTasks && (
+                        <div className="mb-3 relative">
+                            <div className="relative">
+                                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-muted" size={12} />
+                                <input
+                                    type="text"
+                                    value={linkingQuery}
+                                    onChange={(e) => setLinkingQuery(e.target.value)}
+                                    placeholder="Search task to link..."
+                                    className="w-full text-xs bg-card-bg border border-card-border rounded-md pl-8 pr-3 py-2 outline-none focus:ring-1 focus:ring-blue-500"
+                                    autoFocus
+                                />
+                            </div>
+
+                            {linkingQuery && filteredLinkingTasks.length > 0 && (
+                                <div className="absolute top-full left-0 right-0 mt-1 bg-card-bg border border-card-border rounded-md shadow-xl z-50 overflow-hidden divide-y divide-card-border">
+                                    {filteredLinkingTasks.map(t => (
+                                        <button
+                                            key={t.id}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                handleAddLink(t.id);
+                                            }}
+                                            className="w-full text-left px-3 py-2 text-[11px] hover:bg-blue-500/10 text-text-main transition-colors flex flex-col"
+                                        >
+                                            <span className="font-bold truncate">{t.title}</span>
+                                            <span className="text-[9px] text-text-muted">{t.subject}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    <div className="flex flex-wrap gap-2">
+                        {linkedTasks.length === 0 && !isSearchingTasks && (
+                            <p className="text-[11px] text-text-muted italic">No linked tasks.</p>
+                        )}
+                        {linkedTasks.map(t => (
+                            <div
+                                key={t.id}
+                                className="flex items-center gap-2 bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/20 px-2 py-1 rounded-md group cursor-pointer transition-all"
+                                onClick={() => onSelectTask?.(t.id)}
+                            >
+                                <LinkIcon size={10} className="text-blue-500" />
+                                <span className="text-[11px] text-text-main font-bold hover:text-blue-600 transition-colors uppercase tracking-tight">{t.title}</span>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleRemoveLink(t.id);
+                                    }}
+                                    className="text-text-muted hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                                >
+                                    <X size={10} />
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
                 <div className="mb-5">
                     <div className="flex items-center justify-between mb-2">
                         <h3 className="text-sm font-bold text-text-main">Acceptance Criteria</h3>
@@ -315,6 +426,16 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
 
                                     {editingCriterionId !== ac.id && (
                                         <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            {!ac.text.includes('PROMOTED →') && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handlePromoteToTask(ac.text)}
+                                                    className="text-gray-400 hover:text-green-600 p-1 rounded hover:bg-gray-100"
+                                                    title="Promote to standalone Task"
+                                                >
+                                                    <ArrowUpCircle size={14} />
+                                                </button>
+                                            )}
                                             <button
                                                 type="button"
                                                 onClick={() => startEditingCriterion(ac.id, ac.text)}
@@ -557,14 +678,15 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                     <div className="flex justify-between items-center text-xs text-text-muted">
                         <div className="flex items-center gap-2">
                             <div className="flex flex-col">
-                                <label className="text-[10px] font-bold text-text-muted uppercase mb-0.5">Due Date</label>
-                                <div className="flex items-center gap-1.5 hover:bg-white/5 p-1 rounded transition-colors group cursor-pointer">
-                                    <Clock size={14} className="text-text-muted group-hover:text-blue-500" />
+                                <label className="text-[10px] font-bold text-text-muted uppercase mb-1">Due Date</label>
+                                <div className="flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-3 py-1.5 rounded-lg hover:bg-blue-500/20 hover:border-blue-500/40 transition-all group shadow-sm">
+                                    <Calendar size={14} className="text-blue-600 dark:text-blue-400 shrink-0" />
                                     <input
                                         type="date"
                                         value={task.date}
                                         onChange={(e) => onUpdate(task.id, { date: e.target.value })}
-                                        className="bg-transparent border-none p-0 text-xs font-medium text-text-main focus:ring-0 cursor-pointer"
+                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-text-main focus:ring-0 cursor-pointer appearance-none min-w-[90px]"
+                                        style={{ colorScheme: 'auto' }}
                                     />
                                 </div>
                             </div>

@@ -18,8 +18,9 @@ import FullTaskView from './components/tasks/FullTaskView';
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const [currentView, setCurrentView] = useState<ViewType>(ViewType.DASHBOARD);
+  const [currentView, setCurrentView] = useState<ViewType>(ViewType.TASKS);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
   // Fetch user profile
   const userProfile = useLiveQuery(() => db.userProfile.get('Schamala'));
@@ -105,10 +106,12 @@ const App: React.FC = () => {
         onChangeView={handleViewChange}
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
+        isCollapsed={isSidebarCollapsed}
+        onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
       />
 
       {/* Main Content Wrapper - Adjust margin for desktop */}
-      <div className="flex-1 flex flex-col ml-0 md:ml-64 min-w-0 transition-all duration-300">
+      <div className={`flex-1 flex flex-col transition-all duration-300 min-w-0 ${isSidebarCollapsed ? 'md:ml-20' : 'md:ml-64'}`}>
 
 
         {/* Main Content Area */}

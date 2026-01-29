@@ -1,6 +1,8 @@
+import React from 'react';
 import { Task, TaskStatus, Subject, SubjectCategory } from '../../types';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../../constants';
 import { AlertCircle, Calendar, Archive, Trash2, RotateCcw, Ban, Edit } from 'lucide-react';
+import { SearchMatch } from '../../utils/searchHelper';
 
 interface TaskItemProps {
     task: Task;
@@ -11,6 +13,7 @@ interface TaskItemProps {
     onDelete: (id: string) => void;
     onRestore: (id: string) => void;
     onPermanentDelete: (id: string) => void;
+    searchMatch?: SearchMatch;
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({
@@ -21,7 +24,8 @@ const TaskItem: React.FC<TaskItemProps> = ({
     onArchive,
     onDelete,
     onRestore,
-    onPermanentDelete
+    onPermanentDelete,
+    searchMatch
 }) => {
     const calculateProgress = (task: Task) => {
         if (!task.acceptanceCriteria || task.acceptanceCriteria.length === 0) return 0;
@@ -47,17 +51,33 @@ const TaskItem: React.FC<TaskItemProps> = ({
             className={`grid grid-cols-12 gap-4 px-6 py-2.5 border-b border-card-border/50 items-center hover:bg-text-main/5 cursor-pointer transition-all group ${isSelected ? 'bg-blue-500/10' : ''}`}
         >
             {/* Task Title & Progress */}
-            <div className="col-span-4 flex items-center justify-between gap-4 pr-4">
-                <h4 className="text-sm font-bold text-text-main group-hover:text-blue-500 transition-colors truncate" title={task.title}>{task.title}</h4>
-                <div className="flex items-center gap-2 shrink-0">
-                    <div className="w-16 bg-text-main/10 rounded-full h-1">
-                        <div
-                            className="bg-blue-500 h-1 rounded-full shadow-[0_0_8px_rgba(37,99,235,0.3)]"
-                            style={{ width: `${calculateProgress(task)}%` }}
-                        ></div>
+            <div className="col-span-4 flex flex-col justify-center pr-4 overflow-hidden">
+                <div className="flex items-center justify-between gap-4 mb-0.5">
+                    <h4 className="text-sm font-bold text-text-main group-hover:text-blue-500 transition-colors truncate" title={task.title}>{task.title}</h4>
+                    <div className="flex items-center gap-2 shrink-0">
+                        <div className="w-16 bg-text-main/10 rounded-full h-1">
+                            <div
+                                className="bg-blue-500 h-1 rounded-full shadow-[0_0_8px_rgba(37,99,235,0.3)]"
+                                style={{ width: `${calculateProgress(task)}%` }}
+                            ></div>
+                        </div>
+                        <span className="text-[10px] font-mono text-text-muted w-6 text-right">{calculateProgress(task)}%</span>
                     </div>
-                    <span className="text-[10px] font-mono text-text-muted w-6 text-right">{calculateProgress(task)}%</span>
                 </div>
+
+                {/* Search Match Snippet */}
+                {searchMatch && searchMatch.snippet && (
+                    <div className="text-[10px] text-text-muted italic truncate mt-0.5">
+                        <span className="font-bold uppercase text-[8px] bg-blue-500/10 px-1 rounded mr-1">
+                            {searchMatch.field}
+                        </span>
+                        {searchMatch.snippet.split(new RegExp(`(${searchMatch.keyword})`, 'gi')).map((part, i) => (
+                            part.toLowerCase() === searchMatch.keyword.toLowerCase()
+                                ? <mark key={i} className="bg-yellow-500/30 text-text-main rounded-sm px-0.5">{part}</mark>
+                                : <span key={i}>{part}</span>
+                        ))}
+                    </div>
+                )}
             </div>
 
             {/* Status */}
