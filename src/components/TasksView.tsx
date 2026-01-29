@@ -340,17 +340,17 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
                     setFilterSubject(stat.category === filterSubject ? null : stat.category);
                     setFilterTopic(null);
                   }}
-                  className={`p-3 cursor-pointer transition-all hover:translate-y-[-2px] border-card-border min-w-[120px] ${filterSubject === stat.category ? 'ring-2 ring-blue-500 bg-blue-500/10' : 'hover:bg-card-bg/20'}`}
+                  className={`p-3 cursor-pointer transition-all hover:translate-y-[-2px] border-card-border min-w-[120px] ${filterSubject === stat.category ? 'ring-2 ring-blue-500 bg-blue-500/15' : 'hover:bg-card-bg/20'}`}
                 >
                   <div className="flex flex-col gap-1">
                     <div className="flex justify-between items-start">
                       <span className="text-[9px] font-black text-text-muted uppercase tracking-tighter truncate">{stat.category}</span>
-                      <span className="text-[9px] font-mono bg-white/10 px-1 rounded text-text-muted">{stat.completed}/{stat.total}</span>
+                      <span className="text-[9px] font-mono bg-white/10 px-1 rounded text-text-muted font-bold">{stat.completed}/{stat.total}</span>
                     </div>
                     <div className="text-lg font-bold text-text-main leading-none py-1">{stat.percentage}%</div>
-                    <div className="w-full bg-gray-200/10 h-1 rounded-full overflow-hidden">
+                    <div className="w-full bg-text-main/10 dark:bg-white/5 h-1 rounded-full overflow-hidden border border-white/5">
                       <div
-                        className="bg-blue-600 h-full transition-all duration-700"
+                        className="bg-blue-600 h-full transition-all duration-700 shadow-[0_0_8px_rgba(37,99,235,0.4)]"
                         style={{ width: `${stat.percentage}%` }}
                       />
                     </div>

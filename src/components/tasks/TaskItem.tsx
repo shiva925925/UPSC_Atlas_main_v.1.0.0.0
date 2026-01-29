@@ -48,20 +48,20 @@ const TaskItem: React.FC<TaskItemProps> = ({
     return (
         <div
             onClick={() => onClick(task)}
-            className={`grid grid-cols-12 gap-4 px-6 py-2.5 border-b border-card-border/50 items-center hover:bg-text-main/5 cursor-pointer transition-all group ${isSelected ? 'bg-blue-500/10' : ''}`}
+            className={`grid grid-cols-12 gap-4 px-6 py-2.5 border-b border-card-border/50 items-center hover:bg-text-main/5 cursor-pointer transition-all group ${isSelected ? 'bg-blue-600/15 ring-1 ring-blue-500/50 z-10' : ''}`}
         >
             {/* Task Title & Progress */}
             <div className="col-span-4 flex flex-col justify-center pr-4 overflow-hidden">
                 <div className="flex items-center justify-between gap-4 mb-0.5">
                     <h4 className="text-sm font-bold text-text-main group-hover:text-blue-500 transition-colors truncate" title={task.title}>{task.title}</h4>
                     <div className="flex items-center gap-2 shrink-0">
-                        <div className="w-16 bg-text-main/10 rounded-full h-1">
+                        <div className="w-16 bg-text-main/10 dark:bg-white/5 rounded-full h-1.5 border border-white/5">
                             <div
-                                className="bg-blue-500 h-1 rounded-full shadow-[0_0_8px_rgba(37,99,235,0.3)]"
+                                className="bg-blue-500 h-full rounded-full shadow-[0_0_8px_rgba(37,99,235,0.6)] transition-all duration-500"
                                 style={{ width: `${calculateProgress(task)}%` }}
                             ></div>
                         </div>
-                        <span className="text-[10px] font-mono text-text-muted w-6 text-right">{calculateProgress(task)}%</span>
+                        <span className="text-[10px] font-mono text-text-muted w-6 text-right font-bold">{calculateProgress(task)}%</span>
                     </div>
                 </div>
 
@@ -90,7 +90,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
             {/* Subject */}
             <div className="col-span-2">
                 <span
-                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${colors.background} ${colors.text}`}
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${colors.background} ${colors.text} dark:bg-white/5 dark:text-text-main dark:border-white/20`}
                 >
                     {task.subject}
                 </span>
