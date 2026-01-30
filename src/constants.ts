@@ -5,6 +5,8 @@ const today = new Date().toISOString().split('T')[0];
 const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
 const twoDaysAgo = new Date(Date.now() - 86400000 * 2).toISOString().split('T')[0];
 
+export const BASELINE_ANCHOR_DATE = '2026-01-30';
+
 export const MOCK_USER: UserProfile = {
   id: 'Schamala',
   name: "Schamala",

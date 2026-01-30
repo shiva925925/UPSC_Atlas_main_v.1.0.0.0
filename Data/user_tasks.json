@@ -144,5 +144,103 @@
     "evidences": [],
     "isArchived": false,
     "isDeleted": false
+  },
+  {
+    "id": "test_pwsh_verification_123",
+    "subject": "General",
+    "userId": "Schamala",
+    "title": "PowerShell Verification Task",
+    "evidences": [],
+    "description": "Test task created via PowerShell Invoke-RestMethod.",
+    "priority": "High",
+    "logs": [],
+    "isArchived": false,
+    "acceptanceCriteria": [],
+    "status": "TODO",
+    "date": "2026-01-30",
+    "isDeleted": false
+  },
+  {
+    "id": "75csim5h6",
+    "userId": "Schamala",
+    "title": "aetrsh",
+    "subject": "Current Affairs",
+    "priority": "High",
+    "date": "2026-02-06",
+    "status": "TODO",
+    "description": "sfghd",
+    "acceptanceCriteria": [
+      {
+        "id": "86471kx0p",
+        "text": "gfjxfm",
+        "isCompleted": false
+      }
+    ],
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  {
+    "id": "s8zh996io",
+    "userId": "Schamala",
+    "title": "Indian Semi Conductor Mission",
+    "subject": "Indian Economy",
+    "priority": "High",
+    "date": "2026-02-06",
+    "status": "TODO",
+    "description": "you already know the science, prepare a final draft and add the link.",
+    "acceptanceCriteria": [
+      {
+        "id": "o1ldk75lg",
+        "text": "Final draft of science part",
+        "isCompleted": false
+      }
+    ],
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  {
+    "id": "8euh9bzue",
+    "userId": "Schamala",
+    "title": "don",
+    "subject": "General",
+    "priority": "High",
+    "date": "2026-01-02",
+    "status": "TODO",
+    "description": "bcnhmfj",
+    "acceptanceCriteria": [
+      {
+        "id": "ebpphmt14",
+        "text": "gnhfgmj",
+        "isCompleted": false
+      },
+      {
+        "id": "gu4h7zt63",
+        "text": "yrjuk",
+        "isCompleted": false
+      }
+    ],
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  {
+    "id": "vdgq8us15",
+    "userId": "Schamala",
+    "title": "apple",
+    "subject": "General",
+    "priority": "Medium",
+    "date": "2026-01-30",
+    "status": "TODO",
+    "description": "",
+    "acceptanceCriteria": [],
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
   }
 ]

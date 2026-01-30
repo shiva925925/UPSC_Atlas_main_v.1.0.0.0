@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Task, TaskStatus, Subject, EvidenceType, TimeLog, Evidence, SubjectCategory, Priority } from '../../types';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../../constants';
-import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit, Upload, ExternalLink, Share2, ArrowUpCircle, Search, Calendar } from 'lucide-react';
+import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit, Upload, ExternalLink, Share2, ArrowUpCircle, Search, Calendar, Star } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import { uploadFile } from '../../services/uploadService';
 import { ensureProtocol } from '../../utils/urlHelper';
@@ -247,8 +247,16 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                     <div className="flex items-center">
                         <button
                             type="button"
+                            onClick={() => onUpdate(task.id, { isStarred: !task.isStarred })}
+                            className={`p-1 hover:bg-white/10 rounded transition-all flex-shrink-0 ml-2 ${task.isStarred ? 'text-yellow-500 fill-yellow-500 animate-bounce-subtle' : 'text-gray-500 hover:text-yellow-500'}`}
+                            title={task.isStarred ? "Unstar Task" : "Star Task"}
+                        >
+                            <Star size={20} strokeWidth={task.isStarred ? 1 : 2} />
+                        </button>
+                        <button
+                            type="button"
                             onClick={() => window.open(`/task/${task.id}`, '_blank')}
-                            className="p-1 hover:bg-gray-100 rounded text-gray-500 transition-colors flex-shrink-0 ml-2"
+                            className="p-1 hover:bg-gray-100 rounded text-gray-500 transition-colors flex-shrink-0 ml-1"
                             title="Open in New Tab"
                         >
                             <ExternalLink size={20} />

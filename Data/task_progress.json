@@ -22,41 +22,20 @@
     "isArchived": false,
     "isDeleted": false,
     "linkedTaskIds": [
-      "task_icorwtipl"
+      "75csim5h6"
     ],
-    "date": "2026-02-09"
+    "date": "2026-02-09",
+    "isStarred": false
   },
   "AC002": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC003": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false,
-    "linkedTaskIds": [],
-    "acceptanceCriteria": [
-      {
-        "id": "p10y34dgj",
-        "text": "shiva prasad",
-        "isCompleted": false
-      }
-    ]
+    "date": "2026-01-30"
   },
   "AC004": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30",
+    "status": "TODO"
   },
   "AC005": {
     "status": "TODO",
@@ -70,3591 +49,1345 @@
       "GS-1.1-202",
       "GS-1.1-108",
       "GS-3.1-043"
-    ]
+    ],
+    "date": "2026-02-05",
+    "isStarred": true
   },
   "AC006": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30",
+    "isStarred": true
   },
   "AC007": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC008": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC009": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC010": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false,
-    "description": "chamala"
+    "date": "2026-01-30"
   },
   "AC011": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC012": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC013": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC014": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC015": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC016": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC017": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC018": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC019": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC020": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC021": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC022": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC023": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC050": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC051": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC052": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC053": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC054": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC055": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC056": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC057": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC058": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC059": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC060": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC061": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC062": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC063": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC064": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC065": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC066": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC067": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC068": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC069": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC070": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC071": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC072": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC073": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC074": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC075": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC076": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC077": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC078": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC079": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC080": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC081": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC082": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC083": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC084": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC085": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC086": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false,
-    "linkedTaskIds": []
+    "date": "2026-01-30"
   },
   "AC087": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC088": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC089": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC090": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC091": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC092": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC093": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC094": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC095": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC096": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC097": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC098": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC099": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC100": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC101": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC102": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC103": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC104": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC105": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC106": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC107": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC108": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false,
-    "linkedTaskIds": []
+    "date": "2026-01-30"
   },
   "AC109": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC110": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC111": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC112": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC113": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC114": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC115": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC116": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC117": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC118": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC119": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC120": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC121": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC122": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC123": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC124": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC125": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC126": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC127": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC128": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC129": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC130": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC131": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC132": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC133": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC134": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC135": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC136": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC137": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC138": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC139": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC140": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC141": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC142": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC143": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC144": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC145": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC146": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC147": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC148": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC149": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC150": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC151": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC152": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC153": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC154": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC155": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC156": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC157": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC158": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC159": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC160": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC161": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "AC162": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-001": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-002": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [
-      {
-        "id": "fv4xrftyl",
-        "date": "2025-12-07",
-        "durationMinutes": 60,
-        "subject": "Indian Society",
-        "description": "Task work log"
-      }
-    ],
-    "evidences": [
-      {
-        "id": "0aebwzacl",
-        "type": "LINK",
-        "content": "https://vajiramweb-test.s3.ap-south-1.amazonaws.com/media/2023/10/9/17/22/6/Ancient_History_Previous_Year_Questions_UPSC.pdf",
-        "timestamp": "11:37:23 AM"
-      }
-    ],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-003": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-004": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-005": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-006": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-007": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-008": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-009": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-010": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-011": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-012": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-013": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-014": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-015": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-016": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-017": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-018": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-019": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-020": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-021": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-022": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-023": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-024": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-025": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-026": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-027": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-028": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-029": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-030": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-031": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-032": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-033": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-034": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-035": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-036": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-037": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-038": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-039": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-040": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-041": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-042": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-043": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-044": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-045": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-046": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-047": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-048": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-049": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-050": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-051": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-052": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-053": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-054": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-055": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-056": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-057": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-058": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-059": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-060": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-061": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-062": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-063": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-064": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-065": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-066": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-067": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-068": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-069": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-070": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-071": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-072": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-073": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-074": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-075": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-076": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-077": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-078": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-079": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-080": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-081": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-082": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-083": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-084": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-085": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-086": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-087": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-088": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-089": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-090": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-091": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-092": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-093": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-094": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-095": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-096": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-097": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-098": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-099": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-100": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-101": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-102": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-103": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-104": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-105": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-106": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-107": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-108": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false,
-    "linkedTaskIds": [
-      "AC005"
-    ]
+    "date": "2026-01-30"
   },
   "GS-1.1-109": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-110": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-111": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-112": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-113": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-114": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-115": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-116": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-117": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-118": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-119": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-120": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-121": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-122": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-123": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-124": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-125": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-126": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-127": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-128": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-129": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-130": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-131": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-132": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-133": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-134": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-135": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-136": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-137": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-138": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-139": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-140": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-141": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-142": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-143": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-144": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-145": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-146": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-147": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-148": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-149": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-150": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-151": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-152": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-153": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-154": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-155": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-156": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-157": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-158": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-159": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-160": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-161": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-162": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-163": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-164": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-165": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-166": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-167": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-168": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-169": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-170": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-171": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-172": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-173": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-174": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-175": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-176": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-177": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-178": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-179": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-180": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-181": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-182": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-183": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-184": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-185": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-186": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-187": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-188": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-189": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-190": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-191": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-192": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-193": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-194": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-195": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-196": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-197": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-198": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-199": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-200": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-201": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-202": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false,
-    "linkedTaskIds": [
-      "AC005"
-    ]
+    "date": "2026-01-30"
   },
   "GS-1.1-203": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-204": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-205": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-206": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.1-207": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-001": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-002": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-003": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-004": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-005": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-006": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-007": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-008": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-009": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-010": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-011": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-012": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-013": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-014": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-015": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-016": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-017": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-018": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-019": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-020": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-021": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-022": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-023": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-024": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-025": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-026": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-027": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-028": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-029": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-030": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-031": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-032": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-033": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-034": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-035": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-036": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-037": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-038": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-039": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-040": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-041": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-042": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-043": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-044": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-045": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-046": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-047": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-048": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-049": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-050": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-051": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-052": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-053": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-054": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-055": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-056": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-057": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-058": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-059": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-060": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-061": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-062": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-063": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-064": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-065": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-066": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-067": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-068": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-069": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-070": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-071": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-072": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-073": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-074": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-075": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-076": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-077": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-078": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-079": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-080": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-081": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-082": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-083": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-084": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-085": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-086": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-087": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-088": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-089": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-090": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-091": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-092": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-093": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-094": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-095": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-096": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-097": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-098": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-099": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-100": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-101": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-102": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-103": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-104": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-105": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-106": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "GS-1.2-107": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
+    "date": "2026-01-30"
   },
   "bip46u33h": {
     "status": "TODO",
@@ -3745,12 +1478,29 @@
     "linkedTaskIds": [
       "AC001",
       "AC108"
-    ]
+    ],
+    "date": "2026-02-06",
+    "acceptanceCriteria": [
+      {
+        "id": "in32n1lgu",
+        "text": "Fiscal Health Index",
+        "isCompleted": false
+      },
+      {
+        "id": "4z3ztm69k",
+        "text": "FRBM Act",
+        "isCompleted": false
+      },
+      {
+        "id": "004bg6ntb",
+        "text": "Centre - State Fiscal relation",
+        "isCompleted": false
+      }
+    ],
+    "description": "it is a fairly large topic. Covers major part of the Economy.\n"
   },
   "GS-3.1-043": {
-    "linkedTaskIds": [
-      "AC005"
-    ]
+    "date": "2026-01-30"
   },
   "task_5oy7sklf4": {
     "status": "TODO",
@@ -3765,5 +1515,2665 @@
       }
     ],
     "status": "DONE"
+  },
+  "75csim5h6": {
+    "status": "IN_PROGRESS",
+    "priority": "Low",
+    "logs": [
+      {
+        "id": "dpkr9vak9",
+        "date": "2026-01-30",
+        "durationMinutes": 30,
+        "subject": "Current Affairs",
+        "description": "Task work log"
+      }
+    ]
+  },
+  "s8zh996io": {
+    "status": "IN_PROGRESS",
+    "date": "2026-02-04"
+  },
+  "8euh9bzue": {
+    "status": "IN_PROGRESS",
+    "date": "2026-01-03"
+  },
+  "AC024": {
+    "date": "2026-01-30"
+  },
+  "AC025": {
+    "date": "2026-01-30"
+  },
+  "AC026": {
+    "date": "2026-01-30"
+  },
+  "AC027": {
+    "date": "2026-01-30"
+  },
+  "AC028": {
+    "date": "2026-01-30"
+  },
+  "AC029": {
+    "date": "2026-01-30"
+  },
+  "AC030": {
+    "date": "2026-01-30"
+  },
+  "AC031": {
+    "date": "2026-01-30"
+  },
+  "AC032": {
+    "date": "2026-01-30"
+  },
+  "AC033": {
+    "date": "2026-01-30"
+  },
+  "AC034": {
+    "date": "2026-01-30"
+  },
+  "AC035": {
+    "date": "2026-01-30"
+  },
+  "AC036": {
+    "date": "2026-01-30"
+  },
+  "AC037": {
+    "date": "2026-01-30"
+  },
+  "AC038": {
+    "date": "2026-01-30"
+  },
+  "AC039": {
+    "date": "2026-01-30"
+  },
+  "AC040": {
+    "date": "2026-01-30"
+  },
+  "AC041": {
+    "date": "2026-01-30"
+  },
+  "AC042": {
+    "date": "2026-01-30"
+  },
+  "AC043": {
+    "date": "2026-01-30"
+  },
+  "AC044": {
+    "date": "2026-01-30"
+  },
+  "AC045": {
+    "date": "2026-01-30"
+  },
+  "AC046": {
+    "date": "2026-01-30"
+  },
+  "AC047": {
+    "date": "2026-01-30"
+  },
+  "AC048": {
+    "date": "2026-01-30"
+  },
+  "AC049": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-108": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-109": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-110": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-111": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-112": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-113": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-114": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-115": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-116": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-117": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-118": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-119": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-120": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-121": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-122": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-123": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-124": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-125": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-126": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-127": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-128": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-129": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-130": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-131": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-132": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-133": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-134": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-135": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-136": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-137": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-138": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-139": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-140": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-141": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-142": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-143": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-144": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-145": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-146": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-147": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-148": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-149": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-150": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-151": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-152": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-153": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-154": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-155": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-156": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-157": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-158": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-159": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-160": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-161": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-162": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-163": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-164": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-165": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-166": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-167": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-168": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-169": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-170": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-171": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-172": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-173": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-174": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-175": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-176": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-177": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-178": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-179": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-180": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-181": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-182": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-183": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-184": {
+    "date": "2026-01-30"
+  },
+  "GS-1.2-185": {
+    "date": "2026-01-30"
+  },
+  "GS-2-001": {
+    "date": "2026-01-30"
+  },
+  "GS-2-002": {
+    "date": "2026-01-30"
+  },
+  "GS-2-003": {
+    "date": "2026-01-30"
+  },
+  "GS-2-004": {
+    "date": "2026-01-30"
+  },
+  "GS-2-005": {
+    "date": "2026-01-30"
+  },
+  "GS-2-006": {
+    "date": "2026-01-30"
+  },
+  "GS-2-007": {
+    "date": "2026-01-30"
+  },
+  "GS-2-008": {
+    "date": "2026-01-30"
+  },
+  "GS-2-009": {
+    "date": "2026-01-30"
+  },
+  "GS-2-010": {
+    "date": "2026-01-30"
+  },
+  "GS-2-011": {
+    "date": "2026-01-30"
+  },
+  "GS-2-012": {
+    "date": "2026-01-30"
+  },
+  "GS-2-013": {
+    "date": "2026-01-30"
+  },
+  "GS-2-014": {
+    "date": "2026-01-30"
+  },
+  "GS-2-015": {
+    "date": "2026-01-30"
+  },
+  "GS-2-016": {
+    "date": "2026-01-30"
+  },
+  "GS-2-017": {
+    "date": "2026-01-30"
+  },
+  "GS-2-018": {
+    "date": "2026-01-30"
+  },
+  "GS-2-019": {
+    "date": "2026-01-30"
+  },
+  "GS-2-020": {
+    "date": "2026-01-30"
+  },
+  "GS-2-021": {
+    "date": "2026-01-30"
+  },
+  "GS-2-022": {
+    "date": "2026-01-30"
+  },
+  "GS-2-023": {
+    "date": "2026-01-30"
+  },
+  "GS-2-024": {
+    "date": "2026-01-30"
+  },
+  "GS-2-025": {
+    "date": "2026-01-30"
+  },
+  "GS-2-026": {
+    "date": "2026-01-30"
+  },
+  "GS-2-027": {
+    "date": "2026-01-30"
+  },
+  "GS-2-028": {
+    "date": "2026-01-30"
+  },
+  "GS-2-029": {
+    "date": "2026-01-30"
+  },
+  "GS-2-030": {
+    "date": "2026-01-30"
+  },
+  "GS-2-031": {
+    "date": "2026-01-30"
+  },
+  "GS-2-032": {
+    "date": "2026-01-30"
+  },
+  "GS-2-033": {
+    "date": "2026-01-30"
+  },
+  "GS-2-034": {
+    "date": "2026-01-30"
+  },
+  "GS-2-035": {
+    "date": "2026-01-30"
+  },
+  "GS-2-036": {
+    "date": "2026-01-30"
+  },
+  "GS-2-037": {
+    "date": "2026-01-30"
+  },
+  "GS-2-038": {
+    "date": "2026-01-30"
+  },
+  "GS-2-039": {
+    "date": "2026-01-30"
+  },
+  "GS-2-040": {
+    "date": "2026-01-30"
+  },
+  "GS-2-041": {
+    "date": "2026-01-30"
+  },
+  "GS-2-042": {
+    "date": "2026-01-30"
+  },
+  "GS-2-043": {
+    "date": "2026-01-30"
+  },
+  "GS-2-044": {
+    "date": "2026-01-30"
+  },
+  "GS-2-045": {
+    "date": "2026-01-30"
+  },
+  "GS-2-046": {
+    "date": "2026-01-30"
+  },
+  "GS-2-047": {
+    "date": "2026-01-30"
+  },
+  "GS-2-048": {
+    "date": "2026-01-30"
+  },
+  "GS-2-049": {
+    "date": "2026-01-30"
+  },
+  "GS-2-050": {
+    "date": "2026-01-30"
+  },
+  "GS-2-051": {
+    "date": "2026-01-30"
+  },
+  "GS-2-052": {
+    "date": "2026-01-30"
+  },
+  "GS-2-053": {
+    "date": "2026-01-30"
+  },
+  "GS-2-054": {
+    "date": "2026-01-30"
+  },
+  "GS-2-055": {
+    "date": "2026-01-30"
+  },
+  "GS-2-056": {
+    "date": "2026-01-30"
+  },
+  "GS-2-057": {
+    "date": "2026-01-30"
+  },
+  "GS-2-058": {
+    "date": "2026-01-30"
+  },
+  "GS-2-059": {
+    "date": "2026-01-30"
+  },
+  "GS-2-060": {
+    "date": "2026-01-30"
+  },
+  "GS-2-061": {
+    "date": "2026-01-30"
+  },
+  "GS-2-062": {
+    "date": "2026-01-30"
+  },
+  "GS-2-063": {
+    "date": "2026-01-30"
+  },
+  "GS-2-064": {
+    "date": "2026-01-30"
+  },
+  "GS-2-065": {
+    "date": "2026-01-30"
+  },
+  "GS-2-066": {
+    "date": "2026-01-30"
+  },
+  "GS-2-067": {
+    "date": "2026-01-30"
+  },
+  "GS-2-068": {
+    "date": "2026-01-30"
+  },
+  "GS-2-069": {
+    "date": "2026-01-30"
+  },
+  "GS-2-070": {
+    "date": "2026-01-30"
+  },
+  "GS-2-071": {
+    "date": "2026-01-30"
+  },
+  "GS-2-072": {
+    "date": "2026-01-30"
+  },
+  "GS-2-073": {
+    "date": "2026-01-30"
+  },
+  "GS-2-074": {
+    "date": "2026-01-30"
+  },
+  "GS-2-075": {
+    "date": "2026-01-30"
+  },
+  "GS-2-076": {
+    "date": "2026-01-30"
+  },
+  "GS-2-077": {
+    "date": "2026-01-30"
+  },
+  "GS-2-078": {
+    "date": "2026-01-30"
+  },
+  "GS-2-079": {
+    "date": "2026-01-30"
+  },
+  "GS-2-080": {
+    "date": "2026-01-30"
+  },
+  "GS-2-081": {
+    "date": "2026-01-30"
+  },
+  "GS-2-082": {
+    "date": "2026-01-30"
+  },
+  "GS-2-083": {
+    "date": "2026-01-30"
+  },
+  "GS-2-084": {
+    "date": "2026-01-30"
+  },
+  "GS-2-085": {
+    "date": "2026-01-30"
+  },
+  "GS-2-086": {
+    "date": "2026-01-30"
+  },
+  "GS-2-087": {
+    "date": "2026-01-30"
+  },
+  "GS-2-088": {
+    "date": "2026-01-30"
+  },
+  "GS-2-089": {
+    "date": "2026-01-30"
+  },
+  "GS-2-090": {
+    "date": "2026-01-30"
+  },
+  "GS-2-091": {
+    "date": "2026-01-30"
+  },
+  "GS-2-092": {
+    "date": "2026-01-30"
+  },
+  "GS-2-093": {
+    "date": "2026-01-30"
+  },
+  "GS-2-094": {
+    "date": "2026-01-30"
+  },
+  "GS-2-095": {
+    "date": "2026-01-30"
+  },
+  "GS-2-096": {
+    "date": "2026-01-30"
+  },
+  "GS-2-097": {
+    "date": "2026-01-30"
+  },
+  "GS-2-098": {
+    "date": "2026-01-30"
+  },
+  "GS-2-099": {
+    "date": "2026-01-30"
+  },
+  "GS-2-100": {
+    "date": "2026-01-30"
+  },
+  "GS-2-101": {
+    "date": "2026-01-30"
+  },
+  "GS-2-102": {
+    "date": "2026-01-30"
+  },
+  "GS-2-103": {
+    "date": "2026-01-30"
+  },
+  "GS-2-104": {
+    "date": "2026-01-30"
+  },
+  "GS-2-105": {
+    "date": "2026-01-30"
+  },
+  "GS-2-106": {
+    "date": "2026-01-30"
+  },
+  "GS-2-107": {
+    "date": "2026-01-30"
+  },
+  "GS-2-108": {
+    "date": "2026-01-30"
+  },
+  "GS-2-109": {
+    "date": "2026-01-30"
+  },
+  "GS-2-110": {
+    "date": "2026-01-30"
+  },
+  "GS-2-111": {
+    "date": "2026-01-30"
+  },
+  "GS-2-112": {
+    "date": "2026-01-30"
+  },
+  "GS-2-113": {
+    "date": "2026-01-30"
+  },
+  "GS-2-114": {
+    "date": "2026-01-30"
+  },
+  "GS-2-115": {
+    "date": "2026-01-30"
+  },
+  "GS-2-116": {
+    "date": "2026-01-30"
+  },
+  "GS-2-117": {
+    "date": "2026-01-30"
+  },
+  "GS-2-118": {
+    "date": "2026-01-30"
+  },
+  "GS-2-119": {
+    "date": "2026-01-30"
+  },
+  "GS-2-120": {
+    "date": "2026-01-30"
+  },
+  "GS-2-121": {
+    "date": "2026-01-30"
+  },
+  "GS-2-122": {
+    "date": "2026-01-30"
+  },
+  "GS-2-123": {
+    "date": "2026-01-30"
+  },
+  "GS-2-124": {
+    "date": "2026-01-30"
+  },
+  "GS-2-125": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-001": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-002": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-003": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-004": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-005": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-006": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-007": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-008": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-009": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-010": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-011": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-012": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-013": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-014": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-015": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-016": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-017": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-018": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-019": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-020": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-021": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-022": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-023": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-024": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-025": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-026": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-027": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-028": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-029": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-030": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-031": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-032": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-033": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-034": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-035": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-036": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-037": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-038": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-039": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-040": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-041": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-042": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-043": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-044": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-045": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-046": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-047": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-048": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-049": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-050": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-051": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-052": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-053": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-054": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-055": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-056": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-057": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-058": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-059": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-060": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-061": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-062": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-063": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-064": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-065": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-066": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-067": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-068": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-069": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-070": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-071": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-072": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-073": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-074": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-075": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-076": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-077": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-078": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-079": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-080": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-081": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-082": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-083": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-084": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-085": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-086": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-087": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-088": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-089": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-090": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-091": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-092": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-093": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-094": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-095": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-096": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-097": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-098": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-099": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-100": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-101": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-102": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-103": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-104": {
+    "date": "2026-01-30"
+  },
+  "GS-2.1-105": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-001": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-002": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-003": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-004": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-005": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-006": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-007": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-008": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-009": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-010": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-011": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-012": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-013": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-014": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-015": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-016": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-017": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-018": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-019": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-020": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-021": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-022": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-023": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-024": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-025": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-026": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-027": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-028": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-029": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-030": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-031": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-032": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-033": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-034": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-035": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-036": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-037": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-038": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-039": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-040": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-041": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-042": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-043": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-044": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-045": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-046": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-047": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-048": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-049": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-050": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-051": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-052": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-053": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-054": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-055": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-056": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-057": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-058": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-059": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-060": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-061": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-062": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-063": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-064": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-065": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-066": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-067": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-068": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-069": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-070": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-071": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-072": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-073": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-074": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-075": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-076": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-077": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-078": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-079": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-080": {
+    "date": "2026-01-30"
+  },
+  "GS-2.2-081": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-001": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-002": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-003": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-004": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-005": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-006": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-007": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-008": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-009": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-010": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-011": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-012": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-013": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-014": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-015": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-016": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-017": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-018": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-019": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-020": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-021": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-022": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-023": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-024": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-025": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-026": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-027": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-028": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-029": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-030": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-031": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-032": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-033": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-034": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-035": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-036": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-037": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-038": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-039": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-040": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-041": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-042": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-043": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-044": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-045": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-046": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-047": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-048": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-049": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-050": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-051": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-052": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-053": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-054": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-055": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-056": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-057": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-058": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-059": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-060": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-061": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-062": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-063": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-064": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-065": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-066": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-067": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-068": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-069": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-070": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-071": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-072": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-073": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-074": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-075": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-076": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-077": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-078": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-079": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-080": {
+    "date": "2026-01-30"
+  },
+  "GS-2.3-081": {
+    "date": "2026-01-30"
+  },
+  "GS-3-001": {
+    "date": "2026-01-30"
+  },
+  "GS-3-002": {
+    "date": "2026-01-30"
+  },
+  "GS-3-003": {
+    "date": "2026-01-30"
+  },
+  "GS-3-004": {
+    "date": "2026-01-30"
+  },
+  "GS-3-005": {
+    "date": "2026-01-30"
+  },
+  "GS-3-006": {
+    "date": "2026-01-30"
+  },
+  "GS-3-007": {
+    "date": "2026-01-30"
+  },
+  "GS-3-008": {
+    "date": "2026-01-30"
+  },
+  "GS-3-009": {
+    "date": "2026-01-30"
+  },
+  "GS-3-010": {
+    "date": "2026-01-30"
+  },
+  "GS-3-011": {
+    "date": "2026-01-30"
+  },
+  "GS-3-012": {
+    "date": "2026-01-30"
+  },
+  "GS-3-013": {
+    "date": "2026-01-30"
+  },
+  "GS-3-014": {
+    "date": "2026-01-30"
+  },
+  "GS-3-015": {
+    "date": "2026-01-30"
+  },
+  "GS-3-016": {
+    "date": "2026-01-30"
+  },
+  "GS-3-017": {
+    "date": "2026-01-30"
+  },
+  "GS-3-018": {
+    "date": "2026-01-30"
+  },
+  "GS-3-019": {
+    "date": "2026-01-30"
+  },
+  "GS-3-020": {
+    "date": "2026-01-30"
+  },
+  "GS-3-021": {
+    "date": "2026-01-30"
+  },
+  "GS-3-022": {
+    "date": "2026-01-30"
+  },
+  "GS-3-023": {
+    "date": "2026-01-30"
+  },
+  "GS-3-024": {
+    "date": "2026-01-30"
+  },
+  "GS-3-025": {
+    "date": "2026-01-30"
+  },
+  "GS-3-026": {
+    "date": "2026-01-30"
+  },
+  "GS-3-027": {
+    "date": "2026-01-30"
+  },
+  "GS-3-028": {
+    "date": "2026-01-30"
+  },
+  "GS-3-029": {
+    "date": "2026-01-30"
+  },
+  "GS-3-030": {
+    "date": "2026-01-30"
+  },
+  "GS-3-031": {
+    "date": "2026-01-30"
+  },
+  "GS-3-032": {
+    "date": "2026-01-30"
+  },
+  "GS-3-033": {
+    "date": "2026-01-30"
+  },
+  "GS-3-034": {
+    "date": "2026-01-30"
+  },
+  "GS-3-035": {
+    "date": "2026-01-30"
+  },
+  "GS-3-036": {
+    "date": "2026-01-30"
+  },
+  "GS-3-037": {
+    "date": "2026-01-30"
+  },
+  "GS-3-038": {
+    "date": "2026-01-30"
+  },
+  "GS-3-039": {
+    "date": "2026-01-30"
+  },
+  "GS-3-040": {
+    "date": "2026-01-30"
+  },
+  "GS-3-041": {
+    "date": "2026-01-30"
+  },
+  "GS-3-042": {
+    "date": "2026-01-30"
+  },
+  "GS-3-043": {
+    "date": "2026-01-30"
+  },
+  "GS-3-044": {
+    "date": "2026-01-30"
+  },
+  "GS-3-045": {
+    "date": "2026-01-30"
+  },
+  "GS-3-046": {
+    "date": "2026-01-30"
+  },
+  "GS-3-047": {
+    "date": "2026-01-30"
+  },
+  "GS-3-048": {
+    "date": "2026-01-30"
+  },
+  "GS-3-049": {
+    "date": "2026-01-30"
+  },
+  "GS-3-050": {
+    "date": "2026-01-30"
+  },
+  "GS-3-051": {
+    "date": "2026-01-30"
+  },
+  "GS-3-052": {
+    "date": "2026-01-30"
+  },
+  "GS-3-053": {
+    "date": "2026-01-30"
+  },
+  "GS-3-054": {
+    "date": "2026-01-30"
+  },
+  "GS-3-055": {
+    "date": "2026-01-30"
+  },
+  "GS-3-056": {
+    "date": "2026-01-30"
+  },
+  "GS-3-057": {
+    "date": "2026-01-30"
+  },
+  "GS-3-058": {
+    "date": "2026-01-30"
+  },
+  "GS-3-059": {
+    "date": "2026-01-30"
+  },
+  "GS-3-060": {
+    "date": "2026-01-30"
+  },
+  "GS-3-061": {
+    "date": "2026-01-30"
+  },
+  "GS-3-062": {
+    "date": "2026-01-30"
+  },
+  "GS-3-063": {
+    "date": "2026-01-30"
+  },
+  "GS-3-064": {
+    "date": "2026-01-30"
+  },
+  "GS-3-065": {
+    "date": "2026-01-30"
+  },
+  "GS-3-066": {
+    "date": "2026-01-30"
+  },
+  "GS-3-067": {
+    "date": "2026-01-30"
+  },
+  "GS-3-068": {
+    "date": "2026-01-30"
+  },
+  "GS-3-069": {
+    "date": "2026-01-30"
+  },
+  "GS-3-070": {
+    "date": "2026-01-30"
+  },
+  "GS-3-071": {
+    "date": "2026-01-30"
+  },
+  "GS-3-072": {
+    "date": "2026-01-30"
+  },
+  "GS-3-073": {
+    "date": "2026-01-30"
+  },
+  "GS-3-074": {
+    "date": "2026-01-30"
+  },
+  "GS-3-076": {
+    "date": "2026-01-30"
+  },
+  "GS-3-077": {
+    "date": "2026-01-30"
+  },
+  "GS-3-078": {
+    "date": "2026-01-30"
+  },
+  "GS-3-079": {
+    "date": "2026-01-30"
+  },
+  "GS-3-080": {
+    "date": "2026-01-30"
+  },
+  "GS-3-081": {
+    "date": "2026-01-30"
+  },
+  "GS-3-082": {
+    "date": "2026-01-30"
+  },
+  "GS-3-083": {
+    "date": "2026-01-30"
+  },
+  "GS-3-084": {
+    "date": "2026-01-30"
+  },
+  "GS-3-085": {
+    "date": "2026-01-30"
+  },
+  "GS-3-086": {
+    "date": "2026-01-30"
+  },
+  "GS-3-087": {
+    "date": "2026-01-30"
+  },
+  "GS-3-088": {
+    "date": "2026-01-30"
+  },
+  "GS-3-089": {
+    "date": "2026-01-30"
+  },
+  "GS-3-090": {
+    "date": "2026-01-30"
+  },
+  "GS-3-091": {
+    "date": "2026-01-30"
+  },
+  "GS-3-092": {
+    "date": "2026-01-30"
+  },
+  "GS-3-093": {
+    "date": "2026-01-30"
+  },
+  "GS-3-094": {
+    "date": "2026-01-30"
+  },
+  "GS-3-095": {
+    "date": "2026-01-30"
+  },
+  "GS-3-096": {
+    "date": "2026-01-30"
+  },
+  "GS-3-097": {
+    "date": "2026-01-30"
+  },
+  "GS-3-098": {
+    "date": "2026-01-30"
+  },
+  "GS-3-099": {
+    "date": "2026-01-30"
+  },
+  "GS-3-100": {
+    "date": "2026-01-30"
+  },
+  "GS-3-101": {
+    "date": "2026-01-30"
+  },
+  "GS-3-102": {
+    "date": "2026-01-30"
+  },
+  "GS-3-103": {
+    "date": "2026-01-30"
+  },
+  "GS-3-104": {
+    "date": "2026-01-30"
+  },
+  "GS-3-105": {
+    "date": "2026-01-30"
+  },
+  "GS-3-106": {
+    "date": "2026-01-30"
+  },
+  "GS-3-107": {
+    "date": "2026-01-30"
+  },
+  "GS-3-108": {
+    "date": "2026-01-30"
+  },
+  "GS-3-109": {
+    "date": "2026-01-30"
+  },
+  "GS-3-110": {
+    "date": "2026-01-30"
+  },
+  "GS-3-111": {
+    "date": "2026-01-30"
+  },
+  "GS-3-112": {
+    "date": "2026-01-30"
+  },
+  "GS-3-113": {
+    "date": "2026-01-30"
+  },
+  "GS-3-114": {
+    "date": "2026-01-30"
+  },
+  "GS-3-115": {
+    "date": "2026-01-30"
+  },
+  "GS-3-116": {
+    "date": "2026-01-30"
+  },
+  "GS-3-117": {
+    "date": "2026-01-30"
+  },
+  "GS-3-118": {
+    "date": "2026-01-30"
+  },
+  "GS-3-119": {
+    "date": "2026-01-30"
+  },
+  "GS-3-120": {
+    "date": "2026-01-30"
+  },
+  "GS-3-121": {
+    "date": "2026-01-30"
+  },
+  "GS-3-122": {
+    "date": "2026-01-30"
+  },
+  "GS-3-123": {
+    "date": "2026-01-30"
+  },
+  "GS-3-124": {
+    "date": "2026-01-30"
+  },
+  "GS-3-125": {
+    "date": "2026-01-30"
+  },
+  "GS-3-126": {
+    "date": "2026-01-30"
+  },
+  "GS-3-127": {
+    "date": "2026-01-30"
+  },
+  "GS-3-128": {
+    "date": "2026-01-30"
+  },
+  "GS-3-129": {
+    "date": "2026-01-30"
+  },
+  "GS-3-130": {
+    "date": "2026-01-30"
+  },
+  "GS-3-131": {
+    "date": "2026-01-30"
+  },
+  "GS-3-132": {
+    "date": "2026-01-30"
+  },
+  "GS-3-133": {
+    "date": "2026-01-30"
+  },
+  "GS-3-134": {
+    "date": "2026-01-30"
+  },
+  "GS-3-135": {
+    "date": "2026-01-30"
+  },
+  "GS-3-136": {
+    "date": "2026-01-30"
+  },
+  "GS-3-137": {
+    "date": "2026-01-30"
+  },
+  "GS-3-138": {
+    "date": "2026-01-30"
+  },
+  "GS-3-139": {
+    "date": "2026-01-30"
+  },
+  "GS-3-140": {
+    "date": "2026-01-30"
+  },
+  "GS-3-141": {
+    "date": "2026-01-30"
+  },
+  "GS-3-142": {
+    "date": "2026-01-30"
+  },
+  "GS-3-143": {
+    "date": "2026-01-30"
+  },
+  "GS-3-144": {
+    "date": "2026-01-30"
+  },
+  "GS-3-145": {
+    "date": "2026-01-30"
+  },
+  "GS-3-146": {
+    "date": "2026-01-30"
+  },
+  "GS-3-147": {
+    "date": "2026-01-30"
+  },
+  "GS-3-148": {
+    "date": "2026-01-30"
+  },
+  "GS-3-149": {
+    "date": "2026-01-30"
+  },
+  "GS-3-150": {
+    "date": "2026-01-30"
+  },
+  "GS-3-151": {
+    "date": "2026-01-30"
+  },
+  "GS-3-152": {
+    "date": "2026-01-30"
+  },
+  "GS-3-153": {
+    "date": "2026-01-30"
+  },
+  "GS-3-154": {
+    "date": "2026-01-30"
+  },
+  "GS-3-155": {
+    "date": "2026-01-30"
+  },
+  "GS-3-156": {
+    "date": "2026-01-30"
+  },
+  "GS-3-157": {
+    "date": "2026-01-30"
+  },
+  "GS-3-158": {
+    "date": "2026-01-30"
+  },
+  "GS-3-159": {
+    "date": "2026-01-30"
+  },
+  "GS-3-160": {
+    "date": "2026-01-30"
+  },
+  "GS-3-161": {
+    "date": "2026-01-30"
+  },
+  "GS-3-162": {
+    "date": "2026-01-30"
+  },
+  "GS-3-163": {
+    "date": "2026-01-30"
+  },
+  "GS-3-164": {
+    "date": "2026-01-30"
+  },
+  "GS-3-165": {
+    "date": "2026-01-30"
+  },
+  "GS-3-166": {
+    "date": "2026-01-30"
+  },
+  "GS-3-167": {
+    "date": "2026-01-30"
+  },
+  "GS-3-168": {
+    "date": "2026-01-30"
+  },
+  "GS-3-169": {
+    "date": "2026-01-30"
+  },
+  "GS-3-170": {
+    "date": "2026-01-30"
+  },
+  "GS-3-171": {
+    "date": "2026-01-30"
+  },
+  "GS-3-172": {
+    "date": "2026-01-30"
+  },
+  "GS-3-173": {
+    "date": "2026-01-30"
+  },
+  "GS-3-174": {
+    "date": "2026-01-30"
+  },
+  "GS-3-175": {
+    "date": "2026-01-30"
+  },
+  "GS-3-176": {
+    "date": "2026-01-30"
+  },
+  "GS-3-177": {
+    "date": "2026-01-30"
+  },
+  "GS-3-178": {
+    "date": "2026-01-30"
+  },
+  "GS-3-179": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-001": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-002": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-003": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-004": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-005": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-006": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-007": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-008": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-009": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-010": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-011": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-012": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-013": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-014": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-015": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-016": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-017": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-018": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-019": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-020": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-021": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-022": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-023": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-024": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-025": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-026": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-027": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-028": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-029": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-030": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-031": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-032": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-033": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-034": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-035": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-036": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-037": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-038": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-039": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-040": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-041": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-042": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-044": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-045": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-046": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-047": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-048": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-049": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-050": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-051": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-052": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-053": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-054": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-055": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-056": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-057": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-058": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-059": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-060": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-061": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-062": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-063": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-064": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-065": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-066": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-067": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-068": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-069": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-070": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-071": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-072": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-073": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-074": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-075": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-076": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-077": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-078": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-079": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-080": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-081": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-082": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-083": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-084": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-085": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-086": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-087": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-088": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-089": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-090": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-091": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-092": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-093": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-094": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-095": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-096": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-097": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-098": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-099": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-100": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-101": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-102": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-103": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-104": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-105": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-106": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-107": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-108": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-109": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-110": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-111": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-112": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-113": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-114": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-115": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-116": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-117": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-118": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-119": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-120": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-121": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-122": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-123": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-124": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-125": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-126": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-127": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-128": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-129": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-130": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-131": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-132": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-133": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-134": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-135": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-136": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-137": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-138": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-139": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-140": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-141": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-142": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-143": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-144": {
+    "date": "2026-01-30"
+  },
+  "GS-3.1-145": {
+    "date": "2026-01-30"
+  },
+  "GS-4-001": {
+    "date": "2026-01-30"
+  },
+  "GS-4-002": {
+    "date": "2026-01-30"
+  },
+  "GS-4-003": {
+    "date": "2026-01-30"
+  },
+  "GS-4-004": {
+    "date": "2026-01-30"
+  },
+  "GS-4-005": {
+    "date": "2026-01-30"
+  },
+  "GS-4-006": {
+    "date": "2026-01-30"
+  },
+  "GS-4-007": {
+    "date": "2026-01-30"
+  },
+  "GS-4-008": {
+    "date": "2026-01-30"
+  },
+  "GS-4-009": {
+    "date": "2026-01-30"
+  },
+  "GS-4-010": {
+    "date": "2026-01-30"
+  },
+  "GS-4-011": {
+    "date": "2026-01-30"
+  },
+  "GS-4-012": {
+    "date": "2026-01-30"
+  },
+  "GS-4-013": {
+    "date": "2026-01-30"
+  },
+  "GS-4-014": {
+    "date": "2026-01-30"
+  },
+  "GS-4-015": {
+    "date": "2026-01-30"
+  },
+  "GS-4-016": {
+    "date": "2026-01-30"
+  },
+  "GS-4-017": {
+    "date": "2026-01-30"
+  },
+  "GS-4-018": {
+    "date": "2026-01-30"
+  },
+  "GS-4-019": {
+    "date": "2026-01-30"
+  },
+  "GS-4-020": {
+    "date": "2026-01-30"
+  },
+  "GS-4-021": {
+    "date": "2026-01-30"
+  },
+  "GS-4-022": {
+    "date": "2026-01-30"
+  },
+  "GS-4-023": {
+    "date": "2026-01-30"
+  },
+  "GS-4-024": {
+    "date": "2026-01-30"
+  },
+  "GS-4-025": {
+    "date": "2026-01-30"
+  },
+  "GS-4-026": {
+    "date": "2026-01-30"
+  },
+  "GS-4-027": {
+    "date": "2026-01-30"
+  },
+  "GS-4-028": {
+    "date": "2026-01-30"
+  },
+  "GS-4-029": {
+    "date": "2026-01-30"
+  },
+  "GS-4-030": {
+    "date": "2026-01-30"
+  },
+  "GS-4-031": {
+    "date": "2026-01-30"
+  },
+  "GS-4-032": {
+    "date": "2026-01-30"
+  },
+  "GS-4-033": {
+    "date": "2026-01-30"
+  },
+  "GS-4-034": {
+    "date": "2026-01-30"
+  },
+  "GS-4-035": {
+    "date": "2026-01-30"
+  },
+  "GS-4-036": {
+    "date": "2026-01-30"
+  },
+  "GS-4-037": {
+    "date": "2026-01-30"
+  },
+  "GS-4-038": {
+    "date": "2026-01-30"
+  },
+  "GS-4-039": {
+    "date": "2026-01-30"
+  },
+  "GS-4-040": {
+    "date": "2026-01-30"
+  },
+  "GS-4-041": {
+    "date": "2026-01-30"
+  },
+  "GS-4-042": {
+    "date": "2026-01-30"
+  },
+  "GS-4-043": {
+    "date": "2026-01-30"
+  },
+  "GS-4-044": {
+    "date": "2026-01-30"
+  },
+  "GS-4-045": {
+    "date": "2026-01-30"
+  },
+  "GS-4-046": {
+    "date": "2026-01-30"
+  },
+  "GS-4-047": {
+    "date": "2026-01-30"
+  },
+  "GS-4-048": {
+    "date": "2026-01-30"
+  },
+  "GS-4-049": {
+    "date": "2026-01-30"
+  },
+  "GS-4-050": {
+    "date": "2026-01-30"
+  },
+  "GS-4-051": {
+    "date": "2026-01-30"
+  },
+  "GS-4-052": {
+    "date": "2026-01-30"
+  },
+  "GS-4-053": {
+    "date": "2026-01-30"
+  },
+  "GS-4-054": {
+    "date": "2026-01-30"
+  },
+  "GS-4-055": {
+    "date": "2026-01-30"
+  },
+  "GS-4-056": {
+    "date": "2026-01-30"
+  },
+  "GS-4-057": {
+    "date": "2026-01-30"
+  },
+  "GS-4-058": {
+    "date": "2026-01-30"
+  },
+  "GS-4-059": {
+    "date": "2026-01-30"
+  },
+  "GS-4-060": {
+    "date": "2026-01-30"
+  },
+  "vdgq8us15": {
+    "isStarred": true,
+    "status": "IN_PROGRESS",
+    "date": "2026-02-05"
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Task, TaskStatus, Subject, SubjectCategory } from '../../types';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../../constants';
-import { AlertCircle, Calendar, Archive, Trash2, RotateCcw, Ban, Edit } from 'lucide-react';
+import { AlertCircle, Calendar, Archive, Trash2, RotateCcw, Ban, Edit, Star } from 'lucide-react';
 import { SearchMatch } from '../../utils/searchHelper';
 
 interface TaskItemProps {
@@ -13,6 +13,7 @@ interface TaskItemProps {
     onDelete: (id: string) => void;
     onRestore: (id: string) => void;
     onPermanentDelete: (id: string) => void;
+    onToggleStar: (id: string, isStarred: boolean) => void;
     searchMatch?: SearchMatch;
 }
 
@@ -25,6 +26,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
     onDelete,
     onRestore,
     onPermanentDelete,
+    onToggleStar,
     searchMatch
 }) => {
     const calculateProgress = (task: Task) => {
@@ -52,9 +54,20 @@ const TaskItem: React.FC<TaskItemProps> = ({
         >
             {/* Task Title & Progress */}
             <div className="col-span-4 flex flex-col justify-center pr-4 overflow-hidden">
-                <div className="flex items-center justify-between gap-4 mb-0.5">
+                <div className="flex items-center gap-2 mb-0.5 overflow-hidden">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onToggleStar(task.id, !task.isStarred);
+                        }}
+                        className={`shrink-0 transition-all duration-300 hover:scale-125 ${task.isStarred ? 'text-yellow-500 fill-yellow-500' : 'text-text-muted hover:text-yellow-500'}`}
+                    >
+                        <Star size={14} strokeWidth={task.isStarred ? 1 : 2} />
+                    </button>
                     <h4 className="text-sm font-bold text-text-main group-hover:text-blue-500 transition-colors truncate" title={task.title}>{task.title}</h4>
-                    <div className="flex items-center gap-2 shrink-0">
+                </div>
+                <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-2 w-full">
                         <div className="w-16 bg-text-main/10 dark:bg-white/5 rounded-full h-1.5 border border-white/5">
                             <div
                                 className="bg-blue-500 h-full rounded-full shadow-[0_0_8px_rgba(37,99,235,0.6)] transition-all duration-500"

@@ -124,7 +124,7 @@ async function getMergedTasks() {
             const prog = progressData[task.id] || {};
             return {
                 ...task,
-                date: prog.date || task.date || new Date().toISOString().split('T')[0],
+                date: prog.date || task.date || '2026-01-30',
                 status: prog.status || task.status || 'TODO',
                 priority: prog.priority || task.priority || 'Medium',
                 description: prog.description || task.description || '',
@@ -166,8 +166,27 @@ app.get('/api/progress', async (req, res) => {
     try {
         if (!fs.existsSync(PROGRESS_FILE)) return res.json({});
         const data = await fs.promises.readFile(PROGRESS_FILE, 'utf8');
-        res.json(JSON.parse(data));
+        res.json(JSON.parse(data || '{}'));
     } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.post('/api/progress', async (req, res) => {
+    try {
+        const bulkProgress = req.body; // { taskId: { updates } }
+        let progress = {};
+        if (fs.existsSync(PROGRESS_FILE)) {
+            const data = await fs.promises.readFile(PROGRESS_FILE, 'utf8');
+            progress = JSON.parse(data || '{}');
+        }
+
+        // Merge bulk updates
+        Object.assign(progress, bulkProgress);
+
+        await fs.promises.writeFile(PROGRESS_FILE, JSON.stringify(progress, null, 2));
+        res.json({ message: 'Bulk progress saved' });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
 });
 
 /**
@@ -210,28 +229,86 @@ app.post('/api/rescan', async (req, res) => {
     res.json({ message: 'Memory Reloaded' });
 });
 
-// --- User Tasks Endpoints ---
 app.get('/api/user-tasks', async (req, res) => {
     if (!fs.existsSync(USER_TASKS_FILE)) return res.json([]);
     const data = await fs.promises.readFile(USER_TASKS_FILE, 'utf8');
     res.json(JSON.parse(data || '[]'));
 });
 
+app.get('/api/deleted-tasks', async (req, res) => {
+    if (!fs.existsSync(DELETED_TASKS_FILE)) return res.json([]);
+    const data = await fs.promises.readFile(DELETED_TASKS_FILE, 'utf8');
+    res.json(JSON.parse(data || '[]'));
+});
+
+app.post('/api/user-tasks', async (req, res) => {
+    try {
+        const newTask = req.body;
+        let tasks = [];
+        if (fs.existsSync(USER_TASKS_FILE)) {
+            const data = await fs.promises.readFile(USER_TASKS_FILE, 'utf8');
+            tasks = JSON.parse(data || '[]');
+        }
+
+        // Idempotent Upsert Logic (Better logic for race conditions)
+        const idx = tasks.findIndex(t => t.id === newTask.id);
+        if (idx > -1) {
+            tasks[idx] = { ...tasks[idx], ...newTask };
+        } else {
+            tasks.push(newTask);
+        }
+
+        await fs.promises.writeFile(USER_TASKS_FILE, JSON.stringify(tasks, null, 2));
+        res.json({ message: 'User task saved', id: newTask.id });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
 // --- Delete Task ---
 app.delete('/api/tasks/:taskId', async (req, res) => {
     const { taskId } = req.params;
     try {
+        // 1. Tombstone in deleted_tasks.json (Required for YAML library tasks)
         let deleted = [];
         if (fs.existsSync(DELETED_TASKS_FILE)) {
             const d = await fs.promises.readFile(DELETED_TASKS_FILE, 'utf8');
-            deleted = JSON.parse(d);
+            deleted = JSON.parse(d || '[]');
         }
         if (!deleted.includes(taskId)) {
             deleted.push(taskId);
             await fs.promises.writeFile(DELETED_TASKS_FILE, JSON.stringify(deleted, null, 2));
         }
-        res.json({ message: 'Tombstoned' });
-    } catch (e) { res.status(500).json({ error: e.message }); }
+
+        // 2. Physical Clean up from user_tasks.json (Only for UI created tasks)
+        if (fs.existsSync(USER_TASKS_FILE)) {
+            const utData = await fs.promises.readFile(USER_TASKS_FILE, 'utf8');
+            let userTasks = JSON.parse(utData || '[]');
+            const originalLength = userTasks.length;
+            userTasks = userTasks.filter(t => t.id !== taskId);
+
+            if (userTasks.length !== originalLength) {
+                await fs.promises.writeFile(USER_TASKS_FILE, JSON.stringify(userTasks, null, 2));
+                console.log(`[Cleanup] Physically removed task ${taskId} from user_tasks.json`);
+            }
+        }
+
+        // 3. Physical Clean up from task_progress.json (Remove orphans)
+        if (fs.existsSync(PROGRESS_FILE)) {
+            const progData = await fs.promises.readFile(PROGRESS_FILE, 'utf8');
+            let progress = JSON.parse(progData || '{}');
+            if (progress[taskId]) {
+                delete progress[taskId];
+                await fs.promises.writeFile(PROGRESS_FILE, JSON.stringify(progress, null, 2));
+                console.log(`[Cleanup] Removed progress record for deleted task ${taskId}`);
+            }
+        }
+
+        res.json({ message: 'Task deleted and physically cleaned up' });
+    } catch (e) {
+        console.error(`[Delete Error] Failed to delete ${taskId}:`, e);
+        res.status(500).json({ error: e.message });
+    }
 });
 
 // --- File Uploads ---

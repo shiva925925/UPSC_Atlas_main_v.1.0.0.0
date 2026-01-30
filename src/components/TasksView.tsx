@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 import { Task, TaskStatus, Subject, SubjectCategory } from '../types';
-import { Plus, List, Calendar, BookOpen, X, Search, RefreshCw, CheckSquare, Moon, Sun, ChevronUp, ChevronDown } from 'lucide-react';
+import { Plus, List, Calendar, BookOpen, X, Search, RefreshCw, CheckSquare, Moon, Sun, ChevronUp, ChevronDown, Star } from 'lucide-react';
 import { pullProgressOnly, fullLibrarySync, saveUserTask, updateTaskProgress, deleteTaskPermanently, triggerManualRescan } from '../services/taskSyncService';
 import { SUBJECT_HIERARCHY } from '../constants';
 import { getSearchSnippet, SearchMatch } from '../utils/searchHelper';
@@ -49,6 +49,7 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
   const [filterSubject, setFilterSubject] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<string | null>(TaskStatus.IN_PROGRESS);
   const [filterDate, setFilterDate] = useState<string | null>(null);
+  const [showStarredOnly, setShowStarredOnly] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const [filterTopic, setFilterTopic] = useState<string | null>(null);
   const [isSubjectsCollapsed, setIsSubjectsCollapsed] = useState(true);
@@ -92,23 +93,33 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
     const newTask: Task = {
       id: Math.random().toString(36).substr(2, 9),
       userId: 'Schamala',
-      title: taskData.title || 'New Task',
+      title: taskData.title || '',
       subject: taskData.subject || Subject.GENERAL,
       priority: taskData.priority || 'Medium',
       date: taskData.date || new Date().toISOString().split('T')[0],
       status: TaskStatus.TODO,
       description: taskData.description || '',
-      acceptanceCriteria: [],
+      acceptanceCriteria: taskData.acceptanceCriteria || [],
       logs: [],
       evidences: [],
       isArchived: false,
-      isDeleted: false,
-      ...taskData
+      isDeleted: false
     };
 
-    await saveUserTask(newTask);
-    await db.tasks.add(newTask);
-    setIsCreating(false);
+    try {
+      // 1. Optimistic Update: Add to local DB first
+      await db.tasks.add(newTask);
+      setIsCreating(false);
+
+      // 2. Background Sync: Save to server
+      await saveUserTask(newTask);
+      console.log('[TasksView] Task created and synced successfully.');
+    } catch (error) {
+      console.error('[TasksView] Error creating task:', error);
+      // Even if sync fails, the task is already in local DB.
+      // We could show a toast here to inform the user that it's local only.
+      setIsCreating(false);
+    }
   };
 
   const handleUpdateTask = async (taskId: string, updates: Partial<Task>) => {
@@ -141,6 +152,12 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
     if (selectedTaskId === id) setSelectedTaskId(null);
   };
 
+  const handleToggleStar = async (id: string, isStarred: boolean) => {
+    const updates = { isStarred };
+    await db.tasks.update(id, updates);
+    await updateTaskProgress(id, updates);
+  };
+
   const getWeekRange = (offsetWeeks: number = 0) => {
     const now = new Date();
     const start = new Date(now);
@@ -163,6 +180,7 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
     if (filterSubject && (SUBJECT_HIERARCHY[t.subject] || SubjectCategory.GENERAL) !== filterSubject) return null;
     if (filterTopic && t.subject !== filterTopic) return null;
     if (filterStatus && t.status !== filterStatus) return null;
+    if (showStarredOnly && !t.isStarred) return null;
 
     if (filterDate) {
       const taskDate = new Date(t.date);
@@ -211,9 +229,26 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
     return { task: t, score, match };
   }).filter((res): res is { task: Task; score: number; match: SearchMatch | null } => res !== null);
 
-  // 3. Final Sort
+  // 3. Final Sort (3-Tier: Score -> Starred -> Date -> Priority)
   const filteredTasks = scoredTasks
-    .sort((a, b) => b.score - a.score);
+    .sort((a, b) => {
+      // Tie-breaker 1: Search Score (if searching)
+      if (searchQuery && a.score !== b.score) return b.score - a.score;
+
+      // Tier 1: Starred status
+      if (a.task.isStarred !== b.task.isStarred) return a.task.isStarred ? -1 : 1;
+
+      // Tier 2: Date (Overdue/Today first)
+      const dateA = a.task.date || '9999-99-99';
+      const dateB = b.task.date || '9999-99-99';
+      if (dateA !== dateB) return dateA.localeCompare(dateB);
+
+      // Tier 3: Priority
+      const priorityScore = { 'High': 3, 'Medium': 2, 'Low': 1, 'Normal': 2 };
+      const scoreA = priorityScore[a.task.priority as keyof typeof priorityScore] || 2;
+      const scoreB = priorityScore[b.task.priority as keyof typeof priorityScore] || 2;
+      return scoreB - scoreA;
+    });
 
   const activeTasks = tasksList.filter(t => !t.isArchived);
   const subjectStats = Object.values(SubjectCategory).map(category => {
@@ -224,10 +259,10 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
   }).filter(stat => stat.total > 0 || stat.category === SubjectCategory.GENERAL);
 
   const clearAllFilters = () => {
-    setFilterSubject(null); setFilterStatus(null); setFilterDate(null); setFilterTopic(null); setSearchQuery('');
+    setFilterSubject(null); setFilterStatus(null); setFilterDate(null); setFilterTopic(null); setSearchQuery(''); setShowStarredOnly(false);
   };
 
-  const hasActiveFilters = filterSubject || filterStatus || filterDate || filterTopic || searchQuery;
+  const hasActiveFilters = filterSubject || filterStatus || filterDate || filterTopic || searchQuery || showStarredOnly;
 
   return (
     <div className="flex flex-col h-full animate-fade-in bg-app-bg transition-colors duration-300">
@@ -282,6 +317,18 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
               onChange={setFilterDate}
               icon={<Calendar size={14} />}
             />
+
+            <button
+              onClick={() => setShowStarredOnly(!showStarredOnly)}
+              className={`p-1.5 rounded-lg border transition-all flex items-center gap-1.5 text-xs font-bold ${showStarredOnly
+                ? 'bg-yellow-500/10 border-yellow-500/50 text-yellow-600 shadow-sm shadow-yellow-500/10'
+                : 'bg-card-bg/50 border-card-border text-text-muted hover:border-yellow-500/30 hover:text-yellow-600'
+                }`}
+              title={showStarredOnly ? "Show All Tasks" : "Show Favorites Only"}
+            >
+              <Star size={14} className={showStarredOnly ? 'fill-yellow-500' : ''} />
+              {showStarredOnly && <span>Favorites</span>}
+            </button>
             {hasActiveFilters && (
               <button onClick={clearAllFilters} className="text-[10px] text-red-500 hover:text-red-600 font-bold px-2 py-1 flex items-center gap-1">
                 <X size={10} /> CLEAR
@@ -419,6 +466,7 @@ const TasksView: React.FC<TasksViewProps> = ({ initialSelectedTaskId, onTaskSele
                       onDelete={handleDelete}
                       onRestore={handleRestore}
                       onPermanentDelete={handleDelete}
+                      onToggleStar={handleToggleStar}
                       searchMatch={match || undefined}
                     />
                   ))

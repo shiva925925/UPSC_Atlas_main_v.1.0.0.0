@@ -1,9 +1,11 @@
 import { db } from '../db';
 import { Task, TaskStatus, Subject, Priority } from '../types';
+import { BASELINE_ANCHOR_DATE } from '../constants';
 
 const LIBRARY_API = '/api/library';
 const PROGRESS_API = '/api/progress';
 const USER_TASKS_API = '/api/user-tasks';
+const DELETED_TASKS_API = '/api/deleted-tasks';
 const RESCAN_API = '/api/rescan';
 const LEGACY_TASKS_API = '/api/tasks';
 
@@ -69,45 +71,58 @@ export async function fullLibrarySync() {
 
     try {
         // 1. Fetch all streams concurrently
-        const [libRes, progRes, userRes] = await Promise.all([
+        const [libRes, progRes, userRes, delRes] = await Promise.all([
             fetch(LIBRARY_API),
             fetch(PROGRESS_API),
-            fetch(USER_TASKS_API)
+            fetch(USER_TASKS_API),
+            fetch(DELETED_TASKS_API)
         ]);
 
-        if (!libRes.ok || !progRes.ok || !userRes.ok) throw new Error("Sync network failure");
+        if (!libRes.ok || !progRes.ok || !userRes.ok || !delRes.ok) throw new Error("Sync network failure");
 
         const libraryData = await libRes.json(); // { tasks, fullTaskIds }
         const progressData = await progRes.json(); // { taskId: { progress } }
         const userTasksData = await userRes.json(); // Task[]
+        const deletedIdsAsList: string[] = await delRes.json();
+        const deletedIds = new Set(deletedIdsAsList);
 
-        const staticTasks: Task[] = libraryData.tasks || [];
-        const userTasks: Task[] = userTasksData || [];
+        const staticTasks: Task[] = (libraryData.tasks || []).filter((t: Task) => !deletedIds.has(t.id));
+        const userTasks: Task[] = (userTasksData || []).filter((t: Task) => !deletedIds.has(t.id));
+
+        // Discovery Persistence: Track date for new tasks
+        const existingTaskIds = await db.tasks.toCollection().primaryKeys();
+        const existingIdSet = new Set(existingTaskIds as string[]);
+        const updatesToSave: Record<string, Partial<Task>> = {};
+        const todayStr = new Date().toISOString().split('T')[0];
 
         // 2. Perform the Merge (Client is now the engine of truth)
         const mergedTasks: Task[] = [
             ...staticTasks.map(task => {
                 const prog = progressData[task.id] || {};
-                return {
-                    ...task,
-                    date: prog.date || task.date || new Date().toISOString().split('T')[0],
-                    status: prog.status || task.status || 'TODO',
-                    priority: prog.priority || task.priority || 'Medium',
-                    description: prog.description || task.description || '',
-                    acceptanceCriteria: prog.acceptanceCriteria || task.acceptanceCriteria || [],
-                    logs: prog.logs || [],
-                    evidences: prog.evidences || [],
-                    isArchived: prog.isArchived || false,
-                    isDeleted: false,
-                    deletedAt: null
-                };
+                const isNew = !existingIdSet.has(task.id);
+
+                // Track missing dates for capturing first-sync
+                if (!task.date && !prog.date) {
+                    const captureDate = isNew ? todayStr : BASELINE_ANCHOR_DATE;
+                    updatesToSave[task.id] = { date: captureDate };
+                    prog.date = captureDate;
+                }
+
+                return mergeTaskWithProgress(task, prog);
             }),
-            ...userTasks
+            ...userTasks.map(task => {
+                const prog = progressData[task.id] || {};
+                return mergeTaskWithProgress(task, prog);
+            })
         ];
 
+        // Permanently save discovered dates to server
+        if (Object.keys(updatesToSave).length > 0) {
+            console.log(`[Sync Service] Capturing dates for ${Object.keys(updatesToSave).length} newly discovered tasks...`);
+            await saveTaskProgressBulk(updatesToSave);
+        }
+
         // 3. Selective local update
-        // Still using bulkPut for speed, but the DATA we are putting is now pre-merged
-        // so it cannot be "stale" from a server rebuild race.
         await db.tasks.bulkPut(mergedTasks);
 
         // 4. Orphan Cleanup (If a task exists in DB but not in our merged list)
@@ -123,6 +138,26 @@ export async function fullLibrarySync() {
         console.error('[Sync Service] Sync failed:', error);
         throw error;
     }
+}
+
+/**
+ * Unified helper to merge a base task (File/Memory) with progress data (JSON Progress)
+ */
+function mergeTaskWithProgress(task: Task, prog: Partial<Task>): Task {
+    return {
+        ...task,
+        date: prog.date || task.date,
+        status: prog.status || task.status || TaskStatus.TODO,
+        priority: prog.priority || task.priority || 'Medium',
+        description: prog.description || task.description || '',
+        acceptanceCriteria: prog.acceptanceCriteria || task.acceptanceCriteria || [],
+        logs: prog.logs || [],
+        evidences: prog.evidences || [],
+        isArchived: prog.isArchived || false,
+        isStarred: prog.isStarred || false,
+        isDeleted: false,
+        deletedAt: null
+    };
 }
 
 // Remove old syncFileTasks as it is now redundant
@@ -277,9 +312,26 @@ export async function saveTaskProgress(allTasks: Task[]) {
     }
 }
 
+/**
+ * Saves a mapping of taskId -> updates to the server.
+ */
+export async function saveTaskProgressBulk(updates: { [taskId: string]: Partial<Task> }) {
+    try {
+        const response = await fetch(PROGRESS_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updates),
+        });
+        if (!response.ok) throw new Error(`Failed to save bulk progress: ${response.statusText}`);
+    } catch (error) {
+        console.error('[Sync Service] Error saving bulk progress:', error);
+        throw error;
+    }
+}
+
 export async function updateTaskProgress(taskId: string, updates: Partial<Task>) {
     const progressUpdates: Partial<Task> = {};
-    const keys = ['status', 'priority', 'logs', 'evidences', 'isArchived', 'isDeleted', 'deletedAt', 'description', 'acceptanceCriteria', 'date', 'linkedTaskIds'];
+    const keys = ['status', 'priority', 'logs', 'evidences', 'isArchived', 'isDeleted', 'deletedAt', 'description', 'acceptanceCriteria', 'date', 'linkedTaskIds', 'isStarred'];
     keys.forEach(k => { if ((updates as any)[k] !== undefined) (progressUpdates as any)[k] = (updates as any)[k]; });
 
     if (Object.keys(progressUpdates).length === 0) return;
