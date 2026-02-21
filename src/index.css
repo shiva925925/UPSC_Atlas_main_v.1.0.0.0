@@ -24,6 +24,7 @@
   --text-main: #ffffff;
   --text-muted: #a3a3a3;
   --aside-bg: #000000;
+  color-scheme: dark;
 }
 
 @theme {

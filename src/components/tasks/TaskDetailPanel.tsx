@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Task, TaskStatus, Subject, EvidenceType, TimeLog, Evidence, SubjectCategory, Priority } from '../../types';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../../constants';
-import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit, Upload, ExternalLink, Share2, ArrowUpCircle, Search, Calendar, Star } from 'lucide-react';
+import { X, CheckSquare, Square, Paperclip, Link as LinkIcon, FileText, Trash2, Plus, Clock, Save, AlertCircle, Edit, Upload, ExternalLink, Share2, ArrowUpCircle, Search, Calendar } from 'lucide-react';
+import PremiumStar from '../ui/PremiumStar';
 import GlassCard from '../ui/GlassCard';
 import { uploadFile } from '../../services/uploadService';
 import { ensureProtocol } from '../../utils/urlHelper';
@@ -245,23 +246,21 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <button
-                            type="button"
+                        <PremiumStar
+                            isStarred={task.isStarred || false}
+                            size={20}
                             onClick={() => onUpdate(task.id, { isStarred: !task.isStarred })}
-                            className={`p-1 hover:bg-white/10 rounded transition-all flex-shrink-0 ml-2 ${task.isStarred ? 'text-yellow-500 fill-yellow-500 animate-bounce-subtle' : 'text-gray-500 hover:text-yellow-500'}`}
-                            title={task.isStarred ? "Unstar Task" : "Star Task"}
-                        >
-                            <Star size={20} strokeWidth={task.isStarred ? 1 : 2} />
-                        </button>
+                            className="bg-white/5 p-1 rounded-lg"
+                        />
                         <button
                             type="button"
                             onClick={() => window.open(`/task/${task.id}`, '_blank')}
-                            className="p-1 hover:bg-gray-100 rounded text-gray-500 transition-colors flex-shrink-0 ml-1"
+                            className="p-1 hover:bg-white/10 rounded text-text-muted transition-colors flex-shrink-0 ml-1"
                             title="Open in New Tab"
                         >
                             <ExternalLink size={20} />
                         </button>
-                        <button type="button" onClick={onClose} className="p-1 hover:bg-gray-100 rounded text-gray-500 transition-colors flex-shrink-0 ml-1">
+                        <button type="button" onClick={onClose} className="p-1 hover:bg-white/10 rounded text-text-muted transition-colors flex-shrink-0 ml-1">
                             <X size={20} />
                         </button>
                     </div>
@@ -276,7 +275,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             <button
                                 type="button"
                                 onClick={() => { setEditedDescription(task.description || ''); setIsEditingDescription(true); }}
-                                className="text-gray-400 hover:text-blue-600 p-1"
+                                className="text-text-muted hover:text-blue-600 p-1"
                                 title="Edit Description"
                             >
                                 <Edit size={14} />
@@ -294,7 +293,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                             <div className="flex justify-end gap-2">
                                 <button
                                     onClick={() => setIsEditingDescription(false)}
-                                    className="text-xs text-gray-600 px-3 py-1.5 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+                                    className="text-xs text-text-muted px-3 py-1.5 border border-card-border rounded hover:bg-white/5 transition-colors"
                                 >
                                     Cancel
                                 </button>
@@ -398,7 +397,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
 
                     <div className="space-y-2 mb-2">
                         {(!task.acceptanceCriteria || task.acceptanceCriteria.length === 0) ? (
-                            <p className="text-sm text-gray-400 italic">No acceptance criteria defined.</p>
+                            <p className="text-sm text-text-muted italic">No acceptance criteria defined.</p>
                         ) : (
                             task.acceptanceCriteria.map(ac => (
                                 <div
@@ -409,7 +408,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                         className="flex items-start gap-3 flex-1 cursor-pointer"
                                         onClick={() => editingCriterionId !== ac.id && toggleCriterion(ac.id)}
                                     >
-                                        <button type="button" className={`mt-0.5 flex-shrink-0 ${ac.isCompleted ? 'text-green-600' : 'text-gray-400'}`}>
+                                        <button type="button" className={`mt-0.5 flex-shrink-0 ${ac.isCompleted ? 'text-green-600' : 'text-text-muted'}`}>
                                             {ac.isCompleted ? <CheckSquare size={18} /> : <Square size={18} />}
                                         </button>
 
@@ -455,7 +454,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
                                             <button
                                                 type="button"
                                                 onClick={() => handleDeleteCriterion(ac.id)}
-                                                className="text-gray-400 hover:text-red-600 p-1 rounded hover:bg-gray-100"
+                                                className="text-text-muted hover:text-red-600 p-1 rounded hover:bg-white/10"
                                                 title="Delete"
                                             >
                                                 <Trash2 size={14} />
@@ -513,7 +512,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
 
                             {evidenceType === EvidenceType.FILE ? (
                                 <div className="flex-1 flex items-center gap-2">
-                                    <div className="flex-1 px-2 py-1.5 border border-dashed border-gray-300 rounded bg-white text-xs text-gray-500 truncate cursor-pointer hover:bg-gray-50" onClick={() => fileInputRef.current?.click()}>
+                                    <div className="flex-1 px-2 py-1.5 border border-dashed border-card-border rounded bg-card-bg/50 text-xs text-text-muted truncate cursor-pointer hover:bg-white/5" onClick={() => fileInputRef.current?.click()}>
                                         {selectedFile ? selectedFile.name : 'Choose a file...'}
                                     </div>
                                     <input
@@ -546,7 +545,7 @@ const TaskDetailPanel: React.FC<TaskDetailPanelProps> = ({ task, onClose, onUpda
 
                     <div className="space-y-2">
                         {(!task.evidences || task.evidences.length === 0) ? (
-                            <p className="text-xs text-gray-400 italic text-center">No evidences attached yet.</p>
+                            <p className="text-xs text-text-muted italic text-center">No evidences attached yet.</p>
                         ) : (
                             task.evidences.map(ev => (
                                 <div key={ev.id} className="flex items-center justify-between bg-card-bg/50 border border-card-border p-2 rounded-md group">

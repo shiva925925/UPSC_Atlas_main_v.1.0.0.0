@@ -3,6 +3,7 @@ import { Task, TaskStatus, Subject, SubjectCategory } from '../../types';
 import { SUBJECT_HIERARCHY, CATEGORY_COLORS } from '../../constants';
 import { AlertCircle, Calendar, Archive, Trash2, RotateCcw, Ban, Edit, Star } from 'lucide-react';
 import { SearchMatch } from '../../utils/searchHelper';
+import PremiumStar from '../ui/PremiumStar';
 
 interface TaskItemProps {
     task: Task;
@@ -13,7 +14,9 @@ interface TaskItemProps {
     onDelete: (id: string) => void;
     onRestore: (id: string) => void;
     onPermanentDelete: (id: string) => void;
-    onToggleStar: (id: string, isStarred: boolean) => void;
+    isMultiSelected?: boolean;
+    onToggleSelection?: (id: string) => void;
+    onToggleStar?: (id: string, isStarred: boolean) => void;
     searchMatch?: SearchMatch;
 }
 
@@ -26,6 +29,8 @@ const TaskItem: React.FC<TaskItemProps> = ({
     onDelete,
     onRestore,
     onPermanentDelete,
+    isMultiSelected,
+    onToggleSelection,
     onToggleStar,
     searchMatch
 }) => {
@@ -50,21 +55,37 @@ const TaskItem: React.FC<TaskItemProps> = ({
     return (
         <div
             onClick={() => onClick(task)}
-            className={`grid grid-cols-12 gap-4 px-6 py-2.5 border-b border-card-border/50 items-center hover:bg-text-main/5 cursor-pointer transition-all group ${isSelected ? 'bg-blue-600/15 ring-1 ring-blue-500/50 z-10' : ''}`}
+            className={`grid grid-cols-12 gap-4 px-6 py-2.5 border-b border-card-border/50 items-center hover:bg-text-main/5 cursor-pointer transition-all group ${isSelected ? 'bg-blue-600/15 ring-1 ring-blue-500/50 z-10' : ''} ${isMultiSelected ? 'bg-blue-600/10' : ''}`}
         >
-            {/* Task Title & Progress */}
+            {/* Task Title & Selection */}
             <div className="col-span-4 flex flex-col justify-center pr-4 overflow-hidden">
-                <div className="flex items-center gap-2 mb-0.5 overflow-hidden">
+                <div className="flex items-center gap-3 mb-0.5 overflow-hidden">
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
-                            onToggleStar(task.id, !task.isStarred);
+                            onToggleSelection?.(task.id);
                         }}
-                        className={`shrink-0 transition-all duration-300 hover:scale-125 ${task.isStarred ? 'text-yellow-500 fill-yellow-500' : 'text-text-muted hover:text-yellow-500'}`}
+                        className={`shrink-0 transition-all duration-300 hover:scale-110 flex items-center justify-center`}
                     >
-                        <Star size={14} strokeWidth={task.isStarred ? 1 : 2} />
+                        <div className={`w-4 h-4 rounded border transition-all flex items-center justify-center ${isMultiSelected ? 'bg-blue-600 border-blue-500 shadow-[0_0_8px_rgba(37,99,235,0.4)]' : 'bg-card-bg/50 border-card-border group-hover:border-blue-500/50'}`}>
+                            {isMultiSelected && (
+                                <div className="w-[8px] h-[4.5px] border-b-[2px] border-r-[2px] border-white transform rotate-45 -mt-[1px]"></div>
+                            )}
+                        </div>
                     </button>
-                    <h4 className="text-sm font-bold text-text-main group-hover:text-blue-500 transition-colors truncate" title={task.title}>{task.title}</h4>
+                    <div className="flex items-center gap-2 min-w-0">
+                        <h4 className="text-sm font-bold text-text-main group-hover:text-blue-500 transition-colors truncate" title={task.title}>{task.title}</h4>
+                        {/* Premium Star - Responsive & Big */}
+                        <PremiumStar
+                            isStarred={task.isStarred || false}
+                            size={20}
+                            className="flex-shrink-0"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onToggleStar?.(task.id, !task.isStarred);
+                            }}
+                        />
+                    </div>
                 </div>
                 <div className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-2 w-full">

@@ -146,15 +146,20 @@ export async function fullLibrarySync() {
 function mergeTaskWithProgress(task: Task, prog: Partial<Task>): Task {
     return {
         ...task,
-        date: prog.date || task.date,
+        ...prog,
+        // Only override lists/objects if they are explicitly provided in the progress packet
+        acceptanceCriteria: prog.acceptanceCriteria !== undefined ? prog.acceptanceCriteria : (task.acceptanceCriteria || []),
+        logs: prog.logs !== undefined ? prog.logs : (task.logs || []),
+        evidences: prog.evidences !== undefined ? prog.evidences : (task.evidences || []),
+
+        // Ensure status/priority have sensible defaults if missing entirely
         status: prog.status || task.status || TaskStatus.TODO,
         priority: prog.priority || task.priority || 'Medium',
-        description: prog.description || task.description || '',
-        acceptanceCriteria: prog.acceptanceCriteria || task.acceptanceCriteria || [],
-        logs: prog.logs || [],
-        evidences: prog.evidences || [],
-        isArchived: prog.isArchived || false,
-        isStarred: prog.isStarred || false,
+        date: prog.date || task.date,
+
+        // Flattened flags
+        isArchived: prog.isArchived !== undefined ? prog.isArchived : (task.isArchived || false),
+        isStarred: prog.isStarred !== undefined ? prog.isStarred : (task.isStarred || false),
         isDeleted: false,
         deletedAt: null
     };
@@ -245,9 +250,9 @@ function getProgressUpdates(task: Task, progress: Partial<Task>): Partial<Task> 
     }
     if (progress.logs !== undefined && deepDiffer(task.logs, progress.logs)) updates.logs = progress.logs;
     if (progress.evidences !== undefined && deepDiffer(task.evidences, progress.evidences)) updates.evidences = progress.evidences;
-    if (progress.isArchived !== undefined && task.isArchived !== progress.isArchived) updates.isArchived = progress.isArchived;
     if (progress.isDeleted !== undefined && task.isDeleted !== progress.isDeleted) updates.isDeleted = progress.isDeleted;
     if (progress.deletedAt !== undefined && task.deletedAt !== progress.deletedAt) updates.deletedAt = progress.deletedAt;
+    if (progress.isStarred !== undefined && task.isStarred !== progress.isStarred) updates.isStarred = progress.isStarred;
 
     return updates;
 }
@@ -439,4 +444,21 @@ export async function promoteCriterionToTask(parentTaskId: string, criterionText
     });
 
     return newTask;
+}
+
+/**
+ * BULK SYNC: Saves multiple task updates in a single request.
+ */
+export async function saveBulkTaskProgress(bulkUpdates: Record<string, Partial<Task>>) {
+    try {
+        const response = await fetch(PROGRESS_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bulkUpdates),
+        });
+        if (!response.ok) throw new Error(`Failed to update bulk progress: ${response.statusText}`);
+    } catch (error) {
+        console.error('[Sync Service] Error in bulk update:', error);
+        throw error;
+    }
 }

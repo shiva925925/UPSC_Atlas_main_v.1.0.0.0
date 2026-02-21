@@ -155,6 +155,8 @@ async function getMergedTasks() {
                 logs: prog.logs || [],
                 evidences: prog.evidences || [],
                 isArchived: prog.isArchived || false,
+                isStarred: prog.isStarred !== undefined ? prog.isStarred : (task.isStarred || false),
+                linkedTaskIds: prog.linkedTaskIds || task.linkedTaskIds || [],
                 isDeleted: false,
                 deletedAt: null
             };
@@ -162,7 +164,17 @@ async function getMergedTasks() {
 
     // 5. Add User Tasks
     userTasks.forEach(t => {
-        if (!deletedSet.has(t.id)) merged.push(t);
+        if (!deletedSet.has(t.id)) {
+            const prog = progressData[t.id] || {};
+            merged.push({
+                ...t,
+                ...prog,
+                // Ensure certain values are always set if missing in prog
+                isStarred: prog.isStarred || t.isStarred || false,
+                isArchived: prog.isArchived || t.isArchived || false,
+                linkedTaskIds: prog.linkedTaskIds || t.linkedTaskIds || []
+            });
+        }
     });
 
     return merged;
@@ -202,8 +214,13 @@ app.post('/api/progress', async (req, res) => {
             progress = safeJSONParse(data, {});
         }
 
-        // Merge bulk updates
-        Object.assign(progress, bulkProgress);
+        // Merge bulk updates with deep merge logic to preserve existing fields (logs, evidence, etc.)
+        for (const [taskId, updates] of Object.entries(bulkProgress)) {
+            progress[taskId] = {
+                ...(progress[taskId] || {}),
+                ...updates
+            };
+        }
 
         await fs.promises.writeFile(PROGRESS_FILE, JSON.stringify(progress, null, 2));
         res.json({ message: 'Bulk progress saved' });
@@ -270,13 +287,16 @@ app.get('/api/deleted-tasks', async (req, res) => {
 
 app.post('/api/user-tasks', async (req, res) => {
     try {
+        const newTask = req.body;
+        if (!newTask || !newTask.id) return res.status(400).json({ error: 'Invalid task data' });
+
         let tasks = [];
         if (fs.existsSync(USER_TASKS_FILE)) {
             const data = await fs.promises.readFile(USER_TASKS_FILE, 'utf8');
             tasks = safeJSONParse(data, []);
         }
 
-        // Idempotent Upsert Logic (Better logic for race conditions)
+        // Idempotent Upsert Logic
         const idx = tasks.findIndex(t => t.id === newTask.id);
         if (idx > -1) {
             tasks[idx] = { ...tasks[idx], ...newTask };
