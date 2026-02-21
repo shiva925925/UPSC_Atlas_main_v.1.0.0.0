@@ -51,11 +51,11 @@
       "GS-3.1-043"
     ],
     "date": "2026-02-05",
-    "isStarred": true
+    "isStarred": false
   },
   "AC006": {
     "date": "2026-01-30",
-    "isStarred": true
+    "isStarred": false
   },
   "AC007": {
     "date": "2026-01-30"
@@ -121,73 +121,136 @@
     "date": "2026-01-30"
   },
   "AC054": {
-    "date": "2026-01-30"
+    "date": "2026-02-28",
+    "status": "IN_PROGRESS"
   },
   "AC055": {
-    "date": "2026-01-30"
+    "date": "2026-02-22",
+    "status": "IN_PROGRESS",
+    "isStarred": false
   },
   "AC056": {
-    "date": "2026-01-30"
+    "date": "2026-02-22",
+    "status": "IN_PROGRESS",
+    "isStarred": false
   },
   "AC057": {
-    "date": "2026-01-30"
+    "date": "2026-02-22",
+    "status": "IN_PROGRESS",
+    "logs": [
+      {
+        "id": "o18eq9sad",
+        "date": "2026-02-20",
+        "durationMinutes": 60,
+        "subject": "Art and Culture",
+        "description": "First reading, no notes made"
+      }
+    ],
+    "description": "three styles developed under it-\n1. Odisha style\n2. Kajuraho style- chandela rulers(2025 mains)\n3. Solanki Style",
+    "acceptanceCriteria": [
+      {
+        "id": "ww1c3wiwm",
+        "text": "first reading",
+        "isCompleted": true
+      },
+      {
+        "id": "6ybni4cmk",
+        "text": "notes making",
+        "isCompleted": false
+      }
+    ],
+    "isStarred": false
   },
   "AC058": {
-    "date": "2026-01-30"
+    "date": "2026-02-22",
+    "status": "IN_PROGRESS"
   },
   "AC059": {
-    "date": "2026-01-30"
+    "date": "2026-02-22",
+    "status": "IN_PROGRESS"
   },
   "AC060": {
-    "date": "2026-01-30"
+    "date": "2026-02-22",
+    "status": "IN_PROGRESS"
   },
   "AC061": {
-    "date": "2026-01-30"
+    "date": "2026-02-22",
+    "status": "IN_PROGRESS"
   },
   "AC062": {
-    "date": "2026-01-30"
+    "date": "2026-02-22",
+    "status": "IN_PROGRESS"
   },
   "AC063": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC064": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC065": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC066": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC067": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC068": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "description": "Medieval and Indo-Islamic Architecture",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC069": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC070": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC071": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC072": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC073": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC074": {
-    "date": "2026-01-30"
+    "date": "2026-02-22",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC075": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC076": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC077": {
     "date": "2026-01-30"
@@ -208,7 +271,18 @@
     "date": "2026-01-30"
   },
   "AC083": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "logs": [
+      {
+        "id": "rqi1qzilv",
+        "date": "2026-02-17",
+        "durationMinutes": 30,
+        "subject": "Ancient History",
+        "description": "Task work log"
+      }
+    ],
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "AC084": {
     "date": "2026-01-30"
@@ -1389,23 +1463,6 @@
   "GS-1.2-107": {
     "date": "2026-01-30"
   },
-  "bip46u33h": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
-  },
-  "es8u2k56t": {
-    "status": "TODO",
-    "priority": "Medium",
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": true,
-    "deletedAt": "2026-01-12T07:57:30.326Z"
-  },
   "task-001": {
     "status": "TODO",
     "priority": "High",
@@ -1473,7 +1530,7 @@
     "isDeleted": false
   },
   "GS-3-075": {
-    "status": "IN_PROGRESS",
+    "status": "TODO",
     "priority": "High",
     "linkedTaskIds": [
       "AC001",
@@ -1497,7 +1554,8 @@
         "isCompleted": false
       }
     ],
-    "description": "it is a fairly large topic. Covers major part of the Economy.\n"
+    "description": "it is a fairly large topic. Covers major part of the Economy.\n",
+    "isStarred": true
   },
   "GS-3.1-043": {
     "date": "2026-01-30"
@@ -1514,7 +1572,8 @@
         "isCompleted": true
       }
     ],
-    "status": "DONE"
+    "status": "DONE",
+    "isArchived": true
   },
   "75csim5h6": {
     "status": "IN_PROGRESS",
@@ -1530,8 +1589,41 @@
     ]
   },
   "s8zh996io": {
-    "status": "IN_PROGRESS",
-    "date": "2026-02-04"
+    "status": "DONE",
+    "date": "2026-02-04",
+    "isStarred": true,
+    "description": "you already know the science, prepare a final draft and add the link.\n2025 mains-features(Distinct structural components)",
+    "logs": [
+      {
+        "id": "12p7loptt",
+        "date": "2026-02-19",
+        "durationMinutes": 60,
+        "subject": "Indian Economy",
+        "description": "NCERT- semiconductors chapter"
+      },
+      {
+        "id": "cwqfi9czp",
+        "date": "2026-02-19",
+        "durationMinutes": 60,
+        "subject": "Indian Economy",
+        "description": "ISM and SEMICON"
+      }
+    ],
+    "evidences": [
+      {
+        "id": "rsccdh3b0",
+        "type": "LINK",
+        "content": "https://ncert.nic.in/textbook/pdf/leph206.pdf",
+        "timestamp": "6:51:00 AM"
+      }
+    ],
+    "acceptanceCriteria": [
+      {
+        "id": "o1ldk75lg",
+        "text": "Final draft of science part",
+        "isCompleted": true
+      }
+    ]
   },
   "8euh9bzue": {
     "status": "IN_PROGRESS",
@@ -2093,7 +2185,9 @@
     "date": "2026-01-30"
   },
   "GS-2-082": {
-    "date": "2026-01-30"
+    "date": "2026-02-28",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "GS-2-083": {
     "date": "2026-01-30"
@@ -3263,28 +3357,44 @@
     "date": "2026-01-30"
   },
   "GS-3-081": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "GS-3-082": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "GS-3-083": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "GS-3-084": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "GS-3-085": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "GS-3-086": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "GS-3-087": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "GS-3-088": {
-    "date": "2026-01-30"
+    "date": "2026-01-30",
+    "status": "IN_PROGRESS",
+    "isStarred": true
   },
   "GS-3-089": {
     "date": "2026-01-30"
@@ -4175,5 +4285,14 @@
     "isStarred": true,
     "status": "IN_PROGRESS",
     "date": "2026-02-05"
+  },
+  "o89xo8hr5": {
+    "status": "IN_PROGRESS",
+    "description": "2025 mains-2021 reforms impact.\n",
+    "isStarred": false,
+    "date": "2026-02-28"
+  },
+  "b70bk05d3": {
+    "isStarred": true
   }
 }

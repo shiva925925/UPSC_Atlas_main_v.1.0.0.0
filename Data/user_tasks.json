@@ -1,26 +1,5 @@
 [
   {
-    "id": "es8u2k56t",
-    "userId": "Schamala",
-    "title": "ertdyfg",
-    "subject": "Polity",
-    "priority": "Medium",
-    "date": "2025-11-27",
-    "status": "TODO",
-    "description": "gfhj",
-    "acceptanceCriteria": [
-      {
-        "id": "b2wu52ws0",
-        "text": "dtrgyuh",
-        "isCompleted": false
-      }
-    ],
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
-  },
-  {
     "id": "xl3r155b8",
     "userId": "Schamala",
     "title": "DM Examples in India",
@@ -33,53 +12,6 @@
       {
         "id": "csieijjeg",
         "text": "Maintain the data in a map",
-        "isCompleted": false
-      }
-    ],
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
-  },
-  {
-    "id": "bip46u33h",
-    "userId": "Schamala",
-    "title": "fedq",
-    "subject": "General",
-    "priority": "Medium",
-    "date": "2025-12-09",
-    "status": "TODO",
-    "description": "vV fd",
-    "acceptanceCriteria": [
-      {
-        "id": "uurnb53ww",
-        "text": "sv sF",
-        "isCompleted": false
-      },
-      {
-        "id": "lduiuv4vd",
-        "text": "svsdfv",
-        "isCompleted": false
-      }
-    ],
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
-  },
-  {
-    "id": "k9pn9s3yf",
-    "userId": "Schamala",
-    "title": "sdfghf",
-    "subject": "Agriculture",
-    "priority": "Medium",
-    "date": "2026-01-04",
-    "status": "TODO",
-    "description": "fg",
-    "acceptanceCriteria": [
-      {
-        "id": "m8p0ay9cb",
-        "text": "gehrs",
         "isCompleted": false
       }
     ],
@@ -107,57 +39,6 @@
     "logs": [],
     "evidences": [],
     "isArchived": false,
-    "isDeleted": false
-  },
-  {
-    "id": "jt7tfn0l6",
-    "userId": "Schamala",
-    "title": "hvhjbsdvb",
-    "subject": "Polity and Governance",
-    "priority": "Medium",
-    "date": "2026-01-04",
-    "status": "TODO",
-    "description": "hbvdsn ",
-    "acceptanceCriteria": [
-      {
-        "id": "dzvpau1jg",
-        "text": "kjbvkj",
-        "isCompleted": false
-      }
-    ],
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
-  },
-  {
-    "id": "ypjzdrkhf",
-    "userId": "Schamala",
-    "title": "lkjhgfd",
-    "subject": "Current Affairs",
-    "priority": "Medium",
-    "date": "2026-01-04",
-    "status": "TODO",
-    "description": "",
-    "acceptanceCriteria": [],
-    "logs": [],
-    "evidences": [],
-    "isArchived": false,
-    "isDeleted": false
-  },
-  {
-    "id": "test_pwsh_verification_123",
-    "subject": "General",
-    "userId": "Schamala",
-    "title": "PowerShell Verification Task",
-    "evidences": [],
-    "description": "Test task created via PowerShell Invoke-RestMethod.",
-    "priority": "High",
-    "logs": [],
-    "isArchived": false,
-    "acceptanceCriteria": [],
-    "status": "TODO",
-    "date": "2026-01-30",
     "isDeleted": false
   },
   {
@@ -237,6 +118,42 @@
     "date": "2026-01-30",
     "status": "TODO",
     "description": "",
+    "acceptanceCriteria": [],
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  {
+    "id": "o89xo8hr5",
+    "userId": "Schamala",
+    "title": "Administrative Tribunal",
+    "subject": "Indian Polity",
+    "priority": "High",
+    "date": "2026-02-06",
+    "status": "TODO",
+    "description": "",
+    "acceptanceCriteria": [
+      {
+        "id": "rd4wyc18t",
+        "text": "Timeline - Reforms",
+        "isCompleted": false
+      }
+    ],
+    "logs": [],
+    "evidences": [],
+    "isArchived": false,
+    "isDeleted": false
+  },
+  {
+    "id": "b70bk05d3",
+    "userId": "Schamala",
+    "title": "Constitutional Morality",
+    "subject": "Polity and Governance",
+    "priority": "High",
+    "date": "2026-02-01",
+    "status": "TODO",
+    "description": "Very important topic. 2025 mains-deep understanding needed ",
     "acceptanceCriteria": [],
     "logs": [],
     "evidences": [],
